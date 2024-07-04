@@ -21,14 +21,14 @@ function arrangeArcWindows()
     hs.application.launchOrFocus("Arc")
     hs.timer.usleep(1000000) -- Wait for 1 second to ensure Arc is fully launched
 
-    -- Try to find Arc using both name and bundle ID
-    local arcApp = hs.application.find('Arc') or hs.application.get('company.thebrowser.Browser')
+    -- -- Try to find Arc using both name and bundle ID
+    -- local arcApp = hs.application.find('Arc') or hs.application.get('company.thebrowser.Browser')
 
-    if not arcApp then
-        hs.alert.show("Arc isn't running")
-        hs.sound.getByName("Glass"):play()  -- Use "Glass" sound as an example
-        return
-    end
+    -- if not arcApp then
+    --     hs.alert.show("Arc isn't running")
+    --     hs.sound.getByName("Glass"):play()  -- Use "Glass" sound as an example
+    --     return
+    -- end
 
     -- Get the screen and its dimensions
     local screen = hs.screen.mainScreen()
@@ -134,3 +134,4 @@ function openInArc(url)
     end
     return success
 end
+
