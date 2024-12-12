@@ -8,6 +8,7 @@ local M = {}
 
 -- Load required extensions
 require("hs.webview")
+require("hs.fnutils")
 
 -- HTML content template for arrows
 local htmlTemplate = [[
@@ -107,6 +108,10 @@ local sounds = {}
 local silentMode = false
 local lastEscTime = 0
 local escDoubleTapThreshold = 0.3  -- 300ms for double-tap detection
+local lastSoundTime = 0
+local soundDebounceTime = 0.1  -- 100ms debounce
+local lastKeyTime = 0
+local keyDebounceTime = 0.1  -- 100ms debounce
 
 -- Get the Hammerspoon config directory
 local configPath = hs.configdir .. "/sounds/"
@@ -121,6 +126,20 @@ for _, direction in ipairs({"up", "down", "left", "right"}) do
         print("Successfully loaded sound for " .. direction)
     else
         print("Error: Failed to load sound for " .. direction .. " from path: " .. soundPath)
+    end
+end
+
+-- Add new sounds for arrow keys
+local dissonantSounds = {}
+for _, direction in ipairs({"up", "down", "left", "right"}) do
+    local soundPath = configPath .. "dissonant/" .. direction .. ".wav"
+    print("Attempting to load dissonant sound from: " .. soundPath)
+    local sound = hs.sound.getByFile(soundPath)
+    if sound then
+        dissonantSounds[direction] = sound
+        print("Successfully loaded dissonant sound for " .. direction)
+    else
+        print("Error: Failed to load dissonant sound for " .. direction .. " from path: " .. soundPath)
     end
 end
 
@@ -147,31 +166,41 @@ local escWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(e
     return false
 end):start()
 
-local function playSound(direction)
+local function playSound(direction, isArrowKey)
+    -- Debounce check
+    local currentTime = hs.timer.secondsSinceEpoch()
+    if (currentTime - lastSoundTime) < soundDebounceTime then
+        print("Debouncing sound playback")
+        return
+    end
+    lastSoundTime = currentTime
+
     -- Check silent mode first
     if silentMode then
         print("Silent mode active, skipping sound")
         return
     end
 
-    -- Play sound if we're not in a sequence OR if it's a different key
-    if not inKeySequence or (lastKeyPressed and lastKeyPressed ~= direction) then
-        if activeSound and activeSound:isPlaying() then
-            print("Stopping previous sound")
-            activeSound:stop()
-        end
-        
-        activeSound = sounds[direction]
-        if activeSound then
-            activeSound:volume(0.2)
-            local success, err = pcall(function() 
-                activeSound:play() 
-            end)
-            if success then
-                print("Successfully playing sound for " .. direction)
-            else
-                print("Error playing sound for " .. direction .. ": " .. tostring(err))
-            end
+    -- Stop any currently playing sound and wait a tiny bit
+    if activeSound and activeSound:isPlaying() then
+        print("Stopping previous sound")
+        activeSound:stop()
+        hs.timer.usleep(10000)  -- Wait 10ms to ensure clean transition
+    end
+    
+    -- Choose the appropriate sound based on whether it's an arrow key
+    activeSound = isArrowKey and dissonantSounds[direction] or sounds[direction]
+    
+    if activeSound then
+        activeSound:volume(0.2)
+        -- Use pcall to catch any playback errors
+        local success, err = pcall(function() 
+            activeSound:play() 
+        end)
+        if success then
+            print("Successfully playing " .. (isArrowKey and "dissonant " or "") .. "sound for " .. direction)
+        else
+            print("Error playing sound for " .. direction .. ": " .. tostring(err))
         end
     end
     
@@ -179,9 +208,9 @@ local function playSound(direction)
     inKeySequence = true
 end
 
-local function showArrow(direction)
+local function showArrow(direction, isArrowKey)
     -- Play sound for this direction
-    playSound(direction)
+    playSound(direction, isArrowKey)
 
     -- Cancel any existing timers
     if fadeTimer then
@@ -273,37 +302,56 @@ local function showArrow(direction)
 end
 
 -- Create event taps for both keyDown and keyUp
-local keyWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown, hs.eventtap.event.types.keyUp}, function(event)
+local keyWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)  -- Only watch keyDown
     local keyCode = event:getKeyCode()
-    local keyMap = hs.keycodes.map
-    local eventType = event:getType()
+    local flags = event:getFlags()
     
-    -- Handle key up events
-    if eventType == hs.eventtap.event.types.keyUp then
-        if keyCode == keyMap["up"] or 
-           keyCode == keyMap["down"] or 
-           keyCode == keyMap["left"] or 
-           keyCode == keyMap["right"] then
-            inKeySequence = false
-            lastKeyPressed = nil
-            print("Key released - sequence ended")
+    -- Debounce check for all key events
+    local currentTime = hs.timer.secondsSinceEpoch()
+    if (currentTime - lastKeyTime) < keyDebounceTime then
+        print("Debouncing key event")
+        return false
+    end
+    lastKeyTime = currentTime
+    
+    -- Debug logging
+    print("Key pressed - keyCode:", keyCode)
+    print("Flags:", hs.inspect(flags))
+    
+    -- Case 1: Handle Vim keys with Hyper
+    if flags.cmd and flags.alt and flags.shift and flags.ctrl then
+        if keyCode == hs.keycodes.map["k"] then
+            print("Hyper + K pressed (up)")
+            showArrow("up", false)
+        elseif keyCode == hs.keycodes.map["j"] then
+            print("Hyper + J pressed (down)")
+            showArrow("down", false)
+        elseif keyCode == hs.keycodes.map["h"] then
+            print("Hyper + H pressed (left)")
+            showArrow("left", false)
+        elseif keyCode == hs.keycodes.map["l"] then
+            print("Hyper + L pressed (right)")
+            showArrow("right", false)
         end
         return false
     end
     
-    -- Handle key down events
-    if keyCode == keyMap["up"] then
-        print("Up arrow pressed")
-        showArrow("up")
-    elseif keyCode == keyMap["down"] then
-        print("Down arrow pressed")
-        showArrow("down")
-    elseif keyCode == keyMap["left"] then
-        print("Left arrow pressed")
-        showArrow("left")
-    elseif keyCode == keyMap["right"] then
-        print("Right arrow pressed")
-        showArrow("right")
+    -- Case 2: Handle arrow keys with no modifiers
+    -- Simplified the check for no modifiers or just fn
+    if next(flags) == nil or (next(flags) == "fn" and next(flags, "fn") == nil) then
+        if keyCode == 126 then  -- Up arrow
+            print("Up Arrow pressed - triggering visual")
+            showArrow("up", true)
+        elseif keyCode == 125 then  -- Down arrow
+            print("Down Arrow pressed - triggering visual")
+            showArrow("down", true)
+        elseif keyCode == 123 then  -- Left arrow
+            print("Left Arrow pressed - triggering visual")
+            showArrow("left", true)
+        elseif keyCode == 124 then  -- Right arrow
+            print("Right Arrow pressed - triggering visual")
+            showArrow("right", true)
+        end
     end
     
     return false
