@@ -17,7 +17,7 @@ local htmlTemplate = [[
             padding: 0;
             background: transparent;
             font-family: "Proxima Nova", "SF Pro", sans-serif;
-            color: white;
+            color: #666666;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -68,24 +68,25 @@ local arrowTemplate = [[
 '>
     <div style='
         font-family: "Proxima Nova", "SF Pro", sans-serif;
+        color: white;
+        text-shadow: none;
+        font-size: 1em;
         font-weight: 600;
     '>%s</div>
     <div style='
         font-family: "Proxima Nova", "SF Pro", sans-serif;
-        margin-top: %s;
-        color: #666666;
-        text-shadow: none;
-        font-size: 0.7em;
+        margin-top: 5px;
+        font-size: .8em;
         font-weight: 600;
     '>%s</div>
 </div>
 ]]
 
 local arrows = {
-    up = string.format(arrowTemplate, "K", "15px", "↑"),
-    down = string.format(arrowTemplate, "J", "15px", "↓"),
-    left = string.format(arrowTemplate, "H", "10px", "←"),
-    right = string.format(arrowTemplate, "L", "10px", "→")
+    up = string.format(arrowTemplate, "↑", "K"),
+    down = string.format(arrowTemplate, "↓", "J"),
+    left = string.format(arrowTemplate, "←", "H"),
+    right = string.format(arrowTemplate, "→", "L")
 }
 
 -- Keep track of active timers
