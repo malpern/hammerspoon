@@ -92,7 +92,90 @@ local arrows = {
 local fadeTimer = nil
 local deleteTimer = nil
 
+-- At the top with other locals
+local inKeySequence = false
+local lastKeyPressed = nil
+local activeSound = nil
+local sounds = {}
+local silentMode = false
+local lastEscTime = 0
+local escDoubleTapThreshold = 0.3  -- 300ms for double-tap detection
+
+-- Get the Hammerspoon config directory
+local configPath = hs.configdir .. "/sounds/"
+
+-- Load sound files with error handling
+for _, direction in ipairs({"up", "down", "left", "right"}) do
+    local soundPath = configPath .. direction .. ".wav"
+    print("Attempting to load sound from: " .. soundPath)
+    local sound = hs.sound.getByFile(soundPath)
+    if sound then
+        sounds[direction] = sound
+        print("Successfully loaded sound for " .. direction)
+    else
+        print("Error: Failed to load sound for " .. direction .. " from path: " .. soundPath)
+    end
+end
+
+-- Create event tap for escape key
+local escWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
+    local keyCode = event:getKeyCode()
+    
+    -- Check for escape key (keyCode 53)
+    if keyCode == 53 then
+        local currentTime = hs.timer.secondsSinceEpoch()
+        
+        -- Check if this is a double-tap
+        if (currentTime - lastEscTime) < escDoubleTapThreshold then
+            -- Toggle silent mode
+            silentMode = not silentMode
+            hs.alert.show(silentMode and "Arrow sounds: Off" or "Arrow sounds: On")
+            print("Silent mode:", silentMode)
+            lastEscTime = 0  -- Reset to prevent triple-tap
+        else
+            lastEscTime = currentTime
+        end
+    end
+    
+    return false
+end):start()
+
+local function playSound(direction)
+    -- Check silent mode first
+    if silentMode then
+        print("Silent mode active, skipping sound")
+        return
+    end
+
+    -- Play sound if we're not in a sequence OR if it's a different key
+    if not inKeySequence or (lastKeyPressed and lastKeyPressed ~= direction) then
+        if activeSound and activeSound:isPlaying() then
+            print("Stopping previous sound")
+            activeSound:stop()
+        end
+        
+        activeSound = sounds[direction]
+        if activeSound then
+            activeSound:volume(0.2)
+            local success, err = pcall(function() 
+                activeSound:play() 
+            end)
+            if success then
+                print("Successfully playing sound for " .. direction)
+            else
+                print("Error playing sound for " .. direction .. ": " .. tostring(err))
+            end
+        end
+    end
+    
+    lastKeyPressed = direction
+    inKeySequence = true
+end
+
 local function showArrow(direction)
+    -- Play sound for this direction
+    playSound(direction)
+
     -- Cancel any existing timers
     if fadeTimer then
         fadeTimer:stop()
@@ -182,28 +265,41 @@ local function showArrow(direction)
     end)
 end
 
--- Create an event tap to watch for arrow keys
-local keyWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
+-- Create event taps for both keyDown and keyUp
+local keyWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown, hs.eventtap.event.types.keyUp}, function(event)
     local keyCode = event:getKeyCode()
     local keyMap = hs.keycodes.map
+    local eventType = event:getType()
     
-    print("Key pressed:", keyCode)  -- Debug output
+    -- Handle key up events
+    if eventType == hs.eventtap.event.types.keyUp then
+        if keyCode == keyMap["up"] or 
+           keyCode == keyMap["down"] or 
+           keyCode == keyMap["left"] or 
+           keyCode == keyMap["right"] then
+            inKeySequence = false
+            lastKeyPressed = nil
+            print("Key released - sequence ended")
+        end
+        return false
+    end
     
+    -- Handle key down events
     if keyCode == keyMap["up"] then
-        print("Up arrow pressed")  -- Debug output
+        print("Up arrow pressed")
         showArrow("up")
     elseif keyCode == keyMap["down"] then
-        print("Down arrow pressed")  -- Debug output
+        print("Down arrow pressed")
         showArrow("down")
     elseif keyCode == keyMap["left"] then
-        print("Left arrow pressed")  -- Debug output
+        print("Left arrow pressed")
         showArrow("left")
     elseif keyCode == keyMap["right"] then
-        print("Right arrow pressed")  -- Debug output
+        print("Right arrow pressed")
         showArrow("right")
     end
     
-    return false  -- Return false to let the event pass through
+    return false
 end)
 
 -- Start watching for key events
