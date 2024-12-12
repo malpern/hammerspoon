@@ -1,5 +1,11 @@
 local M = {}
 
+-- TODO:
+-- 1. bring back meeting mode auto detect with time out
+-- 2. you only get the good sound if your using hte vim keys. Fail sounds if using arrow keys. stop using KM.
+---3. polish the double esc key
+-- 4. Make it draggable
+
 -- Load required extensions
 require("hs.webview")
 
