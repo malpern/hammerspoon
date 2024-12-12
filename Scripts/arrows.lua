@@ -39,7 +39,7 @@ local htmlTemplate = [[
             padding: 5px;
         }
         .arrow-block {
-            background-color: rgba(30, 30, 30, 1);
+            background-color: %s;
             border-radius: 12px;
             padding: 20px;
             text-align: center;
@@ -75,7 +75,7 @@ local arrowTemplate = [[
 '>
     <div style='
         font-family: "Proxima Nova", "SF Pro", sans-serif;
-        color: white;
+        color: %s;
         text-shadow: none;
         font-size: 1em;
         font-weight: 600;
@@ -85,15 +85,44 @@ local arrowTemplate = [[
         margin-top: 5px;
         font-size: .8em;
         font-weight: 600;
+        color: %s;
     '>%s</div>
 </div>
 ]]
 
+local function getArrowHtml(direction, isArrowKey)
+    -- For arrow keys: letter is white, symbol is darker red
+    -- For vim keys: symbol is white, letter is #666666 (gray)
+    local symbolColor = isArrowKey and "#4B0000" or "white"
+    local letterColor = isArrowKey and "white" or "#666666"  
+    
+    -- Define both symbol and letter for each direction
+    local symbol = direction == "up" and "↑" or
+                  direction == "down" and "↓" or
+                  direction == "left" and "←" or
+                  direction == "right" and "→"
+    
+    local letter = direction == "up" and "K" or
+                  direction == "down" and "J" or
+                  direction == "left" and "H" or
+                  direction == "right" and "L"
+    
+    -- Format template with order depending on key type
+    if isArrowKey then
+        -- Letter on top, arrow below for arrow keys
+        return string.format(arrowTemplate, letterColor, letter, symbolColor, symbol)
+    else
+        -- Arrow on top, letter below for vim keys (unchanged)
+        return string.format(arrowTemplate, symbolColor, symbol, letterColor, letter)
+    end
+end
+
+-- Update arrows table to use the new function
 local arrows = {
-    up = string.format(arrowTemplate, "↑", "K"),
-    down = string.format(arrowTemplate, "↓", "J"),
-    left = string.format(arrowTemplate, "←", "H"),
-    right = string.format(arrowTemplate, "→", "L")
+    up = getArrowHtml("up", false),
+    down = getArrowHtml("down", false),
+    left = getArrowHtml("left", false),
+    right = getArrowHtml("right", false)
 }
 
 -- Keep track of active timers
@@ -112,6 +141,10 @@ local lastSoundTime = 0
 local soundDebounceTime = 0.1  -- 100ms debounce
 local lastKeyTime = 0
 local keyDebounceTime = 0.1  -- 100ms debounce
+local lastArrowPress = nil
+local lastArrowTime ppp= 0
+local celebrationTimeout = 2  -- 1 second window to complete the combination
+local celebrationKeycode = hs.keycodes.map["p"]  -- For Hyper + P
 
 -- Get the Hammerspoon config directory
 local configPath = hs.configdir .. "/sounds/"
@@ -213,86 +246,61 @@ local function showArrow(direction, isArrowKey)
     playSound(direction, isArrowKey)
 
     -- Cancel any existing timers
-    if fadeTimer then
-        fadeTimer:stop()
-        fadeTimer = nil
-    end
-    if deleteTimer then
-        deleteTimer:stop()
-        deleteTimer = nil
-    end
-
-    -- Immediately remove any existing webview without waiting for fade
+    if fadeTimer then fadeTimer:stop() end
+    if deleteTimer then deleteTimer:stop() end
+    
+    -- Clean up existing webview
     if activeWebview then
         activeWebview:delete()
         activeWebview = nil
     end
     
-    -- Create a window size that accommodates all content
-    local width = 90  -- Increased from 80 to prevent truncation
-    local height = 120  -- Increased from 110 to prevent truncation
-    
-    -- Get the main screen's frame
+    -- Create new webview
+    local width = 90
+    local height = 120
     local screen = hs.screen.mainScreen()
     local frame = screen:frame()
-    
-    -- Calculate top-right position with margins
     local x = frame.x + frame.w - width - 20
     local y = frame.y + 20
     
-    -- Create the webview with some padding
     activeWebview = hs.webview.new({x = x, y = y, w = width, h = height})
-    
-    -- Configure the window properties
     activeWebview:windowStyle({"borderless", "closable", "nonactivating"})
     activeWebview:level(hs.drawing.windowLevels.floating)
     activeWebview:alpha(1.0)
     activeWebview:allowTextEntry(false)
     activeWebview:transparent(true)
-    activeWebview:windowCallback(function(webview, message)
-        -- Set corner radius when the window is created
-        if message == "windowCreated" then
-            local win = webview:hswindow()
-            if win then
-                win:setRoundedCorners(true)
-                -- Try to force a more rounded appearance
-                hs.execute([[defaults write org.hammerspoon.Hammerspoon NSWindowCornerRadius -float 10]])
-            end
-        end
-    end)
+    
+    -- Choose the background color based on isArrowKey
+    local bgColor = isArrowKey and "rgba(180, 0, 0, 1)" or "rgba(30, 30, 30, 1)"
+    local formattedHtml = string.format(htmlTemplate, bgColor)
     
     -- Replace ARROW placeholder with the correct arrow character
-    local html = string.gsub(htmlTemplate, "ARROW", arrows[direction])
+    local arrowHtml = getArrowHtml(direction, isArrowKey)
+    local html = string.gsub(formattedHtml, "ARROW", arrowHtml)
     activeWebview:html(html)
-    
-    -- Show the window
     activeWebview:show()
     
-    -- Set timer to fade out after 3.5 seconds (giving 0.8 seconds for fade)
+    -- Set up fade out
     fadeTimer = hs.timer.doAfter(2, function()
-        -- Store reference to this specific webview instance
-        local thisWebview = activeWebview
-        -- Only proceed with fade if this specific webview is still active
-        if thisWebview and thisWebview:isVisible() then
+        local currentWebview = activeWebview  -- Capture current webview
+        if currentWebview and currentWebview:isVisible() then
             local steps = 10
             local fadeTime = 0.8
             local stepTime = fadeTime / steps
-            local alphaStep = 1.0 / steps
             
             for i = 1, steps do
                 hs.timer.doAfter(i * stepTime, function()
-                    -- Check if this specific webview is still active
-                    if thisWebview and thisWebview:isVisible() then
-                        thisWebview:alpha(1.0 - (i * alphaStep))
+                    if currentWebview and currentWebview:isVisible() then
+                        currentWebview:alpha(1.0 - (i/steps))
                     end
                 end)
             end
             
-            deleteTimer = hs.timer.doAfter(fadeTime, function()
-                -- Check if this specific webview is still active
-                if thisWebview and thisWebview:isVisible() then
-                    thisWebview:delete()
-                    if activeWebview == thisWebview then
+            -- Delete after fade
+            deleteTimer = hs.timer.doAfter(fadeTime + 0.1, function()
+                if currentWebview then
+                    currentWebview:delete()
+                    if activeWebview == currentWebview then
                         activeWebview = nil
                     end
                 end
@@ -301,8 +309,64 @@ local function showArrow(direction, isArrowKey)
     end)
 end
 
--- Create event taps for both keyDown and keyUp
-local keyWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)  -- Only watch keyDown
+local function triggerCelebration()
+    print("🎉 Starting celebration sequence!")
+    
+    -- Use osascript to trigger the keyboard shortcut
+    local script = [[
+        tell application "System Events"
+            repeat 3 times
+                key code 35 using {command down, option down, control down, shift down}
+                delay 0.1
+            end repeat
+        end tell
+    ]]
+    
+    local task = hs.task.new("/usr/bin/osascript", nil, function(exitCode, stdOut, stdErr)
+        if exitCode == 0 then
+            print("✨ Celebration sequence completed successfully")
+        else
+            print("❌ Error running celebration sequence:", stdErr)
+        end
+    end, {"-e", script})
+    
+    task:start()
+end
+
+local function checkCelebration(direction, isArrowKey)
+    local currentTime = hs.timer.secondsSinceEpoch()
+    
+    if isArrowKey then
+        -- Store the arrow press
+        lastArrowPress = direction
+        lastArrowTime = currentTime
+        print(string.format("📝 Arrow key pressed: %s - Starting celebration window", direction))
+    else
+        -- Check if this vim motion matches a recent arrow press
+        if lastArrowPress then
+            local timeDiff = currentTime - lastArrowTime
+            print(string.format("⌨️  Vim motion: %s (Previous arrow: %s, Time diff: %.2fs)", 
+                direction, lastArrowPress, timeDiff))
+            
+            if timeDiff < celebrationTimeout and lastArrowPress == direction then
+                print("🎯 Match found! Arrow + Vim combination detected")
+                triggerCelebration()
+                -- Reset after celebration
+                lastArrowPress = nil
+            else
+                if timeDiff >= celebrationTimeout then
+                    print("⌛ Too slow - celebration window expired")
+                elseif lastArrowPress ~= direction then
+                    print("❌ No match - wrong direction")
+                end
+            end
+        else
+            print("ℹ️  Vim motion without recent arrow press")
+        end
+    end
+end
+
+local keyWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
     local keyCode = event:getKeyCode()
     local flags = event:getFlags()
     
@@ -323,34 +387,41 @@ local keyWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(e
         if keyCode == hs.keycodes.map["k"] then
             print("Hyper + K pressed (up)")
             showArrow("up", false)
+            checkCelebration("up", false)
         elseif keyCode == hs.keycodes.map["j"] then
             print("Hyper + J pressed (down)")
             showArrow("down", false)
+            checkCelebration("down", false)
         elseif keyCode == hs.keycodes.map["h"] then
             print("Hyper + H pressed (left)")
             showArrow("left", false)
+            checkCelebration("left", false)
         elseif keyCode == hs.keycodes.map["l"] then
             print("Hyper + L pressed (right)")
             showArrow("right", false)
+            checkCelebration("right", false)
         end
         return false
     end
     
     -- Case 2: Handle arrow keys with no modifiers
-    -- Simplified the check for no modifiers or just fn
     if next(flags) == nil or (next(flags) == "fn" and next(flags, "fn") == nil) then
         if keyCode == 126 then  -- Up arrow
             print("Up Arrow pressed - triggering visual")
             showArrow("up", true)
+            checkCelebration("up", true)
         elseif keyCode == 125 then  -- Down arrow
             print("Down Arrow pressed - triggering visual")
             showArrow("down", true)
+            checkCelebration("down", true)
         elseif keyCode == 123 then  -- Left arrow
             print("Left Arrow pressed - triggering visual")
             showArrow("left", true)
+            checkCelebration("left", true)
         elseif keyCode == 124 then  -- Right arrow
             print("Right Arrow pressed - triggering visual")
             showArrow("right", true)
+            checkCelebration("right", true)
         end
     end
     
