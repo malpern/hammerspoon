@@ -45,7 +45,7 @@ local function testView()
 
 	-- Test VIM mode (Symbol first, then Label)
 	local windowHtml = view.generateWindowHtml(model.Direction.UP, model.KeyType.VIM)
-	if not windowHtml:match("⬆") then
+	if not windowHtml:match("↑") then
 		success = false
 		message = message .. "Missing arrow symbol in VIM mode\n"
 	end
@@ -56,13 +56,24 @@ local function testView()
 
 	-- Test ARROW mode (Label first, then Symbol)
 	windowHtml = view.generateWindowHtml(model.Direction.UP, model.KeyType.ARROW)
-	if not windowHtml:match("⬆") then
+	if not windowHtml:match("↑") then
 		success = false
 		message = message .. "Missing arrow symbol in ARROW mode\n"
 	end
 	if not windowHtml:match("K") then
 		success = false
 		message = message .. "Missing key letter in ARROW mode\n"
+	end
+
+	-- Test simple arrow view
+	local arrowHtml = view.generateArrowHtml(model.Direction.UP, model.KeyType.VIM)
+	if not arrowHtml:match("↑") then
+		success = false
+		message = message .. "Missing arrow symbol in simple arrow view\n"
+	end
+	if arrowHtml:match("K") then
+		success = false
+		message = message .. "Letter should not appear in simple arrow view\n"
 	end
 
 	printResult("View HTML Generation", success, message)
@@ -225,7 +236,7 @@ local function testTypes()
 	end
 
 	-- Window validation
-	local requiredNumbers = { "WIDTH", "HEIGHT", "MARGIN", "BORDER_RADIUS", "PADDING" }
+	local requiredNumbers = { "WIDTH", "HEIGHT", "MARGIN", "BORDER_RADIUS", "PADDING", "CONTAINER_PADDING" }
 	for _, field in ipairs(requiredNumbers) do
 		if type(style.WINDOW[field]) ~= "number" then
 			success = false

@@ -48,6 +48,7 @@ local M = {}
 ---@field MARGIN number Window margin in pixels
 ---@field BORDER_RADIUS number Border radius in pixels
 ---@field PADDING number Internal padding in pixels
+---@field CONTAINER_PADDING number Container padding in pixels
 
 -- Animation configuration types
 ---@class AnimationConfig
@@ -101,10 +102,10 @@ M.Direction = {
 -- Symbols and Labels
 ---@type table<string, string>
 M.SYMBOLS = {
-	[M.Direction.UP] = "⬆",
-	[M.Direction.DOWN] = "⬇",
-	[M.Direction.LEFT] = "⬅",
-	[M.Direction.RIGHT] = "➡",
+	[M.Direction.UP] = "↑",
+	[M.Direction.DOWN] = "↓",
+	[M.Direction.LEFT] = "←",
+	[M.Direction.RIGHT] = "→",
 	[M.Direction.BACK] = "▲",
 }
 
@@ -130,7 +131,7 @@ M.Style = {
 		WEIGHT = "600",
 		SIZES = {
 			SYMBOL = {
-				DEFAULT = "1em",
+				DEFAULT = "48px", -- Increased size for better visibility
 				BACK = "0.85em",
 			},
 			LABEL = {
@@ -165,6 +166,7 @@ M.Style = {
 		MARGIN = 20, -- Margin from screen edges
 		BORDER_RADIUS = 12, -- Border radius for the arrow block
 		PADDING = 20, -- Internal padding for the arrow block
+		CONTAINER_PADDING = 5, -- Padding for the outer container
 	},
 
 	-- Animation timing and configuration

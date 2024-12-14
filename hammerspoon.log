@@ -1,98 +1,109 @@
-[2024-12-14 10:48:15] 📝 Starting new log session
-[2024-12-14 10:48:15] -- Loading extension: ipc
-[2024-12-14 10:48:15] -- Loading extension: alert
-[2024-12-14 10:48:15] ✅ IPC Command Line Tool Installed
-[2024-12-14 10:48:15] -- Loading extension: sound
-[2024-12-14 10:48:15] Successfully loaded sound for UP
-[2024-12-14 10:48:15] Successfully loaded sound for RIGHT
-[2024-12-14 10:48:15] Successfully loaded sound for LEFT
-[2024-12-14 10:48:15] Successfully loaded sound for DOWN
-[2024-12-14 10:48:15] Successfully loaded dissonant sound for UP
-[2024-12-14 10:48:15] Successfully loaded dissonant sound for RIGHT
-[2024-12-14 10:48:15] Successfully loaded dissonant sound for LEFT
-[2024-12-14 10:48:15] Successfully loaded dissonant sound for DOWN
-[2024-12-14 10:48:15] Successfully loaded sound for back
-[2024-12-14 10:48:15] -- Loading extension: eventtap
-[2024-12-14 10:48:15] 
+[2024-12-14 11:28:30] 📝 Starting new log session
+[2024-12-14 11:28:30] -- Loading extension: ipc
+[2024-12-14 11:28:30] -- Loading extension: alert
+[2024-12-14 11:28:30] ✅ IPC Command Line Tool Installed
+[2024-12-14 11:28:30] -- Loading extension: sound
+[2024-12-14 11:28:30] Successfully loaded sound for UP
+[2024-12-14 11:28:30] Successfully loaded sound for RIGHT
+[2024-12-14 11:28:30] Successfully loaded sound for LEFT
+[2024-12-14 11:28:30] Successfully loaded sound for DOWN
+[2024-12-14 11:28:30] Successfully loaded dissonant sound for UP
+[2024-12-14 11:28:30] Successfully loaded dissonant sound for RIGHT
+[2024-12-14 11:28:30] Successfully loaded dissonant sound for LEFT
+[2024-12-14 11:28:30] Successfully loaded dissonant sound for DOWN
+[2024-12-14 11:28:30] Successfully loaded sound for back
+[2024-12-14 11:28:30] -- Loading extension: eventtap
+[2024-12-14 11:28:30] 
 ==================================================
-[2024-12-14 10:48:15] Starting Integration Tests
-[2024-12-14 10:48:15] ==================================================
-[2024-12-14 10:48:15] 
+[2024-12-14 11:28:30] Starting Integration Tests
+[2024-12-14 11:28:30] ==================================================
+[2024-12-14 11:28:30] 
 ==================================================
-[2024-12-14 10:48:15] Testing View Component
-[2024-12-14 10:48:15] ==================================================
-[2024-12-14 10:48:15] ✅ View HTML Generation: 
-[2024-12-14 10:48:15] 
+[2024-12-14 11:28:30] Testing View Component
+[2024-12-14 11:28:30] ==================================================
+[2024-12-14 11:28:30] ✅ View HTML Generation: 
+[2024-12-14 11:28:30] 
 ==================================================
-[2024-12-14 10:48:15] Testing Sound Component
-[2024-12-14 10:48:15] ==================================================
-[2024-12-14 10:48:15] Successfully loaded sound for UP
-[2024-12-14 10:48:15] Successfully loaded sound for RIGHT
-[2024-12-14 10:48:15] Successfully loaded sound for LEFT
-[2024-12-14 10:48:15] Successfully loaded sound for DOWN
-[2024-12-14 10:48:15] Successfully loaded dissonant sound for UP
-[2024-12-14 10:48:15] Successfully loaded dissonant sound for RIGHT
-[2024-12-14 10:48:15] Successfully loaded dissonant sound for LEFT
-[2024-12-14 10:48:15] Successfully loaded dissonant sound for DOWN
-[2024-12-14 10:48:15] Successfully loaded sound for back
-[2024-12-14 10:48:15] ✅ Sound Initialization: Success
-[2024-12-14 10:48:15] ✅ Sound Loading: 
-[2024-12-14 10:48:15] 
+[2024-12-14 11:28:30] Testing Sound Component
+[2024-12-14 11:28:30] ==================================================
+[2024-12-14 11:28:30] Successfully loaded sound for UP
+[2024-12-14 11:28:30] Successfully loaded sound for RIGHT
+[2024-12-14 11:28:30] Successfully loaded sound for LEFT
+[2024-12-14 11:28:30] Successfully loaded sound for DOWN
+[2024-12-14 11:28:30] Successfully loaded dissonant sound for UP
+[2024-12-14 11:28:30] Successfully loaded dissonant sound for RIGHT
+[2024-12-14 11:28:30] Successfully loaded dissonant sound for LEFT
+[2024-12-14 11:28:30] Successfully loaded dissonant sound for DOWN
+[2024-12-14 11:28:30] Successfully loaded sound for back
+[2024-12-14 11:28:30] ✅ Sound Initialization: Success
+[2024-12-14 11:28:30] ✅ Sound Loading: 
+[2024-12-14 11:28:30] 
 ==================================================
-[2024-12-14 10:48:15] Testing Animation Component
-[2024-12-14 10:48:15] ==================================================
-[2024-12-14 10:48:15] -- Loading extension: webview
-[2024-12-14 10:48:16] -- Loading extension: timer
-[2024-12-14 10:48:16] 🎉 Starting celebration sequence!
-[2024-12-14 10:48:16] -- Loading extension: task
-[2024-12-14 10:48:16] ✅ Animation Tests: 
-[2024-12-14 10:48:16] 
+[2024-12-14 11:28:30] Testing Animation Component
+[2024-12-14 11:28:30] ==================================================
+[2024-12-14 11:28:30] -- Loading extension: webview
+[2024-12-14 11:28:33] -- Loading extension: timer
+[2024-12-14 11:28:33] 🎉 Starting celebration sequence!
+[2024-12-14 11:28:33] -- Loading extension: task
+[2024-12-14 11:28:33] ✅ Animation Tests: 
+[2024-12-14 11:28:33] 
 ==================================================
-[2024-12-14 10:48:16] Testing Controller Component
-[2024-12-14 10:48:16] ==================================================
-[2024-12-14 10:48:16] -- Loading extension: screen
-[2024-12-14 10:48:16] -- Loading extension: drawing
-[2024-12-14 10:48:16] 📝 Arrow key pressed: up - Starting celebration window
-[2024-12-14 10:48:16] ⌨️  Vim motion: up (Previous arrow: up, Time diff: 0.00s)
-[2024-12-14 10:48:16] 🎯 Match found! Arrow + Vim combination detected
-[2024-12-14 10:48:16] ✅ Controller Tests: 
-[2024-12-14 10:48:16] 
+[2024-12-14 11:28:33] Testing Controller Component
+[2024-12-14 11:28:33] ==================================================
+[2024-12-14 11:28:33] -- Loading extension: screen
+[2024-12-14 11:28:33] -- Loading extension: drawing
+[2024-12-14 11:28:33] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 11:28:33] ⌨️  Vim motion: up (Previous arrow: up, Time diff: 0.00s)
+[2024-12-14 11:28:33] 🎯 Match found! Arrow + Vim combination detected
+[2024-12-14 11:28:33] ✅ Controller Tests: 
+[2024-12-14 11:28:33] 
 ==================================================
-[2024-12-14 10:48:16] Testing Type Validation
-[2024-12-14 10:48:16] ==================================================
-[2024-12-14 10:48:16] ✅ Type Validation: 
-[2024-12-14 10:48:16] 
+[2024-12-14 11:28:33] Testing Type Validation
+[2024-12-14 11:28:33] ==================================================
+[2024-12-14 11:28:33] ✅ Type Validation: 
+[2024-12-14 11:28:33] 
 ==================================================
-[2024-12-14 10:48:16] Test Results Summary
-[2024-12-14 10:48:16] ==================================================
-[2024-12-14 10:48:16] ✅ types: Success
-[2024-12-14 10:48:16] ✅ view: Success
-[2024-12-14 10:48:16] ✅ sound: Success
-[2024-12-14 10:48:16] ✅ animation: Success
-[2024-12-14 10:48:16] ✅ controller: Success
-[2024-12-14 10:48:16] 
+[2024-12-14 11:28:33] Test Results Summary
+[2024-12-14 11:28:33] ==================================================
+[2024-12-14 11:28:33] ✅ types: Success
+[2024-12-14 11:28:33] ✅ sound: Success
+[2024-12-14 11:28:33] ✅ view: Success
+[2024-12-14 11:28:33] ✅ animation: Success
+[2024-12-14 11:28:33] ✅ controller: Success
+[2024-12-14 11:28:33] 
 --------------------------------------------------
-[2024-12-14 10:48:16] ✅ All Tests: All components working correctly
-[2024-12-14 10:48:16] ✅ Arrows System initialized successfully
-[2024-12-14 10:48:16] ✅ Hammerspoon config loaded
-[2024-12-14 10:48:16] -- Done.
-[2024-12-14 10:48:16] Successfully playing sound for up
-[2024-12-14 10:48:16] 📝 Arrow key pressed: up - Starting celebration window
-[2024-12-14 10:48:16] -- Loading extension: keycodes
-[2024-12-14 10:48:16] Stopping previous sound
-[2024-12-14 10:48:16] Successfully playing sound for up
-[2024-12-14 10:48:16] 📝 Arrow key pressed: up - Starting celebration window
-[2024-12-14 10:48:16] ✨ Celebration sequence completed successfully
-[2024-12-14 10:48:17] Successfully playing sound for up
-[2024-12-14 10:48:17] 📝 Arrow key pressed: up - Starting celebration window
-[2024-12-14 10:48:21] Successfully playing sound for left
-[2024-12-14 10:48:21] 📝 Arrow key pressed: left - Starting celebration window
-[2024-12-14 10:48:22] Successfully playing sound for right
-[2024-12-14 10:48:22] 📝 Arrow key pressed: right - Starting celebration window
-[2024-12-14 10:48:24] Successfully playing sound for left
-[2024-12-14 10:48:24] ⌨️  Vim motion: left (Previous arrow: right, Time diff: 1.44s)
-[2024-12-14 10:48:24] ⌛ Too slow - celebration window expired
-[2024-12-14 10:48:24] Successfully playing sound for up
-[2024-12-14 10:48:24] ℹ️  Vim motion without recent arrow press
-[2024-12-14 10:48:25] Successfully playing sound for right
-[2024-12-14 10:48:25] ℹ️  Vim motion without recent arrow press
+[2024-12-14 11:28:33] ✅ All Tests: All components working correctly
+[2024-12-14 11:28:33] ✅ Arrows System initialized successfully
+[2024-12-14 11:28:33] ✅ Hammerspoon config loaded
+[2024-12-14 11:28:33] -- Done.
+[2024-12-14 11:28:34] Successfully playing sound for up
+[2024-12-14 11:28:34] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 11:28:34] -- Loading extension: keycodes
+[2024-12-14 11:28:34] Stopping previous sound
+[2024-12-14 11:28:34] Successfully playing sound for up
+[2024-12-14 11:28:34] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 11:28:34] Stopping previous sound
+[2024-12-14 11:28:34] Successfully playing sound for up
+[2024-12-14 11:28:34] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 11:28:34] ✨ Celebration sequence completed successfully
+[2024-12-14 11:35:48] Successfully playing sound for right
+[2024-12-14 11:35:48] 📝 Arrow key pressed: right - Starting celebration window
+[2024-12-14 11:37:19] Successfully playing sound for up
+[2024-12-14 11:37:19] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 11:37:19] Stopping previous sound
+[2024-12-14 11:37:19] Successfully playing sound for up
+[2024-12-14 11:37:19] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 11:37:19] Stopping previous sound
+[2024-12-14 11:37:19] Successfully playing sound for up
+[2024-12-14 11:37:19] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 11:37:20] Successfully playing sound for up
+[2024-12-14 11:37:20] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 11:37:22] Successfully playing sound for up
+[2024-12-14 11:37:22] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 11:37:25] Successfully playing sound for up
+[2024-12-14 11:37:25] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 11:37:42] Successfully playing sound for up
+[2024-12-14 11:37:42] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 11:37:42] Stopping previous sound
+[2024-12-14 11:37:42] Successfully playing sound for up
+[2024-12-14 11:37:42] 📝 Arrow key pressed: up - Starting celebration window

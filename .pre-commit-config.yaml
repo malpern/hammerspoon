@@ -6,4 +6,3 @@ repos:
         entry: stylua
         language: system
         types: [lua]
-        args: [-v]
