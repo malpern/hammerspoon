@@ -236,6 +236,9 @@ local function handleHyperKey(event)
         M.createWindow(direction, model.KeyType.VIM)
         sound.playSound(direction, model.KeyType.VIM)
         
+        -- Check for celebration before simulating arrow key
+        M.checkCelebration(direction, model.KeyType.VIM)
+        
         -- Simulate arrow key press
         local arrowEvent = hs.eventtap.event.newKeyEvent({}, arrowKeyCode, true)
         arrowEvent:post()
