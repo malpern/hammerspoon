@@ -74,17 +74,18 @@ local function validateConfig()
     return success, messages
 end
 
--- System initialization
+-- Initialize the Arrows system
+---@param config table Configuration options for the Arrows system
 ---@return boolean success Whether initialization was successful
----@return string|nil error Error message if initialization failed
-function M.init(options)
-    options = options or {}
+---@return string? error Error message if initialization failed
+function M.init(config)
+    config = config or {}
     
     -- Validate configuration
     local configValid, configMessages = validateConfig()
     if not configValid then
         local errorMsg = "Configuration validation failed:\n" .. table.concat(configMessages, "\n")
-        if options.strict then
+        if config.strict then
             return false, errorMsg
         else
             print("⚠️ " .. errorMsg)
@@ -109,7 +110,7 @@ function M.init(options)
     controller.init()
     
     -- Run integration tests if requested
-    if options.test then
+    if config.test then
         local testsPassed = test.runTests()
         if not testsPassed then
             table.insert(errors, "Integration tests failed")
@@ -131,7 +132,7 @@ function M.init(options)
     return true
 end
 
--- System cleanup
+-- Cleanup function
 function M.cleanup()
     controller.cleanup()
     sound.cleanup()
