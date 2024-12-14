@@ -274,10 +274,9 @@ local function handleArrowKey(event)
         M.createWindow(direction, model.KeyType.ARROW)
         sound.playSound(direction, model.KeyType.ARROW)
         M.checkCelebration(direction, model.KeyType.ARROW)
-        return true
     end
     
-    return false
+    return false  -- Always return false to allow the key event to pass through
 end
 
 -- Initialize watchers and components
