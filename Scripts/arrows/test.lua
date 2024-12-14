@@ -62,38 +62,37 @@ local function testView()
 end
 
 local function testSound()
-    -- TODO: Re-enable sound tests after fixing TIMING configuration
-    -- printHeader("Testing Sound Component")
-    -- 
-    -- -- Test sound initialization
-    -- local success = sound.init()
-    -- printResult("Sound Initialization", success)
-    -- 
-    -- -- Test sound loading
-    -- local hasAllSounds = true
-    -- local message = ""
-    -- 
-    -- for direction in pairs(model.Direction) do
-    --     if direction ~= "BACK" then
-    --         local dirLower = string.lower(direction)
-    --         if not sound.sounds[dirLower] then
-    --             hasAllSounds = false
-    --             message = message .. "Missing sound for " .. direction .. "\n"
-    --         end
-    --         if not sound.dissonantSounds[dirLower] then
-    --             hasAllSounds = false
-    --             message = message .. "Missing dissonant sound for " .. direction .. "\n"
-    --         end
-    --     end
-    -- end
-    -- 
-    -- if not sound.backSound then
-    --     hasAllSounds = false
-    --     message = message .. "Missing back sound\n"
-    -- end
-    -- 
-    -- printResult("Sound Loading", hasAllSounds, message)
-    return true  -- Temporarily return success
+    printHeader("Testing Sound Component")
+    
+    -- Test sound initialization
+    local success = sound.init()
+    printResult("Sound Initialization", success)
+    
+    -- Test sound loading
+    local hasAllSounds = true
+    local message = ""
+    
+    for direction in pairs(model.Direction) do
+        if direction ~= "BACK" then
+            local dirLower = string.lower(direction)
+            if not sound.sounds[dirLower] then
+                hasAllSounds = false
+                message = message .. "Missing sound for " .. direction .. "\n"
+            end
+            if not sound.dissonantSounds[dirLower] then
+                hasAllSounds = false
+                message = message .. "Missing dissonant sound for " .. direction .. "\n"
+            end
+        end
+    end
+    
+    if not sound.backSound then
+        hasAllSounds = false
+        message = message .. "Missing back sound\n"
+    end
+    
+    printResult("Sound Loading", hasAllSounds, message)
+    return success and hasAllSounds
 end
 
 local function testAnimation()

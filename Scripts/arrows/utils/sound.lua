@@ -135,7 +135,7 @@ end
 function M.playSound(direction, keyType)
     -- Debounce check
     local currentTime = hs.timer.secondsSinceEpoch()
-    if (currentTime - M.lastSoundTime) < model.Sound.TIMING.DEBOUNCE then
+    if (currentTime - M.lastSoundTime) < model.Timing.KEY.DEBOUNCE then
         print("Debouncing sound playback")
         return
     end
@@ -151,7 +151,7 @@ function M.playSound(direction, keyType)
     if M.activeSound and M.activeSound:isPlaying() then
         print("Stopping previous sound")
         M.activeSound:stop()
-        hs.timer.usleep(model.Sound.TIMING.TRANSITION * 1000000)  -- Convert to microseconds
+        hs.timer.usleep(model.Style.ANIMATION.TRANSITION_DELAY * 1000000)  -- Convert to microseconds
     end
     
     -- Choose the appropriate sound

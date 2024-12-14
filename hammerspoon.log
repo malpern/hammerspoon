@@ -1,84 +1,88 @@
-[2024-12-13 21:56:24] 📝 Starting new log session
-[2024-12-13 21:56:24] -- Loading extension: ipc
-[2024-12-13 21:56:24] -- Loading extension: alert
-[2024-12-13 21:56:24] ✅ IPC Command Line Tool Installed
-[2024-12-13 21:56:24] -- Loading extension: sound
-[2024-12-13 21:56:24] Successfully loaded sound for UP
-[2024-12-13 21:56:24] Successfully loaded sound for DOWN
-[2024-12-13 21:56:24] Successfully loaded sound for LEFT
-[2024-12-13 21:56:24] Successfully loaded sound for RIGHT
-[2024-12-13 21:56:24] Successfully loaded dissonant sound for UP
-[2024-12-13 21:56:24] Successfully loaded dissonant sound for DOWN
-[2024-12-13 21:56:24] Successfully loaded dissonant sound for LEFT
-[2024-12-13 21:56:24] Successfully loaded dissonant sound for RIGHT
-[2024-12-13 21:56:24] Successfully loaded sound for back
-[2024-12-13 21:56:24] -- Loading extension: eventtap
-[2024-12-13 21:56:24] 
+[2024-12-13 22:12:01] 📝 Starting new log session
+[2024-12-13 22:12:01] -- Loading extension: ipc
+[2024-12-13 22:12:01] -- Loading extension: alert
+[2024-12-13 22:12:01] ✅ IPC Command Line Tool Installed
+[2024-12-13 22:12:01] -- Loading extension: sound
+[2024-12-13 22:12:01] Successfully loaded sound for UP
+[2024-12-13 22:12:01] Successfully loaded sound for DOWN
+[2024-12-13 22:12:01] Successfully loaded sound for RIGHT
+[2024-12-13 22:12:01] Successfully loaded sound for LEFT
+[2024-12-13 22:12:01] Successfully loaded dissonant sound for UP
+[2024-12-13 22:12:01] Successfully loaded dissonant sound for DOWN
+[2024-12-13 22:12:01] Successfully loaded dissonant sound for RIGHT
+[2024-12-13 22:12:01] Successfully loaded dissonant sound for LEFT
+[2024-12-13 22:12:01] Successfully loaded sound for back
+[2024-12-13 22:12:01] -- Loading extension: eventtap
+[2024-12-13 22:12:01] 
 ==================================================
-[2024-12-13 21:56:24] Starting Integration Tests
-[2024-12-13 21:56:24] ==================================================
-[2024-12-13 21:56:24] 
+[2024-12-13 22:12:01] Starting Integration Tests
+[2024-12-13 22:12:01] ==================================================
+[2024-12-13 22:12:01] 
 ==================================================
-[2024-12-13 21:56:24] Testing View Component
-[2024-12-13 21:56:24] ==================================================
-[2024-12-13 21:56:24] ✅ View HTML Generation: 
-[2024-12-13 21:56:24] 
+[2024-12-13 22:12:01] Testing View Component
+[2024-12-13 22:12:01] ==================================================
+[2024-12-13 22:12:01] ✅ View HTML Generation: 
+[2024-12-13 22:12:01] 
 ==================================================
-[2024-12-13 21:56:24] Testing Animation Component
-[2024-12-13 21:56:24] ==================================================
-[2024-12-13 21:56:24] -- Loading extension: webview
-[2024-12-13 21:56:26] -- Loading extension: timer
-[2024-12-13 21:56:26] 🎉 Starting celebration sequence!
-[2024-12-13 21:56:26] -- Loading extension: task
-[2024-12-13 21:56:26] ✅ Animation Tests: 
-[2024-12-13 21:56:26] 
+[2024-12-13 22:12:01] Testing Sound Component
+[2024-12-13 22:12:01] ==================================================
+[2024-12-13 22:12:01] Successfully loaded sound for UP
+[2024-12-13 22:12:01] Successfully loaded sound for DOWN
+[2024-12-13 22:12:01] Successfully loaded sound for RIGHT
+[2024-12-13 22:12:01] Successfully loaded sound for LEFT
+[2024-12-13 22:12:01] Successfully loaded dissonant sound for UP
+[2024-12-13 22:12:01] Successfully loaded dissonant sound for DOWN
+[2024-12-13 22:12:01] Successfully loaded dissonant sound for RIGHT
+[2024-12-13 22:12:01] Successfully loaded dissonant sound for LEFT
+[2024-12-13 22:12:01] Successfully loaded sound for back
+[2024-12-13 22:12:01] ✅ Sound Initialization: Success
+[2024-12-13 22:12:01] ✅ Sound Loading: 
+[2024-12-13 22:12:01] 
 ==================================================
-[2024-12-13 21:56:26] Testing Controller Component
-[2024-12-13 21:56:26] ==================================================
-[2024-12-13 21:56:26] -- Loading extension: screen
-[2024-12-13 21:56:26] -- Loading extension: drawing
-[2024-12-13 21:56:26] 📝 Arrow key pressed: up - Starting celebration window
-[2024-12-13 21:56:26] ⌨️  Vim motion: up (Previous arrow: up, Time diff: 0.00s)
-[2024-12-13 21:56:26] 🎯 Match found! Arrow + Vim combination detected
-[2024-12-13 21:56:26] 🎉 Starting celebration sequence!
-[2024-12-13 21:56:26] ✅ Controller Tests: 
-[2024-12-13 21:56:26] 
+[2024-12-13 22:12:01] Testing Animation Component
+[2024-12-13 22:12:01] ==================================================
+[2024-12-13 22:12:01] -- Loading extension: webview
+[2024-12-13 22:12:03] -- Loading extension: timer
+[2024-12-13 22:12:03] 🎉 Starting celebration sequence!
+[2024-12-13 22:12:03] -- Loading extension: task
+[2024-12-13 22:12:03] ✅ Animation Tests: 
+[2024-12-13 22:12:03] 
 ==================================================
-[2024-12-13 21:56:26] Test Results Summary
-[2024-12-13 21:56:26] ==================================================
-[2024-12-13 21:56:26] ✅ sound: Success
-[2024-12-13 21:56:26] ✅ controller: Success
-[2024-12-13 21:56:26] ✅ animation: Success
-[2024-12-13 21:56:26] 
+[2024-12-13 22:12:03] Testing Controller Component
+[2024-12-13 22:12:03] ==================================================
+[2024-12-13 22:12:03] -- Loading extension: screen
+[2024-12-13 22:12:03] -- Loading extension: drawing
+[2024-12-13 22:12:03] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-13 22:12:03] ⌨️  Vim motion: up (Previous arrow: up, Time diff: 0.00s)
+[2024-12-13 22:12:03] 🎯 Match found! Arrow + Vim combination detected
+[2024-12-13 22:12:03] 🎉 Starting celebration sequence!
+[2024-12-13 22:12:03] ✅ Controller Tests: 
+[2024-12-13 22:12:03] 
+==================================================
+[2024-12-13 22:12:03] Test Results Summary
+[2024-12-13 22:12:03] ==================================================
+[2024-12-13 22:12:03] ✅ controller: Success
+[2024-12-13 22:12:03] ✅ sound: Success
+[2024-12-13 22:12:03] ✅ animation: Success
+[2024-12-13 22:12:03] 
 --------------------------------------------------
-[2024-12-13 21:56:26] ❌ All Tests: Some components need attention
-[2024-12-13 21:56:26] ❌ Initialization failed:
+[2024-12-13 22:12:03] ❌ All Tests: Some components need attention
+[2024-12-13 22:12:03] ❌ Initialization failed:
 Integration tests failed
-[2024-12-13 21:56:26] ❌ Initialization failed:
-[2024-12-13 21:56:26] Initialization failed:
+[2024-12-13 22:12:03] ❌ Initialization failed:
+[2024-12-13 22:12:03] Initialization failed:
 Integration tests failed
-[2024-12-13 21:56:26] -- Done.
-[2024-12-13 21:56:26] 21:56:26 ERROR:   LuaSkin: hs.eventtap callback error: /Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: attempt to index a nil value (field 'TIMING')
-stack traceback:
-	/Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: in function 'Scripts.arrows.utils.sound.playSound'
-	/Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:278: in function </Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:259>
-[2024-12-13 21:56:26] 21:56:26 ERROR:   LuaSkin: hs.eventtap callback error: /Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: attempt to index a nil value (field 'TIMING')
-stack traceback:
-	/Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: in function 'Scripts.arrows.utils.sound.playSound'
-	/Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:278: in function </Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:259>
-[2024-12-13 21:56:26] 21:56:26 ERROR:   LuaSkin: hs.eventtap callback error: /Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: attempt to index a nil value (field 'TIMING')
-stack traceback:
-	/Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: in function 'Scripts.arrows.utils.sound.playSound'
-	/Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:278: in function </Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:259>
-[2024-12-13 21:56:26] 21:56:26 ERROR:   LuaSkin: hs.eventtap callback error: /Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: attempt to index a nil value (field 'TIMING')
-stack traceback:
-	/Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: in function 'Scripts.arrows.utils.sound.playSound'
-	/Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:278: in function </Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:259>
-[2024-12-13 21:56:26] 21:56:26 ERROR:   LuaSkin: hs.eventtap callback error: /Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: attempt to index a nil value (field 'TIMING')
-stack traceback:
-	/Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: in function 'Scripts.arrows.utils.sound.playSound'
-	/Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:278: in function </Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:259>
-[2024-12-13 21:56:26] 21:56:26 ERROR:   LuaSkin: hs.eventtap callback error: /Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: attempt to index a nil value (field 'TIMING')
-stack traceback:
-	/Users/malpern/.hammerspoon/Scripts/arrows/utils/sound.lua:138: in function 'Scripts.arrows.utils.sound.playSound'
-	/Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:278: in function </Users/malpern/.hammerspoon/Scripts/arrows/controller.lua:259>
+[2024-12-13 22:12:03] -- Done.
+[2024-12-13 22:12:04] Successfully playing sound for up
+[2024-12-13 22:12:04] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-13 22:12:04] -- Loading extension: keycodes
+[2024-12-13 22:12:04] Successfully playing sound for up
+[2024-12-13 22:12:04] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-13 22:12:04] Debouncing sound playback
+[2024-12-13 22:12:04] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-13 22:12:04] Debouncing sound playback
+[2024-12-13 22:12:04] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-13 22:12:04] Debouncing sound playback
+[2024-12-13 22:12:04] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-13 22:12:04] Debouncing sound playback
+[2024-12-13 22:12:04] 📝 Arrow key pressed: up - Starting celebration window
