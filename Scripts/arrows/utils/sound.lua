@@ -2,49 +2,110 @@
     Sound utility module for the Arrows system
     
     This module handles all sound-related functionality including:
-    - Loading and managing sound files
-    - Playing sounds with proper timing and transitions
-    - Managing sound state (mute/unmute)
-    - Handling escape key for sound toggling
+    - Sound file loading and management
+    - Sound playback with debouncing
+    - Volume control and muting
+    - Sound state management
+    - Escape key handling for sound toggling
+
+    Return values:
+    - init() returns boolean - true if all sounds loaded successfully
+    - cleanup() returns nil but must clean up all resources
+    - playSound() returns boolean - true if sound played successfully
+    - toggleMute() returns boolean - new mute state
+    - nil returns indicate bugs and are NOT valid
 ]]
 
 local model = require("Scripts.arrows.model")
 
-local M = {
+local M = {}
+
+-- Sound configuration types
+---@class VolumeConfig
+---@field NORMAL number Normal volume level (0.0 to 1.0)
+---@field MUTED number Muted volume level (always 0.0)
+
+---@class PathConfig
+---@field NORMAL string Pattern for normal sound files
+---@field DISSONANT string Pattern for dissonant sound files
+---@field BACK string Path for back command sound
+
+-- Sound Configuration
+---@class SoundConfig
+---@field VOLUME VolumeConfig Volume levels
+---@field PATHS PathConfig Sound file paths
+local SoundConfig = {
+    VOLUME = {
+        NORMAL = 0.2,                        -- Normal volume level
+        MUTED = 0.0                          -- Muted volume level
+    },
+    PATHS = {
+        NORMAL = "%s.wav",                   -- Pattern for normal sounds
+        DISSONANT = "dissonant/%s.wav",      -- Pattern for dissonant sounds
+        BACK = "up_deeper.wav"               -- Back command sound
+    }
+}
+
+-- Sound state
+---@class SoundState
+---@field sounds table<string, userdata> Normal sound objects
+---@field dissonantSounds table<string, userdata> Dissonant sound objects
+---@field backSound userdata Back command sound
+---@field silentMode boolean Whether sound is muted
+---@field activeSound userdata|nil Currently playing sound
+---@field lastPlayTime number Timestamp of last sound play
+---@field lastEscTime number|nil Timestamp of last escape press
+---@field escKeyDown boolean Whether escape key is currently down
+local State = {
     sounds = {},
     dissonantSounds = {},
     backSound = nil,
+    silentMode = false,
     activeSound = nil,
-    silentMode = model.State.INITIAL.silentMode,
-    lastSoundTime = 0,
+    lastPlayTime = 0,
     lastEscTime = nil,
-    escKeyDown = false  -- Track if escape key is currently down
+    escKeyDown = false
 }
 
--- Initialize sound system
----@return boolean success Whether initialization was successful
+-- Expose state for testing
+M.sounds = State.sounds
+M.dissonantSounds = State.dissonantSounds
+M.backSound = State.backSound
+M.silentMode = State.silentMode
+
+---@param direction string The direction to get sound path for
+---@param isDissonant boolean Whether to get dissonant sound
+---@return string path The full path to the sound file
+local function getSoundPath(direction, isDissonant)
+    local basePath = hs.configdir .. "/sounds/"
+    if direction == model.Direction.BACK then
+        return basePath .. SoundConfig.PATHS.BACK
+    end
+    local pattern = isDissonant and SoundConfig.PATHS.DISSONANT or SoundConfig.PATHS.NORMAL
+    return basePath .. string.format(pattern, string.lower(direction))
+end
+
+---@return boolean success Whether all sounds were loaded successfully
 function M.init()
     -- Reset timing variables
-    M.lastSoundTime = 0
-    M.lastEscTime = nil
-    M.escKeyDown = false
+    State.lastPlayTime = 0
+    State.lastEscTime = nil
+    State.escKeyDown = false
     
-    -- Get the Hammerspoon config directory
-    local configPath = hs.configdir .. "/sounds/"
     local success = true
     
     -- Load normal sounds
     for direction in pairs(model.Direction) do
         if direction ~= "BACK" then
-            local dirLower = string.lower(direction)
-            local soundPath = configPath .. string.format(model.Sound.PATHS.NORMAL, dirLower)
-            local sound = hs.sound.getByFile(soundPath)
+            local path = getSoundPath(direction, false)
+            local sound = hs.sound.getByFile(path)
             if sound then
-                M.sounds[dirLower] = sound
-                print("Successfully loaded sound for " .. direction)
+                State.sounds[string.lower(direction)] = sound
+                sound:volume(SoundConfig.VOLUME.NORMAL)
+                print(string.format("Successfully loaded sound for %s", direction))
             else
-                print("Error: Failed to load sound for " .. direction .. " from path: " .. soundPath)
                 success = false
+                print(string.format("Failed to load sound: %s", path))
             end
         end
     end
@@ -52,27 +113,29 @@ function M.init()
     -- Load dissonant sounds
     for direction in pairs(model.Direction) do
         if direction ~= "BACK" then
-            local dirLower = string.lower(direction)
-            local soundPath = configPath .. string.format(model.Sound.PATHS.DISSONANT, dirLower)
-            local sound = hs.sound.getByFile(soundPath)
+            local path = getSoundPath(direction, true)
+            local sound = hs.sound.getByFile(path)
             if sound then
-                M.dissonantSounds[dirLower] = sound
-                print("Successfully loaded dissonant sound for " .. direction)
+                State.dissonantSounds[string.lower(direction)] = sound
+                sound:volume(SoundConfig.VOLUME.NORMAL)
+                print(string.format("Successfully loaded dissonant sound for %s", direction))
             else
-                print("Error: Failed to load dissonant sound for " .. direction .. " from path: " .. soundPath)
                 success = false
+                print(string.format("Failed to load dissonant sound: %s", path))
             end
         end
     end
     
     -- Load back sound
-    local backSoundPath = configPath .. model.Sound.PATHS.BACK
-    M.backSound = hs.sound.getByFile(backSoundPath)
-    if M.backSound then
+    local backPath = getSoundPath(model.Direction.BACK, false)
+    local backSound = hs.sound.getByFile(backPath)
+    if backSound then
+        State.backSound = backSound
+        backSound:volume(SoundConfig.VOLUME.NORMAL)
         print("Successfully loaded sound for back")
     else
-        print("Error: Failed to load sound for back from path: " .. backSoundPath)
         success = false
+        print(string.format("Failed to load back sound: %s", backPath))
     end
     
     -- Set up escape key watchers for silent mode toggle
@@ -85,38 +148,36 @@ function M.init()
             
             if eventType == hs.eventtap.event.types.keyDown then
                 -- If escape is already down, this is a repeat event - ignore it
-                if M.escKeyDown then
+                if State.escKeyDown then
                     return false
                 end
                 
-                M.escKeyDown = true
+                State.escKeyDown = true
                 
                 -- If this is the first press in a sequence
-                if not M.lastEscTime then
-                    M.lastEscTime = currentTime
+                if not State.lastEscTime then
+                    State.lastEscTime = currentTime
                     return false  -- Let the first press through
                 end
                 
                 -- This is a second press, check if it's within the double-tap window
-                local timeDiff = currentTime - M.lastEscTime
-                if timeDiff < model.Timing.KEY.DOUBLE_TAP then
-                    M.silentMode = not M.silentMode
-                    hs.alert.show(M.silentMode and "Arrow sounds: Off" or "Arrow sounds: On")
-                    print("Silent mode:", M.silentMode)
-                    M.lastEscTime = nil
+                local timeDiff = currentTime - State.lastEscTime
+                if timeDiff < model.Timing.KEY.DOUBLE_PRESS then
+                    M.toggleMute()
+                    State.lastEscTime = nil
                     return true  -- Capture the second press
                 end
                 
                 -- Too slow, treat as new first press
-                M.lastEscTime = currentTime
+                State.lastEscTime = currentTime
                 return false
                 
             elseif eventType == hs.eventtap.event.types.keyUp then
-                M.escKeyDown = false
+                State.escKeyDown = false
                 
                 -- If no second press came quickly enough, reset the sequence
-                if M.lastEscTime and (currentTime - M.lastEscTime) >= model.Timing.KEY.DOUBLE_TAP then
-                    M.lastEscTime = nil
+                if State.lastEscTime and (currentTime - State.lastEscTime) >= model.Timing.KEY.DOUBLE_PRESS then
+                    State.lastEscTime = nil
                 end
                 
                 return false
@@ -126,75 +187,105 @@ function M.init()
         return false
     end):start()
     
+    -- Update exposed state
+    M.sounds = State.sounds
+    M.dissonantSounds = State.dissonantSounds
+    M.backSound = State.backSound
+    
     return success
 end
 
--- Play sound for a direction
----@param direction string The direction to play sound for
----@param keyType string The type of key (vim/arrow)
-function M.playSound(direction, keyType)
-    -- Debounce check
-    local currentTime = hs.timer.secondsSinceEpoch()
-    if (currentTime - M.lastSoundTime) < model.Timing.KEY.DEBOUNCE then
-        print("Debouncing sound playback")
-        return
-    end
-    M.lastSoundTime = currentTime
-
-    -- Check silent mode first
-    if M.silentMode then
-        print("Silent mode active, skipping sound")
-        return
-    end
-
-    -- Stop any currently playing sound and wait for transition
-    if M.activeSound and M.activeSound:isPlaying() then
-        print("Stopping previous sound")
-        M.activeSound:stop()
-        hs.timer.usleep(model.Style.ANIMATION.TRANSITION_DELAY * 1000000)  -- Convert to microseconds
-    end
-    
-    -- Choose the appropriate sound
-    if direction == model.Direction.BACK then
-        M.activeSound = M.backSound
-    else
-        local dirLower = string.lower(direction)
-        M.activeSound = (keyType == model.KeyType.ARROW) 
-            and M.dissonantSounds[dirLower] 
-            or M.sounds[dirLower]
-    end
-    
-    if M.activeSound then
-        M.activeSound:volume(model.Sound.VOLUME.NORMAL)
-        -- Use pcall to catch any playback errors
-        local success, err = pcall(function() 
-            M.activeSound:play() 
-        end)
-        if success then
-            print("Successfully playing sound for " .. direction)
-        else
-            print("Error playing sound for " .. direction .. ": " .. tostring(err))
-        end
-    end
-end
-
--- Toggle silent mode
----@return boolean isSilent The new silent mode state
-function M.toggleSilent()
-    M.silentMode = not M.silentMode
-    return M.silentMode
-end
-
--- Cleanup function
+---@return nil
 function M.cleanup()
+    -- Stop escape key watcher
     if M.escWatcher then
         M.escWatcher:stop()
     end
     
-    -- Stop any playing sound
-    if M.activeSound and M.activeSound:isPlaying() then
-        M.activeSound:stop()
+    -- Stop any playing sounds
+    if State.activeSound then
+        State.activeSound:stop()
+        State.activeSound = nil
     end
+    
+    -- Clear sound objects
+    State.sounds = {}
+    State.dissonantSounds = {}
+    State.backSound = nil
+    State.silentMode = false
+    
+    -- Update exposed state
+    M.sounds = State.sounds
+    M.dissonantSounds = State.dissonantSounds
+    M.backSound = State.backSound
+    M.silentMode = State.silentMode
+end
+
+---@param direction string The direction to play sound for
+---@param keyType string The type of key pressed
+---@return boolean success Whether the sound was played successfully
+function M.playSound(direction, keyType)
+    if State.silentMode then
+        print("Silent mode active, skipping sound")
+        return true
+    end
+    
+    -- Debounce sound playback
+    local currentTime = hs.timer.secondsSinceEpoch()
+    if currentTime - State.lastPlayTime < model.Style.ANIMATION.TRANSITION_DELAY then
+        print("Debouncing sound playback")
+        return true
+    end
+    State.lastPlayTime = currentTime
+    
+    -- Stop currently playing sound and wait for transition
+    if State.activeSound and State.activeSound:isPlaying() then
+        print("Stopping previous sound")
+        State.activeSound:stop()
+        hs.timer.usleep(model.Style.ANIMATION.TRANSITION_DELAY * 1000000)  -- Convert to microseconds
+    end
+    
+    -- Select appropriate sound
+    local sound = nil
+    if direction == model.Direction.BACK then
+        sound = State.backSound
+    else
+        local dirLower = string.lower(direction)
+        sound = keyType == model.KeyType.ARROW and 
+               State.sounds[dirLower] or 
+               State.dissonantSounds[dirLower]
+    end
+    
+    -- Play sound if available
+    if sound then
+        State.activeSound = sound
+        sound:volume(SoundConfig.VOLUME.NORMAL)
+        -- Use pcall to catch any playback errors
+        local success, err = pcall(function() 
+            sound:play() 
+        end)
+        if success then
+            print(string.format("Successfully playing sound for %s", direction))
+        else
+            print(string.format("Error playing sound for %s: %s", direction, tostring(err)))
+        end
+        return success
+    end
+    
+    return false
+end
+
+---@return boolean muted The new mute state
+function M.toggleMute()
+    State.silentMode = not State.silentMode
+    M.silentMode = State.silentMode
+    
+    -- Show feedback
+    local message = State.silentMode and "🔇 Sound Off" or "🔊 Sound On"
+    hs.alert.show(message, 1)
+    print("Silent mode:", State.silentMode)
+    
+    return State.silentMode
 end
 
 return M 

@@ -6,6 +6,13 @@
     - Component initialization
     - System configuration
     - Testing and debugging utilities
+
+    Return values:
+    - All public functions MUST return explicit values
+    - init() returns (boolean, string?) - success and optional error message
+    - cleanup() returns nil
+    - debug() returns nil
+    - test() returns boolean - true if all tests pass
 ]]
 
 local model = require("Scripts.arrows.model")
@@ -75,17 +82,17 @@ local function validateConfig()
 end
 
 -- Initialize the Arrows system
----@param config table Configuration options for the Arrows system
----@return boolean success Whether initialization was successful
----@return string? error Error message if initialization failed
-function M.init(config)
-    config = config or {}
+---@param options table Configuration options for initialization
+---@return boolean success Whether initialization succeeded
+---@return string? error Optional error message if initialization failed
+function M.init(options)
+    options = options or {}
     
     -- Validate configuration
     local configValid, configMessages = validateConfig()
     if not configValid then
         local errorMsg = "Configuration validation failed:\n" .. table.concat(configMessages, "\n")
-        if config.strict then
+        if options.strict then
             return false, errorMsg
         else
             print("⚠️ " .. errorMsg)
@@ -110,7 +117,7 @@ function M.init(config)
     controller.init()
     
     -- Run integration tests if requested
-    if config.test then
+    if options.test then
         local testsPassed = test.runTests()
         if not testsPassed then
             table.insert(errors, "Integration tests failed")
@@ -133,17 +140,20 @@ function M.init(config)
 end
 
 -- Cleanup function
+---@return nil
 function M.cleanup()
     controller.cleanup()
     sound.cleanup()
 end
 
 -- Debug utilities
+---@return nil
 function M.debug()
     test.debugState()
 end
 
 -- Run tests
+---@return boolean success Whether all tests passed
 function M.test()
     return test.runTests()
 end

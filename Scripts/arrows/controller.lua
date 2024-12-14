@@ -6,6 +6,15 @@
     - Event handling (keyboard events)
     - State management
     - Component coordination
+
+    Return values:
+    - All public functions MUST return explicit values
+    - createWindow() returns boolean - true if window created successfully
+    - init() returns nil but must initialize all components
+    - cleanup() returns nil but must clean up all resources
+    - checkCelebration() returns boolean - true if celebration triggered
+    - resetState() returns nil but must reset all state fields
+    - nil returns indicate bugs and are NOT valid
 ]]
 
 local model = require("Scripts.arrows.model")
@@ -90,8 +99,8 @@ local function calculateWindowPosition()
 end
 
 -- Window lifecycle management
----@param direction string The direction to display
----@param keyType string The type of key (vim/arrow)
+---@param direction string The direction to display (from model.Direction)
+---@param keyType string The key type (from model.KeyType)
 ---@return boolean success Whether the window was created successfully
 function M.createWindow(direction, keyType)
     -- Cancel existing timers
@@ -163,8 +172,9 @@ function M.createWindow(direction, keyType)
 end
 
 -- Celebration management
----@param direction string The direction to check
----@param keyType string The type of key (vim/arrow)
+---@param direction string The direction to check (from model.Direction)
+---@param keyType string The key type that was pressed (from model.KeyType)
+---@return boolean triggered Whether a celebration was triggered
 function M.checkCelebration(direction, keyType)
     local currentTime = hs.timer.secondsSinceEpoch()
     
@@ -283,6 +293,7 @@ local function handleArrowKey(event)
 end
 
 -- Initialize watchers and components
+---@return nil
 function M.init()
     -- Initialize state
     State = {
@@ -310,6 +321,7 @@ function M.init()
 end
 
 -- Cleanup function
+---@return nil
 function M.cleanup()
     -- Stop watchers
     if M.hyperWatcher then M.hyperWatcher:stop() end

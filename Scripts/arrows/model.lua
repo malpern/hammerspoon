@@ -10,15 +10,74 @@
     - Sound settings
     - Timing configurations
     - State definitions
+
+    Types:
+    - All enums are string literals with predefined values
+    - All style values must match their specified types exactly
+    - All timing values are numbers in seconds
+    - nil values are NOT valid for required fields
 ]]
 
 local M = {}
 
--- Type Definitions
+-- Font configuration types
+---@class FontSizes
+---@field DEFAULT string Default size in em units
+---@field BACK string Back button size in em units
+
+---@class FontConfig
+---@field FAMILY string Font family string
+---@field WEIGHT string Font weight string
+---@field SIZES { SYMBOL: FontSizes, LABEL: FontSizes } Size configurations
+
+-- Color configuration types
+---@class ColorSet
+---@field DEFAULT string Default color in hex or rgba
+---@field ARROW string Arrow key color in hex or rgba
+---@field BACK? string Optional back button color
+
+---@class ColorConfig
+---@field BACKGROUND { DEFAULT: string, ARROW: string } Background colors
+---@field SYMBOL ColorSet Symbol colors
+---@field LABEL ColorSet Label colors
+
+-- Window configuration types
+---@class WindowConfig
+---@field WIDTH number Window width in pixels
+---@field HEIGHT number Window height in pixels
+---@field MARGIN number Window margin in pixels
+---@field BORDER_RADIUS number Border radius in pixels
+---@field PADDING number Internal padding in pixels
+
+-- Animation configuration types
+---@class AnimationConfig
+---@field FADE_DURATION number Duration in seconds
+---@field FADE_STEPS number Number of fade steps
+---@field DISPLAY_DURATION number Display time in seconds
+---@field TRANSITION_DELAY number Delay in seconds
+
+-- Timing configuration types
+---@class KeyTiming
+---@field HYPER_RESET number Time in seconds
+---@field DOUBLE_PRESS number Time in seconds
+---@field DEBOUNCE number Key press debounce time
+
+---@class CelebrationTiming
+---@field TIMEOUT number Time window in seconds
+---@field DURATION number Duration in seconds
+---@field REPEAT_COUNT number Number of times to repeat celebration
+---@field REPEAT_DELAY number Delay between repeats in seconds
+
+-- Sound configuration types
+---@class SoundConfig
+---@field VOLUME { NORMAL: number, MUTED: number } Volume levels
+---@field PATHS { NORMAL: string, DISSONANT: string, BACK: string } Sound file paths
+
+-- Core type definitions
 ---@class KeyType
----@field VIM string Vim-style navigation key
----@field ARROW string Arrow key navigation
----@field BACK string Back command key
+---@field VIM "vim" Vim-style navigation key
+---@field ARROW "arrow" Arrow key navigation
+---@field BACK "back" Back command key
 M.KeyType = {
     VIM = "vim",
     ARROW = "arrow",
@@ -26,11 +85,11 @@ M.KeyType = {
 }
 
 ---@class Direction
----@field UP string Up direction
----@field DOWN string Down direction
----@field LEFT string Left direction
----@field RIGHT string Right direction
----@field BACK string Back command
+---@field UP "up" Up direction
+---@field DOWN "down" Down direction
+---@field LEFT "left" Left direction
+---@field RIGHT "right" Right direction
+---@field BACK "back" Back command
 M.Direction = {
     UP = "up",
     DOWN = "down",
@@ -40,6 +99,7 @@ M.Direction = {
 }
 
 -- Symbols and Labels
+---@type table<string, string>
 M.SYMBOLS = {
     [M.Direction.UP] = "⬆",
     [M.Direction.DOWN] = "⬇",
@@ -48,6 +108,7 @@ M.SYMBOLS = {
     [M.Direction.BACK] = "▲"
 }
 
+---@type table<string, string>
 M.LABELS = {
     [M.Direction.UP] = "K",
     [M.Direction.DOWN] = "J",
@@ -58,6 +119,10 @@ M.LABELS = {
 
 -- Visual Style Configuration
 ---@class Style
+---@field FONT FontConfig Font configuration
+---@field COLORS ColorConfig Color configuration
+---@field WINDOW WindowConfig Window dimensions and positioning
+---@field ANIMATION AnimationConfig Animation timing and configuration
 M.Style = {
     -- Font configurations
     FONT = {
@@ -111,41 +176,28 @@ M.Style = {
     }
 }
 
--- Sound Configuration
----@class SoundConfig
-M.Sound = {
-    -- Volume levels
-    VOLUME = {
-        NORMAL = 0.2,                        -- Normal volume level
-        MUTED = 0.0                          -- Muted volume level
-    },
-    
-    -- Sound file paths (relative to sounds directory)
-    PATHS = {
-        NORMAL = "%s.wav",                   -- Pattern for normal sounds
-        DISSONANT = "dissonant/%s.wav",      -- Pattern for dissonant sounds
-        BACK = "up_deeper.wav"               -- Back command sound
-    }
-}
-
--- Timing Configuration
----@class TimingConfig
+-- Timing configurations
+---@class Timing
+---@field KEY KeyTiming Key press timing configuration
+---@field CELEBRATION CelebrationTiming Celebration timing configuration
 M.Timing = {
-    CELEBRATION = {
-        TIMEOUT = 2.0,                       -- Celebration window timeout
-        DURATION = 1.0,                      -- Celebration animation duration
-        REPEAT_COUNT = 3,                    -- Number of times to repeat celebration
-        REPEAT_DELAY = 0.2                   -- Delay between celebration repeats
-    },
-    
     KEY = {
-        DEBOUNCE = 0.1,                      -- Key press debounce time
-        DOUBLE_TAP = 0.3,                    -- Double-tap detection threshold
-        HYPER_RESET = 0.1                    -- Hyper key reset delay
+        HYPER_RESET = 0.1,                  -- Time to reset hyper key state
+        DOUBLE_PRESS = 0.3,                 -- Time window for double press
+        DEBOUNCE = 0.1                      -- Key press debounce time
+    },
+    CELEBRATION = {
+        TIMEOUT = 1.0,                      -- Time window for celebration trigger
+        DURATION = 2.0,                     -- How long celebration lasts
+        REPEAT_COUNT = 3,                   -- Number of times to repeat celebration
+        REPEAT_DELAY = 0.2                  -- Delay between celebration repeats
     }
 }
 
 -- Initial state
+---@class InitialState
+---@field inKeySequence boolean Whether in a key sequence
+---@field isHyperGenerated boolean Whether generated by hyper key
 M.State = {
     INITIAL = {
         inKeySequence = false,               -- Not in a key sequence
@@ -167,9 +219,27 @@ M.KeyMappings = {
 
 -- Special key codes
 ---@class SpecialKeys
+---@field ESCAPE number Escape key code
+---@field CELEBRATION number Up arrow for celebration
 M.SpecialKeys = {
     ESCAPE = 53,           -- Escape key code
     CELEBRATION = 126      -- Up arrow for celebration (same as UP direction)
+}
+
+-- Sound Configuration
+M.Sound = {
+    -- Volume levels
+    VOLUME = {
+        NORMAL = 0.2,                        -- Normal volume level
+        MUTED = 0.0                          -- Muted volume level
+    },
+    
+    -- Sound file paths (relative to sounds directory)
+    PATHS = {
+        NORMAL = "%s.wav",                   -- Pattern for normal sounds
+        DISSONANT = "dissonant/%s.wav",      -- Pattern for dissonant sounds
+        BACK = "up_deeper.wav"               -- Back command sound
+    }
 }
 
 return M 

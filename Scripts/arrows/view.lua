@@ -3,6 +3,12 @@
     
     This module handles all HTML generation and templating for the arrow display.
     It uses the model's style configurations to maintain consistent appearance.
+
+    Return values:
+    - All public functions MUST return string
+    - generateWindowHtml() returns valid HTML string
+    - generateArrowHtml() returns valid HTML string
+    - nil returns indicate bugs and are NOT valid
 ]]
 
 local model = require("Scripts.arrows.model")
@@ -118,9 +124,9 @@ local function generateComponentHtml(direction, keyType, isSymbol)
 end
 
 -- Generate complete window HTML
----@param direction string The direction to display
----@param keyType string The type of key (vim/arrow)
----@return string The complete HTML for the window
+---@param direction string The direction to display (from model.Direction)
+---@param keyType string The key type (from model.KeyType)
+---@return string html The generated HTML for the window
 function M.generateWindowHtml(direction, keyType)
     -- Generate CSS
     local css = generateStyles(keyType)
@@ -153,6 +159,37 @@ function M.generateWindowHtml(direction, keyType)
         </body>
         </html>
     ]], css, firstComponent, secondComponent)
+end
+
+-- Generate arrow HTML
+---@param direction string The direction to display (from model.Direction)
+---@param keyType string The key type (from model.KeyType)
+---@return string html The generated HTML for the arrow display
+function M.generateArrowHtml(direction, keyType)
+    -- Generate CSS
+    local css = generateStyles(keyType)
+    
+    -- Generate component HTML
+    local componentHtml = generateComponentHtml(direction, keyType, true)
+    
+    -- Generate complete HTML
+    return string.format([[
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="color-scheme" content="light dark">
+            <title>Arrow Display</title>
+            <style>%s</style>
+        </head>
+        <body>
+            <div class="arrow-container fade-in">
+                %s
+            </div>
+        </body>
+        </html>
+    ]], css, componentHtml)
 end
 
 return M 
