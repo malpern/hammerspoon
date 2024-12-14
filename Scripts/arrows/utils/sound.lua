@@ -252,7 +252,7 @@ function M.playSound(direction, keyType)
 		sound = State.backSound
 	else
 		local dirLower = string.lower(direction)
-		sound = keyType == model.KeyType.ARROW and State.sounds[dirLower] or State.dissonantSounds[dirLower]
+		sound = keyType == model.KeyType.ARROW and State.dissonantSounds[dirLower] or State.sounds[dirLower]
 	end
 
 	-- Play sound if available
