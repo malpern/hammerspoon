@@ -16,12 +16,11 @@ local M = {}
 
 -- CSS styles generation
 local function generateStyles(keyType)
-    local style = model.Style
-    local bgColor = keyType == model.KeyType.ARROW and 
-                   style.COLORS.BACKGROUND.ARROW or 
-                   style.COLORS.BACKGROUND.DEFAULT
-    
-    return string.format([[
+	local style = model.Style
+	local bgColor = keyType == model.KeyType.ARROW and style.COLORS.BACKGROUND.ARROW or style.COLORS.BACKGROUND.DEFAULT
+
+	return string.format(
+		[[
         /* Base styles */
         body {
             margin: 0;
@@ -87,28 +86,29 @@ local function generateStyles(keyType)
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             }
         }
-    ]], 
-    style.FONT.FAMILY,
-    bgColor,
-    style.WINDOW.BORDER_RADIUS,
-    style.WINDOW.PADDING)
+    ]],
+		style.FONT.FAMILY,
+		bgColor,
+		style.WINDOW.BORDER_RADIUS,
+		style.WINDOW.PADDING
+	)
 end
 
 -- Generate component HTML
 local function generateComponentHtml(direction, keyType, isSymbol)
-    local style = model.Style
-    local content = isSymbol and model.SYMBOLS[direction] or model.LABELS[direction]
-    
-    -- Determine sizes and colors based on component type and key type
-    local sizeKey = isSymbol and "SYMBOL" or "LABEL"
-    local size = style.FONT.SIZES[sizeKey][direction] or style.FONT.SIZES[sizeKey].DEFAULT
-    
-    local colorKey = isSymbol and "SYMBOL" or "LABEL"
-    local color = keyType == model.KeyType.ARROW and 
-                 style.COLORS[colorKey].ARROW or
-                 (style.COLORS[colorKey][direction] or style.COLORS[colorKey].DEFAULT)
-    
-    return string.format([[
+	local style = model.Style
+	local content = isSymbol and model.SYMBOLS[direction] or model.LABELS[direction]
+
+	-- Determine sizes and colors based on component type and key type
+	local sizeKey = isSymbol and "SYMBOL" or "LABEL"
+	local size = style.FONT.SIZES[sizeKey][direction] or style.FONT.SIZES[sizeKey].DEFAULT
+
+	local colorKey = isSymbol and "SYMBOL" or "LABEL"
+	local color = keyType == model.KeyType.ARROW and style.COLORS[colorKey].ARROW
+		or (style.COLORS[colorKey][direction] or style.COLORS[colorKey].DEFAULT)
+
+	return string.format(
+		[[
         <div style='
             font-family: %s;
             font-weight: %s;
@@ -120,7 +120,13 @@ local function generateComponentHtml(direction, keyType, isSymbol)
             margin: 2px;
             text-shadow: none;
         '>%s</div>
-    ]], style.FONT.FAMILY, style.FONT.WEIGHT, size, color, content)
+    ]],
+		style.FONT.FAMILY,
+		style.FONT.WEIGHT,
+		size,
+		color,
+		content
+	)
 end
 
 -- Generate complete window HTML
@@ -128,20 +134,19 @@ end
 ---@param keyType string The key type (from model.KeyType)
 ---@return string html The generated HTML for the window
 function M.generateWindowHtml(direction, keyType)
-    -- Generate CSS
-    local css = generateStyles(keyType)
-    
-    -- Determine component order based on key type
-    local firstComponent = keyType == model.KeyType.ARROW and 
-                         generateComponentHtml(direction, keyType, false) or  -- Label for arrow keys
-                         generateComponentHtml(direction, keyType, true)      -- Symbol for vim keys
-    
-    local secondComponent = keyType == model.KeyType.ARROW and 
-                          generateComponentHtml(direction, keyType, true) or  -- Symbol for arrow keys
-                          generateComponentHtml(direction, keyType, false)    -- Label for vim keys
-    
-    -- Generate complete HTML
-    return string.format([[
+	-- Generate CSS
+	local css = generateStyles(keyType)
+
+	-- Determine component order based on key type
+	local firstComponent = keyType == model.KeyType.ARROW and generateComponentHtml(direction, keyType, false) -- Label for arrow keys
+		or generateComponentHtml(direction, keyType, true) -- Symbol for vim keys
+
+	local secondComponent = keyType == model.KeyType.ARROW and generateComponentHtml(direction, keyType, true) -- Symbol for arrow keys
+		or generateComponentHtml(direction, keyType, false) -- Label for vim keys
+
+	-- Generate complete HTML
+	return string.format(
+		[[
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -158,7 +163,11 @@ function M.generateWindowHtml(direction, keyType)
             </div>
         </body>
         </html>
-    ]], css, firstComponent, secondComponent)
+    ]],
+		css,
+		firstComponent,
+		secondComponent
+	)
 end
 
 -- Generate arrow HTML
@@ -166,14 +175,15 @@ end
 ---@param keyType string The key type (from model.KeyType)
 ---@return string html The generated HTML for the arrow display
 function M.generateArrowHtml(direction, keyType)
-    -- Generate CSS
-    local css = generateStyles(keyType)
-    
-    -- Generate component HTML
-    local componentHtml = generateComponentHtml(direction, keyType, true)
-    
-    -- Generate complete HTML
-    return string.format([[
+	-- Generate CSS
+	local css = generateStyles(keyType)
+
+	-- Generate component HTML
+	local componentHtml = generateComponentHtml(direction, keyType, true)
+
+	-- Generate complete HTML
+	return string.format(
+		[[
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -189,7 +199,10 @@ function M.generateArrowHtml(direction, keyType)
             </div>
         </body>
         </html>
-    ]], css, componentHtml)
+    ]],
+		css,
+		componentHtml
+	)
 end
 
-return M 
+return M

@@ -8,25 +8,25 @@ local M = {}
 
 -- Initialize function
 function M.init(options)
-    -- Load the actual implementation
-    local impl = require("Scripts.arrows.init")
-    return impl.init(options)
+	-- Load the actual implementation
+	local impl = require("Scripts.arrows.init")
+	return impl.init(options)
 end
 
 -- Export other functions
 M.cleanup = function()
-    local impl = require("Scripts.arrows.init")
-    return impl.cleanup()
+	local impl = require("Scripts.arrows.init")
+	return impl.cleanup()
 end
 
 M.debug = function()
-    local impl = require("Scripts.arrows.init")
-    return impl.debug()
+	local impl = require("Scripts.arrows.init")
+	return impl.debug()
 end
 
 M.test = function()
-    local impl = require("Scripts.arrows.init")
-    return impl.test()
+	local impl = require("Scripts.arrows.init")
+	return impl.test()
 end
 
 return M
