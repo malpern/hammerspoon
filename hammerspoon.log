@@ -1,0 +1,4162 @@
+[2024-12-14 16:33:53] 📝 Starting new log session
+[2024-12-14 16:33:53] -- Loading extension: ipc
+[2024-12-14 16:33:53] -- Loading extension: alert
+[2024-12-14 16:33:53] ✅ IPC Command Line Tool Installed
+[2024-12-14 16:33:53] -- Loading extension: sound
+[2024-12-14 16:33:53] Successfully loaded sound for RIGHT
+[2024-12-14 16:33:53] Successfully loaded sound for LEFT
+[2024-12-14 16:33:53] Successfully loaded sound for UP
+[2024-12-14 16:33:53] Successfully loaded sound for DOWN
+[2024-12-14 16:33:53] Successfully loaded dissonant sound for RIGHT
+[2024-12-14 16:33:53] Successfully loaded dissonant sound for LEFT
+[2024-12-14 16:33:53] Successfully loaded dissonant sound for UP
+[2024-12-14 16:33:53] Successfully loaded dissonant sound for DOWN
+[2024-12-14 16:33:53] Successfully loaded sound for back
+[2024-12-14 16:33:53] -- Loading extension: eventtap
+[2024-12-14 16:33:53] 
+==================================================
+[2024-12-14 16:33:53] Starting Integration Tests
+[2024-12-14 16:33:53] ==================================================
+[2024-12-14 16:33:53] 
+==================================================
+[2024-12-14 16:33:53] Testing View Component
+[2024-12-14 16:33:53] ==================================================
+[2024-12-14 16:33:53] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:33:53] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(30, 30, 30, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:33:53] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:33:53] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:33:53] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:33:53] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(30, 30, 30, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:33:53] ✅ View HTML Generation: 
+[2024-12-14 16:33:53] 
+==================================================
+[2024-12-14 16:33:53] Testing Sound Component
+[2024-12-14 16:33:53] ==================================================
+[2024-12-14 16:33:53] Successfully loaded sound for RIGHT
+[2024-12-14 16:33:53] Successfully loaded sound for LEFT
+[2024-12-14 16:33:53] Successfully loaded sound for UP
+[2024-12-14 16:33:53] Successfully loaded sound for DOWN
+[2024-12-14 16:33:53] Successfully loaded dissonant sound for RIGHT
+[2024-12-14 16:33:53] Successfully loaded dissonant sound for LEFT
+[2024-12-14 16:33:53] Successfully loaded dissonant sound for UP
+[2024-12-14 16:33:53] Successfully loaded dissonant sound for DOWN
+[2024-12-14 16:33:53] Successfully loaded sound for back
+[2024-12-14 16:33:53] ✅ Sound Initialization: Success
+[2024-12-14 16:33:53] ✅ Sound Loading: 
+[2024-12-14 16:33:53] 
+==================================================
+[2024-12-14 16:33:53] Testing Animation Component
+[2024-12-14 16:33:53] ==================================================
+[2024-12-14 16:33:53] -- Loading extension: webview
+[2024-12-14 16:33:55] -- Loading extension: timer
+[2024-12-14 16:33:55] 🎉 Starting celebration sequence!
+[2024-12-14 16:33:55] -- Loading extension: task
+[2024-12-14 16:33:55] ✅ Animation Tests: 
+[2024-12-14 16:33:55] 
+==================================================
+[2024-12-14 16:33:55] Testing Controller Component
+[2024-12-14 16:33:55] ==================================================
+[2024-12-14 16:33:55] -- Loading extension: screen
+[2024-12-14 16:33:55] -- Loading extension: drawing
+[2024-12-14 16:33:55] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:33:55] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(30, 30, 30, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:33:55] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 16:33:55] ⌨️  Vim motion: up (Previous arrow: up, Time diff: 0.00s)
+[2024-12-14 16:33:55] 🎯 Match found! Arrow + Vim combination detected
+[2024-12-14 16:33:55] ✅ Controller Tests: 
+[2024-12-14 16:33:55] 
+==================================================
+[2024-12-14 16:33:55] Testing Type Validation
+[2024-12-14 16:33:55] ==================================================
+[2024-12-14 16:33:55] ✅ Type Validation: 
+[2024-12-14 16:33:55] 
+==================================================
+[2024-12-14 16:33:55] Test Results Summary
+[2024-12-14 16:33:55] ==================================================
+[2024-12-14 16:33:55] ✅ view: Success
+[2024-12-14 16:33:55] ✅ types: Success
+[2024-12-14 16:33:55] ✅ animation: Success
+[2024-12-14 16:33:55] ✅ controller: Success
+[2024-12-14 16:33:55] ✅ sound: Success
+[2024-12-14 16:33:55] 
+--------------------------------------------------
+[2024-12-14 16:33:55] ✅ All Tests: All components working correctly
+[2024-12-14 16:33:55] ✅ Arrows System initialized successfully
+[2024-12-14 16:33:55] ✅ Hammerspoon config loaded
+[2024-12-14 16:33:55] -- Done.
+[2024-12-14 16:33:55] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:33:55] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:33:55] Successfully playing sound for up
+[2024-12-14 16:33:55] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 16:33:55] -- Loading extension: keycodes
+[2024-12-14 16:33:56] ✨ Celebration sequence completed successfully
+[2024-12-14 16:33:56] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:33:56] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:33:56] Successfully playing sound for up
+[2024-12-14 16:33:56] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 16:33:56] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:33:56] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:33:56] Stopping previous sound
+[2024-12-14 16:33:56] Successfully playing sound for up
+[2024-12-14 16:33:56] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 16:34:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:34:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:34:02] Successfully playing sound for up
+[2024-12-14 16:34:02] 📝 Arrow key pressed: up - Starting celebration window
+[2024-12-14 16:34:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:34:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:34:03] Successfully playing sound for left
+[2024-12-14 16:34:03] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:34:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:34:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:34:03] Successfully playing sound for down
+[2024-12-14 16:34:03] 📝 Arrow key pressed: down - Starting celebration window
+[2024-12-14 16:34:04] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:34:04] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:34:04] Successfully playing sound for down
+[2024-12-14 16:34:04] 📝 Arrow key pressed: down - Starting celebration window
+[2024-12-14 16:34:04] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:34:04] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:34:04] Successfully playing sound for left
+[2024-12-14 16:34:04] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:34:04] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:34:04] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:34:04] Stopping previous sound
+[2024-12-14 16:34:04] Successfully playing sound for left
+[2024-12-14 16:34:04] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:34:04] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:34:04] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:34:04] Stopping previous sound
+[2024-12-14 16:34:04] Successfully playing sound for left
+[2024-12-14 16:34:04] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:34:06] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:34:06] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:34:06] Successfully playing sound for left
+[2024-12-14 16:34:06] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:34:07] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:34:07] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:34:07] Successfully playing sound for left
+[2024-12-14 16:34:07] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:00] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:00] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:00] Successfully playing sound for right
+[2024-12-14 16:45:00] 📝 Arrow key pressed: right - Starting celebration window
+[2024-12-14 16:45:01] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:01] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:01] Successfully playing sound for left
+[2024-12-14 16:45:01] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:02] Successfully playing sound for left
+[2024-12-14 16:45:02] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:02] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:02] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:02] Stopping previous sound
+[2024-12-14 16:45:03] Successfully playing sound for left
+[2024-12-14 16:45:03] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:03] Stopping previous sound
+[2024-12-14 16:45:03] Successfully playing sound for left
+[2024-12-14 16:45:03] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:03] Stopping previous sound
+[2024-12-14 16:45:03] Successfully playing sound for left
+[2024-12-14 16:45:03] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:03] Stopping previous sound
+[2024-12-14 16:45:03] Successfully playing sound for left
+[2024-12-14 16:45:03] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:03] Stopping previous sound
+[2024-12-14 16:45:03] Successfully playing sound for left
+[2024-12-14 16:45:03] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:03] Stopping previous sound
+[2024-12-14 16:45:03] Successfully playing sound for left
+[2024-12-14 16:45:03] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:03] Stopping previous sound
+[2024-12-14 16:45:03] Successfully playing sound for left
+[2024-12-14 16:45:03] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:03] Stopping previous sound
+[2024-12-14 16:45:03] Successfully playing sound for left
+[2024-12-14 16:45:03] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:03] Stopping previous sound
+[2024-12-14 16:45:03] Successfully playing sound for left
+[2024-12-14 16:45:03] 📝 Arrow key pressed: left - Starting celebration window
+[2024-12-14 16:45:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:03] Stopping previous sound
+[2024-12-14 16:45:03] Successfully playing sound for right
+[2024-12-14 16:45:03] 📝 Arrow key pressed: right - Starting celebration window
+[2024-12-14 16:45:03] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:45:03] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:45:03] Stopping previous sound
+[2024-12-14 16:45:03] Successfully playing sound for right
+[2024-12-14 16:45:03] 📝 Arrow key pressed: right - Starting celebration window
+[2024-12-14 16:50:54] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 16:50:54] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 16:50:54] Successfully playing sound for down
+[2024-12-14 16:50:54] 📝 Arrow key pressed: down - Starting celebration window
+[2024-12-14 18:02:53] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 18:02:53] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 18:02:53] Successfully playing sound for down
+[2024-12-14 18:02:53] 📝 Arrow key pressed: down - Starting celebration window
+[2024-12-14 18:02:53] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 18:02:53] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 18:02:53] Successfully playing sound for right
+[2024-12-14 18:02:53] 📝 Arrow key pressed: right - Starting celebration window
+[2024-12-14 18:02:53] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 18:02:53] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 18:02:53] Stopping previous sound
+[2024-12-14 18:02:53] Successfully playing sound for right
+[2024-12-14 18:02:53] 📝 Arrow key pressed: right - Starting celebration window
+[2024-12-14 18:02:54] DEBUG: Generating styles with: border-width=6px, border-color=#FFFF00, border-radius=45px
+[2024-12-14 18:02:54] DEBUG: Generated CSS:	        /* Base styles */
+        html {
+            background: transparent !important;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent !important;
+            font-family: "Proxima Nova", "SF Pro", sans-serif;
+            color: #666666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: default;
+        }
+        
+        /* Container styles */
+        .arrow-container {
+            background: transparent !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            margin: 0;
+        }
+        
+        .arrow-block {
+            background-color: rgba(180, 0, 0, 1);
+            border: 10px solid red !important;
+            border-radius: 45px !important;
+            padding: 20px;
+            text-align: center;
+            font-size: 48px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            line-height: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 90px;
+            min-height: 120px;
+            margin: 20px;
+            transition: all 0.2s ease;
+            overflow: visible;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hover effects */
+        .arrow-block:hover {
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .arrow-block {
+                box-shadow: 0 0 0 2px #000000;
+                border-color: white !important;
+            }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #ffffff;
+            }
+            .arrow-block {
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+        }
+    
+[2024-12-14 18:02:54] Stopping previous sound
+[2024-12-14 18:02:54] Successfully playing sound for right
+[2024-12-14 18:02:54] 📝 Arrow key pressed: right - Starting celebration window
