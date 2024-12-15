@@ -225,6 +225,9 @@ function M.init()
         position = nil
     }
 
+    -- Initialize sound system
+    sound.init()
+
     -- Create event watchers
     M.hyperWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, handleHyperKey)
     M.arrowWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, handleArrowKey)
@@ -243,6 +246,7 @@ function M.cleanup()
     if State.activeWebview then State.activeWebview:delete() end
     if State.fadeTimer then State.fadeTimer:stop() end
     if State.deleteTimer then State.deleteTimer:stop() end
+    sound.cleanup()
     State = nil
     hs.alert.show("👋 Arrow Keys Enhancement Deactivated", 1)
 end

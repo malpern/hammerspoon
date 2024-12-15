@@ -8,16 +8,14 @@ local M = {}
 -- Constants
 local COLORS = {
     VIM = {
-        BG = "rgba(30, 30, 30, 0.95)",
+        BG = "#1E1E1E",
         SYMBOL = "white",
-        LABEL = "#666666",
-        BORDER = "#444444"
+        LABEL = "#666666"
     },
     ARROW = {
-        BG = "rgba(180, 0, 0, 0.95)",
-        SYMBOL = "#FFFFFF",
-        LABEL = "#FFCCCC",
-        BORDER = "#990000"
+        BG = "#B40000",
+        SYMBOL = "#4B0000",
+        LABEL = "white"
     }
 }
 
@@ -48,6 +46,9 @@ function M.generateWindowHtml(direction, keyType)
     local firstColor = isArrowKey and colors.LABEL or colors.SYMBOL
     local secondColor = isArrowKey and colors.SYMBOL or colors.LABEL
 
+    -- Special case for back button
+    local secondMargin = direction == "back" and "0px" or "5px"
+
     return string.format([[
         <!DOCTYPE html>
         <html>
@@ -68,38 +69,41 @@ function M.generateWindowHtml(direction, keyType)
         <body>
             <div style="
                 background-color: %s;
-                border: 3px solid %s;
-                border-radius: 25px;
+                border-radius: 12px;
                 width: 90px;
                 height: 120px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                font-family: -apple-system, 'SF Pro', sans-serif;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
                 transition: all 0.2s ease;
-                -webkit-backdrop-filter: blur(10px);
-                backdrop-filter: blur(10px);
+                font-size: 48px;
             ">
                 <div style="
+                    font-family: %s;
                     color: %s;
-                    font-size: 24px;
+                    font-size: 1em;
                     font-weight: 600;
-                    margin: 4px;
-                    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
                 ">%s</div>
                 <div style="
+                    font-family: %s;
                     color: %s;
-                    font-size: 48px;
+                    font-size: 0.8em;
                     font-weight: 600;
-                    margin: 4px;
-                    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+                    margin-top: %s;
                 ">%s</div>
             </div>
         </body>
         </html>
-    ]], colors.BG, colors.BORDER, firstColor, firstContent, secondColor, secondContent)
+    ]], colors.BG, 
+        (isArrowKey or firstContent == SYMBOLS[direction]) and "'SF Pro', sans-serif" or "'Proxima Nova', 'SF Pro', sans-serif",
+        firstColor, 
+        firstContent,
+        (isArrowKey or secondContent == SYMBOLS[direction]) and "'SF Pro', sans-serif" or "'Proxima Nova', 'SF Pro', sans-serif",
+        secondColor,
+        secondMargin,
+        secondContent)
 end
 
 -- Simplified arrow-only display for special cases
@@ -126,20 +130,20 @@ function M.generateArrowHtml(direction, keyType)
         <body>
             <div style="
                 background-color: %s;
-                border: 10px solid red;
-                border-radius: 45px;
+                border-radius: 12px;
                 width: 90px;
                 height: 120px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-family: 'SF Pro', sans-serif;
-                box-shadow: 0 0 5px rgba(0,0,0,0.5);
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
                 transition: all 0.2s ease;
+                font-size: 48px;
             ">
                 <div style="
+                    font-family: 'SF Pro', sans-serif;
                     color: %s;
-                    font-size: 48px;
+                    font-size: 1em;
                     font-weight: 600;
                 ">%s</div>
             </div>
