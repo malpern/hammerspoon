@@ -131,12 +131,24 @@ function M.checkCelebration(direction, keyType)
                 debug.log("🎯 Match found! Triggering celebration")
                 animation.triggerCelebration()
                 State.lastArrowPress = nil
-                hs.alert.show("🎉 Great job! You used both arrow and vim keys!", TIMING.FEEDBACK_DURATION)
+                
+                -- Get vim key for direction
+                local vimKey = direction == "up" and "K" or
+                             direction == "down" and "J" or
+                             direction == "left" and "H" or
+                             direction == "right" and "L" or
+                             direction == "back" and "B"
+                             
+                local arrowSymbol = direction == "up" and "↑" or
+                                  direction == "down" and "↓" or
+                                  direction == "left" and "←" or
+                                  direction == "right" and "→" or
+                                  direction == "back" and "Back"
+                
+                hs.alert.show(string.format("🎉 Great job using Vim %s to move %s!", vimKey, arrowSymbol), TIMING.FEEDBACK_DURATION)
                 return true
             else
-                if timeDiff >= TIMING.MATCH_WINDOW then
-                    hs.alert.show("⌛ Too slow! Try again faster!", TIMING.FEEDBACK_DURATION)
-                elseif State.lastArrowPress ~= direction then
+                if State.lastArrowPress ~= direction then
                     hs.alert.show("❌ Wrong direction! Try to match the arrow key!", TIMING.FEEDBACK_DURATION)
                 end
                 State.lastArrowPress = nil
@@ -176,6 +188,7 @@ local function handleHyperKey(event)
     end
 
     if direction then
+        -- Set flag before any actions
         State.isHyperGenerated = true
         
         -- Show feedback and play sound
@@ -186,8 +199,8 @@ local function handleHyperKey(event)
         -- Simulate arrow key
         hs.eventtap.event.newKeyEvent({}, arrowKeyCode, true):post()
         
-        -- Reset hyper state
-        hs.timer.doAfter(0.1, function()
+        -- Reset hyper state after a short delay
+        hs.timer.doAfter(0.2, function()
             State.isHyperGenerated = false
         end)
         
@@ -199,7 +212,10 @@ end
 
 -- Handle arrow keys
 local function handleArrowKey(event)
-    if State.isHyperGenerated then return false end
+    -- Skip if this is from a Hyper-generated event
+    if State.isHyperGenerated then 
+        return false 
+    end
 
     local keyCode = event:getKeyCode()
     local keyMap = {

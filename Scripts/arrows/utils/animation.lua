@@ -27,9 +27,33 @@ local ANIMATION = {
 	CELEBRATION_DELAY = 0.15     -- ⏱️ Delay between repeats
 }
 
+-- Helper function to safely check webview
+local function isValidWebview(wv)
+	if not wv then return false end
+	if type(wv) ~= "userdata" then return false end
+	
+	-- Safely check if methods exist and can be called
+	local function safeCall(obj, method)
+		local success = pcall(function() return obj[method] end)
+		return success and type(obj[method]) == "function"
+	end
+	
+	-- Check required methods
+	if not safeCall(wv, "hswindow") then return false end
+	
+	-- Get window safely
+	local success, window = pcall(function() return wv:hswindow() end)
+	if not success or not window then return false end
+	
+	-- Check window visibility safely
+	success, _ = pcall(function() return window:isVisible() end)
+	return success
+end
+
 -- Fade out a window
 function M.fadeOut(webview, callback)
-	if not webview or not webview:hswindow() or not webview:hswindow():isVisible() then
+	-- Early exit if webview is invalid
+	if not isValidWebview(webview) then
 		if callback then callback() end
 		return
 	end
@@ -47,12 +71,27 @@ function M.fadeOut(webview, callback)
 	-- Create fade steps
 	for i = 1, ANIMATION.FADE_STEPS do
 		State.timers[i] = hs.timer.doAfter(i * stepTime, function()
-			if webview and webview:hswindow() and webview:hswindow():isVisible() then
-				webview:alpha(1.0 - (i / ANIMATION.FADE_STEPS))
+			-- Check if webview is still valid before each step
+			if isValidWebview(webview) then
+				local success = pcall(function()
+					webview:alpha(1.0 - (i / ANIMATION.FADE_STEPS))
+				end)
+				if not success then
+					-- Cancel remaining timers if alpha setting fails
+					for j = i + 1, ANIMATION.FADE_STEPS do
+						if State.timers[j] then 
+							State.timers[j]:stop() 
+							State.timers[j] = nil
+						end
+					end
+				end
 			else
-				-- Cancel remaining timers if window is gone
+				-- Cancel remaining timers if window is invalid
 				for j = i + 1, ANIMATION.FADE_STEPS do
-					if State.timers[j] then State.timers[j]:stop() end
+					if State.timers[j] then 
+						State.timers[j]:stop() 
+						State.timers[j] = nil
+					end
 				end
 			end
 		end)
@@ -61,7 +100,8 @@ function M.fadeOut(webview, callback)
 	-- Call completion handler
 	if callback then
 		hs.timer.doAfter(ANIMATION.FADE_DURATION + 0.01, function()
-			if webview and webview:hswindow() and webview:hswindow():isVisible() then
+			-- Final check before callback
+			if isValidWebview(webview) then
 				callback()
 			end
 		end)
@@ -76,10 +116,12 @@ function M.triggerCelebration()
 	State.isCelebrating = true
 
 	-- Create celebration script
+	-- Note: Key code 35 is 'p'. Hyper+P triggers Raycast's confetti animation
 	local script = string.format([[
 		tell application "System Events"
+			-- Trigger Raycast confetti animation with Hyper+P
 			repeat %d times
-				key code 126 using {command down, option down, control down, shift down}
+				key code 35 using {command down, option down, control down, shift down}
 				delay %f
 			end repeat
 		end tell
