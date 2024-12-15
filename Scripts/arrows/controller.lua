@@ -21,7 +21,9 @@ local State = {
     lastArrowPress = nil,    -- ⌨️ Last arrow key
     lastArrowTime = 0,       -- ⏱️ Last press time
     isHyperGenerated = false,-- 🔑 Hyper key state
-    position = nil           -- 📍 Window position
+    position = nil,          -- 📍 Window position
+    lastSoundKey = nil,      -- 🔊 Last key that played sound
+    isRealArrowPress = false -- ⌨️ Track if arrow press was real or simulated
 }
 
 -- Constants
@@ -119,13 +121,15 @@ function M.checkCelebration(direction, keyType)
     local currentTime = hs.timer.secondsSinceEpoch()
     
     if keyType == "arrow" then
-        -- Store arrow press
-        State.lastArrowPress = direction
-        State.lastArrowTime = currentTime
-        debug.log("⌨️ Arrow key pressed:", direction)
+        -- Only store arrow press if it was from a real key press
+        if State.isRealArrowPress then
+            State.lastArrowPress = direction
+            State.lastArrowTime = currentTime
+            debug.log("⌨️ Arrow key pressed:", direction)
+        end
     else
-        -- Check for vim motion match
-        if State.lastArrowPress then
+        -- Only check for celebration if the last key was a real arrow key
+        if State.lastArrowPress and keyType == "vim" then
             local timeDiff = currentTime - State.lastArrowTime
             if timeDiff < TIMING.MATCH_WINDOW and State.lastArrowPress == direction then
                 debug.log("🎯 Match found! Triggering celebration")
@@ -191,9 +195,12 @@ local function handleHyperKey(event)
         -- Set flag before any actions
         State.isHyperGenerated = true
         
-        -- Show feedback and play sound
+        -- Show feedback and play sound only if key changed
         M.createWindow(direction, "vim")
-        sound.playSound(direction, "vim")
+        if State.lastSoundKey ~= direction then
+            sound.playSound(direction, "vim")
+            State.lastSoundKey = direction
+        end
         M.checkCelebration(direction, "vim")
 
         -- Simulate arrow key
@@ -214,6 +221,7 @@ end
 local function handleArrowKey(event)
     -- Skip if this is from a Hyper-generated event
     if State.isHyperGenerated then 
+        State.isRealArrowPress = false
         return false 
     end
 
@@ -228,8 +236,12 @@ local function handleArrowKey(event)
     
     local direction = keyMap[keyCode]
     if direction then
+        State.isRealArrowPress = true  -- Mark this as a real arrow press
         M.createWindow(direction, "arrow")
-        sound.playSound(direction, "arrow")
+        if State.lastSoundKey ~= direction then
+            sound.playSound(direction, "arrow")
+            State.lastSoundKey = direction
+        end
         M.checkCelebration(direction, "arrow")
     end
     
@@ -246,7 +258,9 @@ function M.init()
         lastArrowPress = nil,    -- ⌨️ Last arrow key
         lastArrowTime = 0,       -- ⏱️ Last press time
         isHyperGenerated = false,-- 🔑 Hyper key state
-        position = nil           -- 📍 Window position
+        position = nil,          -- 📍 Window position
+        lastSoundKey = nil,      -- 🔊 Last key that played sound
+        isRealArrowPress = false -- ⌨️ Track if arrow press was real or simulated
     }
 
     -- Initialize sound system
@@ -260,13 +274,21 @@ function M.init()
     M.hyperWatcher:start()
     M.arrowWatcher:start()
 
-    hs.alert.show("🎮 Arrow Keys Enhancement Active!", 1)
+    -- Create key up watcher to reset sound state
+    M.keyUpWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyUp }, function(event)
+        State.lastSoundKey = nil
+        return false
+    end)
+    M.keyUpWatcher:start()
+
+    hs.alert.show("⌨️✨ Let's learn some VIM Motions!", 1)
 end
 
 -- Cleanup
 function M.cleanup()
     if M.hyperWatcher then M.hyperWatcher:stop() end
     if M.arrowWatcher then M.arrowWatcher:stop() end
+    if M.keyUpWatcher then M.keyUpWatcher:stop() end
     if State.activeWebview then State.activeWebview:delete() end
     if State.fadeTimer then State.fadeTimer:stop() end
     if State.deleteTimer then State.deleteTimer:stop() end
