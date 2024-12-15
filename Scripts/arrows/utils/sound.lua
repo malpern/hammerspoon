@@ -66,8 +66,8 @@ function M.init()
     end
 
     -- Load back sounds (both normal and dissonant)
-    local backPath = configPath .. "up_deeper.wav"
-    local dissonantBackPath = configPath .. "dissonant/up_deeper.wav"
+    local backPath = configPath .. "backward.wav"
+    local dissonantBackPath = configPath .. "dissonant/backward.wav"
     
     -- Normal back sound
     local backSound = hs.sound.getByFile(backPath)
