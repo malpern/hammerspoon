@@ -1,29 +1,35 @@
 --[[
-    Controller for the Arrows system - Simplified Version
-    Handles window management and keyboard events
+    🎮 Arrows System Controller
+    
+    Features:
+    🎯 Key event handling
+    🪟 Window management
+    🔄 State management
+    🎉 Celebration triggers
 ]]
 
 local view = require("Scripts.arrows.view")
 local sound = require("Scripts.arrows.utils.sound")
 local animation = require("Scripts.arrows.utils.animation")
+local debug = require("Scripts.arrows.utils.debug")
 
 -- State management
 local State = {
-    activeWebview = nil,
-    fadeTimer = nil,
-    deleteTimer = nil,
-    lastArrowPress = nil,
-    lastArrowTime = 0,
-    isHyperGenerated = false,
-    position = nil
+    activeWebview = nil,     -- 🪟 Current window
+    fadeTimer = nil,         -- ⏱️ Fade timer
+    deleteTimer = nil,       -- ⏱️ Cleanup timer
+    lastArrowPress = nil,    -- ⌨️ Last arrow key
+    lastArrowTime = 0,       -- ⏱️ Last press time
+    isHyperGenerated = false,-- 🔑 Hyper key state
+    position = nil           -- 📍 Window position
 }
 
 -- Constants
 local TIMING = {
-    FADE_DELAY = 0.5,           -- How long before fade starts
-    MATCH_WINDOW = 1.0,         -- Time window for matching keys
-    FEEDBACK_DURATION = 1.0,    -- How long feedback alerts show
-    TRANSITION_DELAY = 0.01     -- Small delay for smooth transitions
+    FADE_DELAY = 0.5,           -- ⏱️ Pre-fade delay
+    MATCH_WINDOW = 1.0,         -- ⚡ Match timeout
+    FEEDBACK_DURATION = 1.0,    -- 💬 Alert duration
+    TRANSITION_DELAY = 0.01     -- 🎨 Animation delay
 }
 
 local M = {}
@@ -66,7 +72,7 @@ function M.createWindow(direction, keyType)
     end)
 
     if not success or not webview then
-        print("Failed to create webview:", webview)
+        debug.error("🚫 Failed to create webview:", webview)
         return false
     end
 
@@ -97,7 +103,7 @@ function M.createWindow(direction, keyType)
     end)
 
     if not success then
-        print("Failed to configure webview:", err)
+        debug.error("🚫 Failed to configure webview:", err)
         if State.activeWebview then
             State.activeWebview:delete()
             State.activeWebview = nil
@@ -116,13 +122,13 @@ function M.checkCelebration(direction, keyType)
         -- Store arrow press
         State.lastArrowPress = direction
         State.lastArrowTime = currentTime
-        print("📝 Arrow key pressed:", direction)
+        debug.log("⌨️ Arrow key pressed:", direction)
     else
         -- Check for vim motion match
         if State.lastArrowPress then
             local timeDiff = currentTime - State.lastArrowTime
             if timeDiff < TIMING.MATCH_WINDOW and State.lastArrowPress == direction then
-                print("🎯 Match found! Triggering celebration")
+                debug.log("🎯 Match found! Triggering celebration")
                 animation.triggerCelebration()
                 State.lastArrowPress = nil
                 hs.alert.show("🎉 Great job! You used both arrow and vim keys!", TIMING.FEEDBACK_DURATION)
@@ -157,7 +163,8 @@ local function handleHyperKey(event)
         k = { dir = "up", code = 126 },
         j = { dir = "down", code = 125 },
         h = { dir = "left", code = 123 },
-        l = { dir = "right", code = 124 }
+        l = { dir = "right", code = 124 },
+        b = { dir = "back", code = 116 }  -- Page Up for back
     }
 
     for key, map in pairs(keyMap) do
@@ -199,7 +206,8 @@ local function handleArrowKey(event)
         [126] = "up",
         [125] = "down",
         [123] = "left",
-        [124] = "right"
+        [124] = "right",
+        [116] = "back"    -- Page Up for back
     }
     
     local direction = keyMap[keyCode]
@@ -216,13 +224,13 @@ end
 function M.init()
     -- Reset state
     State = {
-        activeWebview = nil,
-        fadeTimer = nil,
-        deleteTimer = nil,
-        lastArrowPress = nil,
-        lastArrowTime = 0,
-        isHyperGenerated = false,
-        position = nil
+        activeWebview = nil,     -- 🪟 Current window
+        fadeTimer = nil,         -- ⏱️ Fade timer
+        deleteTimer = nil,       -- ⏱️ Cleanup timer
+        lastArrowPress = nil,    -- ⌨️ Last arrow key
+        lastArrowTime = 0,       -- ⏱️ Last press time
+        isHyperGenerated = false,-- 🔑 Hyper key state
+        position = nil           -- 📍 Window position
     }
 
     -- Initialize sound system

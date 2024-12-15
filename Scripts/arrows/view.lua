@@ -4,6 +4,7 @@
 ]]
 
 local M = {}
+local debug = require("Scripts.arrows.utils.debug")
 
 -- Constants
 local COLORS = {
@@ -37,6 +38,7 @@ local LABELS = {
 
 function M.generateWindowHtml(direction, keyType)
     local isArrowKey = keyType == "arrow"
+    local isVimKey = not isArrowKey
     local colors = isArrowKey and COLORS.ARROW or COLORS.VIM
     
     -- For arrow keys: label on top, symbol below
@@ -47,7 +49,12 @@ function M.generateWindowHtml(direction, keyType)
     local secondColor = isArrowKey and colors.SYMBOL or colors.LABEL
 
     -- Special case for back button
-    local secondMargin = direction == "back" and "0px" or "5px"
+    local secondMargin = direction == "back" and "0px" or "2px"
+    -- Use smaller font for "Back" text only when it appears (depends on key mode)
+    local secondFontSize = (direction == "back" and isVimKey) and "0.6em" or "0.8em"
+    local firstFontSize = (direction == "back" and isArrowKey) and "0.6em" or "1em"
+
+    debug.log("Generating window HTML for", direction, "with type", keyType)
 
     return string.format([[
         <!DOCTYPE html>
@@ -83,13 +90,13 @@ function M.generateWindowHtml(direction, keyType)
                 <div style="
                     font-family: %s;
                     color: %s;
-                    font-size: 1em;
+                    font-size: %s;
                     font-weight: 600;
                 ">%s</div>
                 <div style="
                     font-family: %s;
                     color: %s;
-                    font-size: 0.8em;
+                    font-size: %s;
                     font-weight: 600;
                     margin-top: %s;
                 ">%s</div>
@@ -99,9 +106,11 @@ function M.generateWindowHtml(direction, keyType)
     ]], colors.BG, 
         (isArrowKey or firstContent == SYMBOLS[direction]) and "'SF Pro', sans-serif" or "'Proxima Nova', 'SF Pro', sans-serif",
         firstColor, 
+        firstFontSize,
         firstContent,
         (isArrowKey or secondContent == SYMBOLS[direction]) and "'SF Pro', sans-serif" or "'Proxima Nova', 'SF Pro', sans-serif",
         secondColor,
+        secondFontSize,
         secondMargin,
         secondContent)
 end
@@ -109,8 +118,11 @@ end
 -- Simplified arrow-only display for special cases
 function M.generateArrowHtml(direction, keyType)
     local isArrowKey = keyType == "arrow"
+    local isVimKey = not isArrowKey
     local colors = isArrowKey and COLORS.ARROW or COLORS.VIM
     
+    debug.log("Generating simplified arrow HTML for", direction, "with type", keyType)
+
     return string.format([[
         <!DOCTYPE html>
         <html>

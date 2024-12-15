@@ -1,30 +1,36 @@
 --[[
-    Sound utility module for the Arrows system - Simplified Version
-    Handles sound playback and muting
+    🔊 Sound System for Arrows
+    
+    Features:
+    🎵 Directional sounds for vim keys
+    🎶 Dissonant sounds for arrow keys
+    🔇 Mute toggle with double-ESC
+    ⏱️  Sound debouncing
 ]]
 
 local M = {}
+local debug = require("Scripts.arrows.utils.debug")
 
 -- Sound state
 local State = {
-    sounds = {},
-    dissonantSounds = {},
-    backSound = nil,
-    silentMode = false,
-    activeSound = nil,
-    lastPlayTime = 0,
-    lastEscTime = nil,
-    escKeyDown = false
+    sounds = {},            -- 🎵 Normal sounds
+    dissonantSounds = {},   -- 🎶 Dissonant sounds
+    backSound = nil,        -- ⬆️ Back sound
+    silentMode = false,     -- 🔇 Mute state
+    activeSound = nil,      -- 🎧 Currently playing
+    lastPlayTime = 0,       -- ⏱️ Debounce timer
+    lastEscTime = nil,      -- ⌨️ Last ESC press
+    escKeyDown = false      -- ⬇️ ESC key state
 }
 
 -- Constants
 local VOLUME = {
-    NORMAL = 0.2,
-    MUTED = 0.0
+    NORMAL = 0.2,  -- 🔊 Normal volume
+    MUTED = 0.0    -- 🔇 Muted volume
 }
 
-local DOUBLE_PRESS_TIME = 0.3  -- 300ms for double-tap detection
-local DEBOUNCE_TIME = 0.01     -- 10ms for sound transitions
+local DOUBLE_PRESS_TIME = 0.3  -- ⚡ 300ms for double-tap
+local DEBOUNCE_TIME = 0.01     -- ⏱️ 10ms for transitions
 
 -- Initialize sounds
 function M.init()
@@ -38,10 +44,10 @@ function M.init()
         if sound then
             State.sounds[direction] = sound
             sound:volume(VOLUME.NORMAL)
-            print("Successfully loaded sound for " .. direction)
+            debug.log("🎵 Loaded sound for " .. direction)
         else
             success = false
-            print("Failed to load sound: " .. path)
+            debug.error("🚫 Failed to load sound: " .. path)
         end
     end
 
@@ -52,23 +58,37 @@ function M.init()
         if sound then
             State.dissonantSounds[direction] = sound
             sound:volume(VOLUME.NORMAL)
-            print("Successfully loaded dissonant sound for " .. direction)
+            debug.log("🎶 Loaded dissonant sound for " .. direction)
         else
             success = false
-            print("Failed to load sound: " .. path)
+            debug.error("🚫 Failed to load dissonant sound: " .. path)
         end
     end
 
-    -- Load back sound
+    -- Load back sounds (both normal and dissonant)
     local backPath = configPath .. "up_deeper.wav"
+    local dissonantBackPath = configPath .. "dissonant/up_deeper.wav"
+    
+    -- Normal back sound
     local backSound = hs.sound.getByFile(backPath)
     if backSound then
         State.backSound = backSound
         backSound:volume(VOLUME.NORMAL)
-        print("Successfully loaded sound for back")
+        debug.log("⬆️ Loaded sound for back")
     else
         success = false
-        print("Failed to load back sound: " .. backPath)
+        debug.error("🚫 Failed to load back sound: " .. backPath)
+    end
+
+    -- Dissonant back sound
+    local dissonantBackSound = hs.sound.getByFile(dissonantBackPath)
+    if dissonantBackSound then
+        State.dissonantSounds["back"] = dissonantBackSound
+        dissonantBackSound:volume(VOLUME.NORMAL)
+        debug.log("🎶 Loaded dissonant sound for back")
+    else
+        success = false
+        debug.error("🚫 Failed to load dissonant back sound: " .. dissonantBackPath)
     end
 
     -- Set up escape key watcher for mute toggle
@@ -113,14 +133,14 @@ end
 -- Play sound for a direction
 function M.playSound(direction, keyType)
     if State.silentMode then
-        print("Silent mode active, skipping sound")
+        debug.log("🔇 Silent mode active, skipping sound")
         return true
     end
 
     -- Debounce
     local currentTime = hs.timer.secondsSinceEpoch()
     if currentTime - State.lastPlayTime < DEBOUNCE_TIME then
-        print("Debouncing sound playback")
+        debug.log("⏱️ Debouncing sound playback")
         return true
     end
     State.lastPlayTime = currentTime
@@ -134,7 +154,7 @@ function M.playSound(direction, keyType)
     -- Select sound
     local sound = nil
     if direction == "back" then
-        sound = State.backSound
+        sound = keyType == "arrow" and State.dissonantSounds[direction] or State.backSound
     else
         sound = keyType == "arrow" and State.dissonantSounds[direction] or State.sounds[direction]
     end
@@ -145,9 +165,9 @@ function M.playSound(direction, keyType)
         sound:volume(VOLUME.NORMAL)
         local success = pcall(function() sound:play() end)
         if success then
-            print("Successfully playing sound for " .. direction)
+            debug.log("🎵 Playing " .. (keyType == "arrow" and "dissonant" or "normal") .. " sound for " .. direction)
         else
-            print("Error playing sound for " .. direction)
+            debug.error("🚫 Error playing sound for " .. direction)
         end
         return success
     end
@@ -160,7 +180,7 @@ function M.toggleMute()
     State.silentMode = not State.silentMode
     local message = State.silentMode and "🔇 Sound Off" or "🔊 Sound On"
     hs.alert.show(message, 1)
-    print("Silent mode:", State.silentMode)
+    debug.log("🎚️ Silent mode:", State.silentMode)
     return State.silentMode
 end
 

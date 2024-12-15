@@ -1,24 +1,30 @@
 --[[
-    Animation utility module for the Arrows system - Simplified Version
-    Handles window fading and celebration effects
+    ✨ Animation System for Arrows
+    
+    Features:
+    🌟 Window fade effects
+    🎉 Celebration animations
+    ⚡ Fast performance
+    🎨 Smooth transitions
 ]]
 
 local M = {}
+local debug = require("Scripts.arrows.utils.debug")
 
 -- Animation state
 local State = {
-	celebrationTimer = nil,
-	isCelebrating = false,
-	timers = {}
+	celebrationTimer = nil,  -- ⏱️ Celebration timeout
+	isCelebrating = false,   -- 🎉 Celebration state
+	timers = {}             -- ⚡ Active fade timers
 }
 
 -- Constants
 local ANIMATION = {
-	FADE_DURATION = 0.5,    -- Duration of fade in seconds (reduced for snappier feedback)
-	FADE_STEPS = 8,        -- Number of steps in fade (reduced for smoother performance)
-	CELEBRATION_DURATION = 1.5,  -- How long celebration lasts (reduced to match feedback timing)
-	CELEBRATION_REPEATS = 2,     -- Number of celebration repeats (reduced for less intrusion)
-	CELEBRATION_DELAY = 0.15     -- Delay between celebration repeats (increased for smoother animation)
+	FADE_DURATION = 0.5,     -- ⏱️ Fade duration (seconds)
+	FADE_STEPS = 8,          -- 🎨 Fade smoothness
+	CELEBRATION_DURATION = 1.5,  -- 🎉 Celebration length
+	CELEBRATION_REPEATS = 2,     -- 🔄 Number of repeats
+	CELEBRATION_DELAY = 0.15     -- ⏱️ Delay between repeats
 }
 
 -- Fade out a window
@@ -36,6 +42,7 @@ function M.fadeOut(webview, callback)
 
 	-- Calculate fade steps
 	local stepTime = ANIMATION.FADE_DURATION / ANIMATION.FADE_STEPS
+	debug.log("🎨 Starting fade animation with", ANIMATION.FADE_STEPS, "steps")
 
 	-- Create fade steps
 	for i = 1, ANIMATION.FADE_STEPS do
@@ -65,7 +72,7 @@ end
 function M.triggerCelebration()
 	if State.isCelebrating then return false end
 
-	print("🎉 Starting celebration sequence!")
+	debug.log("🎉 Starting celebration sequence!")
 	State.isCelebrating = true
 
 	-- Create celebration script
@@ -81,9 +88,9 @@ function M.triggerCelebration()
 	-- Run celebration
 	local task = hs.task.new("/usr/bin/osascript", function(exitCode, stdOut, stdErr)
 		if exitCode == 0 then
-			print("✨ Celebration sequence completed successfully")
+			debug.log("✨ Celebration sequence completed!")
 		else
-			print("❌ Error running celebration sequence:", stdErr)
+			debug.error("💥 Error running celebration sequence:", stdErr)
 		end
 		State.isCelebrating = false
 		State.celebrationTimer = nil
