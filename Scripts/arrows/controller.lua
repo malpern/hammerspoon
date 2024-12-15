@@ -141,13 +141,15 @@ function M.checkCelebration(direction, keyType)
                              direction == "down" and "J" or
                              direction == "left" and "H" or
                              direction == "right" and "L" or
-                             direction == "back" and "B"
+                             direction == "back" and "B" or
+                             direction == "forward" and "F"
                              
                 local arrowSymbol = direction == "up" and "↑" or
                                   direction == "down" and "↓" or
                                   direction == "left" and "←" or
                                   direction == "right" and "→" or
-                                  direction == "back" and "Back"
+                                  direction == "back" and "Back" or
+                                  direction == "forward" and "Forward"
                 
                 hs.alert.show(string.format("🎉 Great job using Vim %s to move %s!", vimKey, arrowSymbol), TIMING.FEEDBACK_DURATION)
                 return true
@@ -180,7 +182,8 @@ local function handleHyperKey(event)
         j = { dir = "down", code = 125 },
         h = { dir = "left", code = 123 },
         l = { dir = "right", code = 124 },
-        b = { dir = "back", code = 116 }  -- Page Up for back
+        b = { dir = "back", code = 116 },  -- Page Up for back
+        f = { dir = "forward", code = 121 }  -- Page Down for forward
     }
 
     for key, map in pairs(keyMap) do
@@ -231,7 +234,8 @@ local function handleArrowKey(event)
         [125] = "down",
         [123] = "left",
         [124] = "right",
-        [116] = "back"    -- Page Up for back
+        [116] = "back",    -- Page Up for back
+        [121] = "forward"  -- Page Down for forward
     }
     
     local direction = keyMap[keyCode]

@@ -25,7 +25,8 @@ local SYMBOLS = {
     down = "↓",
     left = "←",
     right = "→",
-    back = "▲"
+    back = "▲",
+    forward = "▼"
 }
 
 local LABELS = {
@@ -33,7 +34,8 @@ local LABELS = {
     down = "J",
     left = "H",
     right = "L",
-    back = "Back"
+    back = "Back",
+    forward = "Forward"
 }
 
 function M.generateWindowHtml(direction, keyType)
@@ -51,8 +53,10 @@ function M.generateWindowHtml(direction, keyType)
     -- Special case for back button
     local secondMargin = direction == "back" and "0px" or "2px"
     -- Use smaller font for "Back" text only when it appears (depends on key mode)
-    local secondFontSize = (direction == "back" and isVimKey) and "0.6em" or "0.8em"
-    local firstFontSize = (direction == "back" and isArrowKey) and "0.6em" or "1em"
+    local secondFontSize = (direction == "back" and isVimKey) and "0.6em" or 
+                          (direction == "forward" and isVimKey) and "0.45em" or "0.8em"  -- Forward text 25% smaller than Back
+    local firstFontSize = (direction == "back" and isArrowKey) and "0.6em" or 
+                         (direction == "forward" and isArrowKey) and "0.45em" or "1em"  -- Forward text 25% smaller than Back
 
     debug.log("Generating window HTML for", direction, "with type", keyType)
 
@@ -122,46 +126,38 @@ function M.generateArrowHtml(direction, keyType)
     local colors = isArrowKey and COLORS.ARROW or COLORS.VIM
     
     debug.log("Generating simplified arrow HTML for", direction, "with type", keyType)
-
-    return string.format([[
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="UTF-8">
-            <style>
-                * { margin: 0; padding: 0; }
-                html, body { 
-                    background: transparent !important;
-                    height: 100vh;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-            </style>
-        </head>
-        <body>
-            <div style="
-                background-color: %s;
-                border-radius: 12px;
-                width: 90px;
-                height: 120px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-                transition: all 0.2s ease;
-                font-size: 48px;
-            ">
-                <div style="
-                    font-family: 'SF Pro', sans-serif;
-                    color: %s;
-                    font-size: 1em;
-                    font-weight: 600;
-                ">%s</div>
-            </div>
-        </body>
-        </html>
-    ]], colors.BG, colors.SYMBOL, SYMBOLS[direction])
+    
+    -- Special case for "back" and "forward" commands with smaller text
+    if direction == "back" or direction == "forward" then
+        local symbol = direction == "back" and "▲" or "▼"  -- Triangle pointing up for back, down for forward
+        local text = direction == "back" and "Back" or "Forward"
+        return string.format(backTemplate, 
+            "white",      -- Top symbol color (white triangle)
+            string.format([[<span style="font-size: 0.85em">%s</span>]], symbol),  -- 25% smaller triangle
+            "#666666",   -- Bottom text color (gray)
+            string.format([[<span style="font-size: 0.65em">%s</span>]], text)  -- Smaller text
+        )
+    end
+    
+    -- Define both symbol and letter for each direction
+    local symbol = direction == "up" and "↑" or
+                  direction == "down" and "↓" or
+                  direction == "left" and "←" or
+                  direction == "right" and "→"
+    
+    local letter = direction == "up" and "K" or
+                  direction == "down" and "J" or
+                  direction == "left" and "H" or
+                  direction == "right" and "L"
+    
+    -- Format template with order depending on key type
+    if isArrowKey then
+        -- Letter on top, arrow below for arrow keys
+        return string.format(arrowTemplate, colors.letter, letter, colors.symbol, symbol)
+    else
+        -- Arrow on top, letter below for vim keys
+        return string.format(arrowTemplate, colors.symbol, symbol, colors.letter, letter)
+    end
 end
 
 return M

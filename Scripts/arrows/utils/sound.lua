@@ -16,6 +16,7 @@ local State = {
     sounds = {},            -- 🎵 Normal sounds
     dissonantSounds = {},   -- 🎶 Dissonant sounds
     backSound = nil,        -- ⬆️ Back sound
+    forwardSound = nil,     -- ⬇️ Forward sound
     silentMode = false,     -- 🔇 Mute state
     activeSound = nil,      -- 🎧 Currently playing
     lastPlayTime = 0,       -- ⏱️ Debounce timer
@@ -65,30 +66,32 @@ function M.init()
         end
     end
 
-    -- Load back sounds (both normal and dissonant)
+    -- Load back/forward sounds (both normal and dissonant)
     local backPath = configPath .. "backward.wav"
     local dissonantBackPath = configPath .. "dissonant/backward.wav"
     
-    -- Normal back sound
+    -- Normal back/forward sound
     local backSound = hs.sound.getByFile(backPath)
     if backSound then
         State.backSound = backSound
+        State.forwardSound = backSound  -- Use same sound for forward
         backSound:volume(VOLUME.NORMAL)
-        debug.log("⬆️ Loaded sound for back")
+        debug.log("⬆️ Loaded sound for back/forward")
     else
         success = false
-        debug.error("🚫 Failed to load back sound: " .. backPath)
+        debug.error("🚫 Failed to load back/forward sound: " .. backPath)
     end
 
-    -- Dissonant back sound
+    -- Dissonant back/forward sound
     local dissonantBackSound = hs.sound.getByFile(dissonantBackPath)
     if dissonantBackSound then
         State.dissonantSounds["back"] = dissonantBackSound
+        State.dissonantSounds["forward"] = dissonantBackSound  -- Use same sound for forward
         dissonantBackSound:volume(VOLUME.NORMAL)
-        debug.log("🎶 Loaded dissonant sound for back")
+        debug.log("🎶 Loaded dissonant sound for back/forward")
     else
         success = false
-        debug.error("🚫 Failed to load dissonant back sound: " .. dissonantBackPath)
+        debug.error("🚫 Failed to load dissonant back/forward sound: " .. dissonantBackPath)
     end
 
     -- Set up escape key watcher for mute toggle
@@ -153,7 +156,7 @@ function M.playSound(direction, keyType)
 
     -- Select sound
     local sound = nil
-    if direction == "back" then
+    if direction == "back" or direction == "forward" then
         sound = keyType == "arrow" and State.dissonantSounds[direction] or State.backSound
     else
         sound = keyType == "arrow" and State.dissonantSounds[direction] or State.sounds[direction]
@@ -191,6 +194,7 @@ function M.cleanup()
     State.sounds = {}
     State.dissonantSounds = {}
     State.backSound = nil
+    State.forwardSound = nil
     State.silentMode = false
 end
 
