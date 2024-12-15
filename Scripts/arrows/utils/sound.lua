@@ -68,30 +68,48 @@ function M.init()
 
     -- Load back/forward sounds (both normal and dissonant)
     local backPath = configPath .. "backward.wav"
+    local forwardPath = configPath .. "forward.wav"
     local dissonantBackPath = configPath .. "dissonant/backward.wav"
+    local dissonantForwardPath = configPath .. "dissonant/forward.wav"
     
-    -- Normal back/forward sound
+    -- Normal back/forward sounds
     local backSound = hs.sound.getByFile(backPath)
+    local forwardSound = hs.sound.getByFile(forwardPath)
     if backSound then
         State.backSound = backSound
-        State.forwardSound = backSound  -- Use same sound for forward
         backSound:volume(VOLUME.NORMAL)
-        debug.log("⬆️ Loaded sound for back/forward")
+        debug.log("⬆️ Loaded sound for back")
     else
         success = false
-        debug.error("🚫 Failed to load back/forward sound: " .. backPath)
+        debug.error("🚫 Failed to load back sound: " .. backPath)
+    end
+    if forwardSound then
+        State.forwardSound = forwardSound
+        forwardSound:volume(VOLUME.NORMAL)
+        debug.log("⬇️ Loaded sound for forward")
+    else
+        success = false
+        debug.error("🚫 Failed to load forward sound: " .. forwardPath)
     end
 
-    -- Dissonant back/forward sound
+    -- Dissonant back/forward sounds
     local dissonantBackSound = hs.sound.getByFile(dissonantBackPath)
+    local dissonantForwardSound = hs.sound.getByFile(dissonantForwardPath)
     if dissonantBackSound then
         State.dissonantSounds["back"] = dissonantBackSound
-        State.dissonantSounds["forward"] = dissonantBackSound  -- Use same sound for forward
         dissonantBackSound:volume(VOLUME.NORMAL)
-        debug.log("🎶 Loaded dissonant sound for back/forward")
+        debug.log("🎶 Loaded dissonant sound for back")
     else
         success = false
-        debug.error("🚫 Failed to load dissonant back/forward sound: " .. dissonantBackPath)
+        debug.error("🚫 Failed to load dissonant back sound: " .. dissonantBackPath)
+    end
+    if dissonantForwardSound then
+        State.dissonantSounds["forward"] = dissonantForwardSound
+        dissonantForwardSound:volume(VOLUME.NORMAL)
+        debug.log("🎶 Loaded dissonant sound for forward")
+    else
+        success = false
+        debug.error("🚫 Failed to load dissonant forward sound: " .. dissonantForwardPath)
     end
 
     -- Set up escape key watcher for mute toggle
@@ -156,8 +174,10 @@ function M.playSound(direction, keyType)
 
     -- Select sound
     local sound = nil
-    if direction == "back" or direction == "forward" then
-        sound = keyType == "arrow" and State.dissonantSounds[direction] or State.backSound
+    if direction == "back" then
+        sound = keyType == "arrow" and State.dissonantSounds["back"] or State.backSound
+    elseif direction == "forward" then
+        sound = keyType == "arrow" and State.dissonantSounds["forward"] or State.forwardSound
     else
         sound = keyType == "arrow" and State.dissonantSounds[direction] or State.sounds[direction]
     end
