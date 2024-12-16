@@ -6,6 +6,7 @@
     🎶 Dissonant sounds for arrow keys
     🔇 Mute toggle with double-ESC
     ⏱️  Sound debouncing
+    🎯 Rapid-fire prevention for VIM keys
 ]]
 
 local M = {}
@@ -21,7 +22,9 @@ local State = {
     activeSound = nil,      -- 🎧 Currently playing
     lastPlayTime = 0,       -- ⏱️ Debounce timer
     lastEscTime = nil,      -- ⌨️ Last ESC press
-    escKeyDown = false      -- ⬇️ ESC key state
+    escKeyDown = false,     -- ⬇️ ESC key state
+    lastVimDirection = nil, -- 🎯 Last VIM key pressed
+    lastVimTime = 0        -- ⏱️ Time of last VIM key press
 }
 
 -- Constants
@@ -30,8 +33,9 @@ local VOLUME = {
     MUTED = 0.0    -- 🔇 Muted volume
 }
 
-local DOUBLE_PRESS_TIME = 0.3  -- ⚡ 300ms for double-tap
-local DEBOUNCE_TIME = 0.01     -- ⏱️ 10ms for transitions
+local DOUBLE_PRESS_TIME = 0.3   -- ⚡ 300ms for double-tap
+local DEBOUNCE_TIME = 0.01      -- ⏱️ 10ms for transitions
+local VIM_TIMEOUT = 0.2         -- 🎯 200ms timeout for VIM key sound prevention
 
 -- Initialize sounds
 function M.init()
@@ -158,8 +162,26 @@ function M.playSound(direction, keyType)
         return true
     end
 
-    -- Debounce
     local currentTime = hs.timer.secondsSinceEpoch()
+
+    -- For VIM keys, prevent rapid-fire sounds within timeout window
+    if keyType == "vim" then
+        if direction == State.lastVimDirection and 
+           (currentTime - State.lastVimTime) < VIM_TIMEOUT then
+            debug.log("🔄 Rapid VIM key repeat, skipping sound")
+            return true
+        end
+        State.lastVimDirection = direction
+        State.lastVimTime = currentTime
+    end
+
+    -- For arrow keys, reset the VIM tracking
+    if keyType == "arrow" then
+        State.lastVimDirection = nil
+        State.lastVimTime = 0
+    end
+
+    -- Debounce
     if currentTime - State.lastPlayTime < DEBOUNCE_TIME then
         debug.log("⏱️ Debouncing sound playback")
         return true

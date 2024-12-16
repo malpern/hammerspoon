@@ -11,6 +11,12 @@
     🔇 Sound toggle with double-ESC
 ]]
 
+--[[
+    TODO:
+    - Add meeting detection mode
+    - add stats on how well you've learned
+]]
+
 local controller = require("Scripts.arrows.controller")
 local debug = require("Scripts.arrows.utils.debug")
 
@@ -18,7 +24,7 @@ local debug = require("Scripts.arrows.utils.debug")
 -- NONE = 0  ➜ No output
 -- ERROR = 1 ➜ Only errors (production)
 -- DEBUG = 2 ➜ All debug output (development)
-debug.setLevel(debug.LEVEL.DEBUG)  -- Set to ERROR in production
+debug.setLevel(debug.LEVEL.DEBUG)  -- Show all debug output
 
 -- 🚀 Initialize the module
 controller.init()

@@ -160,4 +160,127 @@ function M.generateArrowHtml(direction, keyType)
     end
 end
 
+-- Generate a single vim key preview
+local function generateVimKeyPreview(key, symbol)
+    return string.format([[
+        <div style="
+            background-color: %s;
+            border-radius: 8px;
+            width: 60px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            font-size: 32px;
+        ">
+            <div style="
+                font-family: 'SF Pro', sans-serif;
+                color: %s;
+                font-size: 1em;
+                font-weight: 600;
+            ">%s</div>
+            <div style="
+                font-family: 'Proxima Nova', 'SF Pro', sans-serif;
+                color: %s;
+                font-size: 0.6em;
+                font-weight: 600;
+                margin-top: 2px;
+            ">%s</div>
+        </div>
+    ]], COLORS.VIM.BG, COLORS.VIM.SYMBOL, symbol, COLORS.VIM.LABEL, key)
+end
+
+-- Generate welcome window HTML
+function M.generateWelcomeHtml()
+    -- Define vim keys and their symbols
+    local vimKeys = {
+        { key = "H", symbol = "←" },
+        { key = "J", symbol = "↓" },
+        { key = "K", symbol = "↑" },
+        { key = "L", symbol = "→" },
+        { key = "B", symbol = "▲" },
+        { key = "F", symbol = "▼" }
+    }
+
+    -- Generate vim key previews HTML
+    local vimKeysHtml = ""
+    for _, keyInfo in ipairs(vimKeys) do
+        vimKeysHtml = vimKeysHtml .. generateVimKeyPreview(keyInfo.key, keyInfo.symbol)
+    end
+
+    return string.format([[
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                html, body { 
+                    background: transparent !important;
+                    height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    overflow: hidden;
+                    font-family: 'SF Pro', sans-serif;
+                }
+            </style>
+        </head>
+        <body>
+            <div style="
+                background-color: %s;
+                border-radius: 16px;
+                width: 800px;
+                height: 400px;
+                display: flex;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            ">
+                <!-- Left Column - Vim Logo -->
+                <div style="
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 40px;
+                ">
+                    <img src="file://%s/sounds/vim.png" style="max-width: 100%%; max-height: 100%%; object-fit: contain;">
+                </div>
+
+                <!-- Right Column - Content -->
+                <div style="
+                    flex: 2;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 40px;
+                ">
+                    <!-- Welcome Message -->
+                    <div style="
+                        color: white;
+                        font-size: 24px;
+                        margin-bottom: 40px;
+                        text-align: center;
+                    ">⌨️✨ Let's learn some VIM Motions!</div>
+
+                    <!-- Vim Keys Grid -->
+                    <div style="
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        gap: 10px;
+                        max-width: 400px;
+                    ">
+                        %s
+                    </div>
+                </div>
+            </div>
+        </body>
+        </html>
+    ]], COLORS.VIM.BG, hs.configdir, vimKeysHtml)
+end
+
 return M

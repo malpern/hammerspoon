@@ -12,6 +12,7 @@ local view = require("Scripts.arrows.view")
 local sound = require("Scripts.arrows.utils.sound")
 local animation = require("Scripts.arrows.utils.animation")
 local debug = require("Scripts.arrows.utils.debug")
+local welcome = require("Scripts.arrows.welcome")
 
 -- State management
 local State = {
@@ -23,7 +24,9 @@ local State = {
     isHyperGenerated = false,-- 🔑 Hyper key state
     position = nil,          -- 📍 Window position
     lastSoundKey = nil,      -- 🔊 Last key that played sound
-    isRealArrowPress = false -- ⌨️ Track if arrow press was real or simulated
+    isRealArrowPress = false,-- ⌨️ Track if arrow press was real or simulated
+    isRealVimPress = false,  -- ⌨️ Track if VIM press was real or simulated
+    activeHyperKey = nil    -- 🔑 Currently held Hyper key
 }
 
 -- Constants
@@ -128,8 +131,12 @@ function M.checkCelebration(direction, keyType)
             debug.log("⌨️ Arrow key pressed:", direction)
         end
     else
-        -- Only check for celebration if the last key was a real arrow key
-        if State.lastArrowPress and keyType == "vim" then
+        -- Only check for celebration if:
+        -- 1. The last key was a real arrow key
+        -- 2. This is a real VIM key press
+        -- 3. This is not a Hyper-generated event
+        if State.lastArrowPress and keyType == "vim" and 
+           State.isRealVimPress and not State.isHyperGenerated then
             local timeDiff = currentTime - State.lastArrowTime
             if timeDiff < TIMING.MATCH_WINDOW and State.lastArrowPress == direction then
                 debug.log("🎯 Match found! Triggering celebration")
@@ -154,9 +161,6 @@ function M.checkCelebration(direction, keyType)
                 hs.alert.show(string.format("🎉 Great job using Vim %s to move %s!", vimKey, arrowSymbol), TIMING.FEEDBACK_DURATION)
                 return true
             else
-                if State.lastArrowPress ~= direction then
-                    hs.alert.show("❌ Wrong direction! Try to match the arrow key!", TIMING.FEEDBACK_DURATION)
-                end
                 State.lastArrowPress = nil
             end
         end
@@ -195,8 +199,15 @@ local function handleHyperKey(event)
     end
 
     if direction then
-        -- Set flag before any actions
+        -- If this is the same key that's being held down, ignore it
+        if keyCode == State.activeHyperKey then
+            return true
+        end
+        
+        -- Set flags before any actions
         State.isHyperGenerated = true
+        State.isRealVimPress = true
+        State.activeHyperKey = keyCode
         
         -- Show feedback and play sound only if key changed
         M.createWindow(direction, "vim")
@@ -212,6 +223,7 @@ local function handleHyperKey(event)
         -- Reset hyper state after a short delay
         hs.timer.doAfter(0.2, function()
             State.isHyperGenerated = false
+            State.isRealVimPress = false
         end)
         
         return true
@@ -222,9 +234,10 @@ end
 
 -- Handle arrow keys
 local function handleArrowKey(event)
-    -- Skip if this is from a Hyper-generated event
-    if State.isHyperGenerated then 
+    -- Skip if this is from a Hyper-generated event or if a Hyper key is being held
+    if State.isHyperGenerated or State.activeHyperKey then 
         State.isRealArrowPress = false
+        State.isRealVimPress = false
         return false 
     end
 
@@ -241,6 +254,7 @@ local function handleArrowKey(event)
     local direction = keyMap[keyCode]
     if direction then
         State.isRealArrowPress = true  -- Mark this as a real arrow press
+        State.isRealVimPress = false   -- Reset VIM press state
         M.createWindow(direction, "arrow")
         if State.lastSoundKey ~= direction then
             sound.playSound(direction, "arrow")
@@ -264,7 +278,9 @@ function M.init()
         isHyperGenerated = false,-- 🔑 Hyper key state
         position = nil,          -- 📍 Window position
         lastSoundKey = nil,      -- 🔊 Last key that played sound
-        isRealArrowPress = false -- ⌨️ Track if arrow press was real or simulated
+        isRealArrowPress = false,-- ⌨️ Track if arrow press was real or simulated
+        isRealVimPress = false,  -- ⌨️ Track if VIM press was real or simulated
+        activeHyperKey = nil    -- 🔑 Currently held Hyper key
     }
 
     -- Initialize sound system
@@ -278,14 +294,19 @@ function M.init()
     M.hyperWatcher:start()
     M.arrowWatcher:start()
 
-    -- Create key up watcher to reset sound state
+    -- Create key up watcher to reset sound state and key tracking
     M.keyUpWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyUp }, function(event)
+        local keyCode = event:getKeyCode()
+        if keyCode == State.activeHyperKey then
+            State.activeHyperKey = nil
+        end
         State.lastSoundKey = nil
         return false
     end)
     M.keyUpWatcher:start()
 
-    hs.alert.show("⌨️✨ Let's learn some VIM Motions!", 1)
+    -- Show welcome window
+    welcome.show()
 end
 
 -- Cleanup

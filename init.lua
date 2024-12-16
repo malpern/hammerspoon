@@ -1,7 +1,7 @@
 require("hs.ipc")
 
 hs.loadSpoon("ReloadConfiguration")
-spoon.ReloadConfiguration:start()
+-- spoon.ReloadConfiguration:start()  -- Removed auto-reload on file changes
 
 -- Load the custom scripts using require instead of dofile
 local dismissNotif = require("Scripts.dismissNotification")
