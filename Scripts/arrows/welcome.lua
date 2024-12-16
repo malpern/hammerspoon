@@ -5,11 +5,33 @@
     🎨 Stylish welcome screen
     🎯 VIM key previews
     🖼️ VIM logo display
+    📊 VIM Motion Quotient
     ⏱️ Auto-fade after 2 seconds
 ]]
 
 local debug = require("Scripts.arrows.utils.debug")
 local animation = require("Scripts.arrows.utils.animation")
+
+-- Calculate VIM Motion Quotient from learning logs
+local function calculateVimQuotient()
+    local logPath = hs.configdir .. "/learning.log"
+    debug.log("📊 Calculating VIM Motion Quotient from:", logPath)
+    
+    local vimCount = tonumber(hs.execute("cat '" .. logPath .. "' | grep vim | wc -l") or "0")
+    local arrowCount = tonumber(hs.execute("cat '" .. logPath .. "' | grep arrow | wc -l") or "0")
+    local total = vimCount + arrowCount
+    
+    debug.log(string.format("📈 Stats - VIM: %d, Arrow: %d, Total: %d", vimCount, arrowCount, total))
+    
+    if total == 0 then 
+        debug.log("⚠️ No usage data found")
+        return 0 
+    end
+    
+    local quotient = math.floor((vimCount / total) * 100)
+    debug.log("✨ VIM Motion Quotient:", quotient .. "%")
+    return quotient
+end
 
 -- Constants
 local COLORS = {
@@ -53,8 +75,19 @@ local function generateVimKeyPreview(key, symbol)
     ]], COLORS.BG, COLORS.SYMBOL, symbol, COLORS.LABEL, key)
 end
 
+-- Generate a progress bar string using block characters
+local function generateProgressBar(percentage, width)
+    local filledWidth = math.floor(width * percentage / 100)
+    local emptyWidth = width - filledWidth
+    return string.rep("█", filledWidth) .. string.rep("░", emptyWidth)
+end
+
 -- Generate welcome window HTML
 local function generateHtml()
+    -- Calculate VIM Motion Quotient
+    local vimQuotient = calculateVimQuotient()
+    local progressBar = generateProgressBar(vimQuotient, 14)  -- Reduced from 20 to 14 characters
+    
     -- Try PNG first, then fall back to JPG
     local vimLogoPath = hs.configdir .. "/sounds/vim.png"
     debug.log("🔍 Attempting to load vim logo from:", vimLogoPath)
@@ -133,19 +166,43 @@ local function generateHtml()
             ">
                 <!-- Left Column - Vim Logo -->
                 <div style="
-                    flex: 0.6;
+                    flex: 0.4;
                     display: flex;
+                    flex-direction: column;
                     align-items: center;
                     justify-content: center;
                     padding: 30px;
+                    gap: 20px;
+                    width: 100%%;
                 ">
-                    <img src="%s" style="max-width: 100%%; max-height: 100%%; object-fit: contain;" 
-                         onerror="console.error('Failed to load image:', this.src); this.style.display='none';">
+                    <div style="
+                        width: 100%%;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 20px;
+                    ">
+                        <img src="%s" style="width: 150px; height: 150px; object-fit: contain;" 
+                             onerror="console.error('Failed to load image:', this.src); this.style.display='none';">
+                        <div style="
+                            color: rgba(255, 255, 255, 1) !important;
+                            font-size: 16px;
+                            font-family: monospace;
+                            font-weight: 400;
+                            padding: 10px 15px;
+                            background-color: rgba(255, 255, 255, 0.1);
+                            border-radius: 8px;
+                            text-align: center;
+                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+                            width: fit-content;
+                            white-space: nowrap;
+                        ">🏆 [%s] %d%%</div>
+                    </div>
                 </div>
 
                 <!-- Right Column - Content -->
                 <div style="
-                    flex: 2.4;
+                    flex: 2.6;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
@@ -165,7 +222,7 @@ local function generateHtml()
                         opacity: 0.95;
                         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
                         white-space: nowrap;
-                    ">⌨️✨ Let's learn some VIM Motions</div>
+                    ">⌨️✨ Learning VIM Motions</div>
 
                     <!-- Vim Keys Grid -->
                     <div style="
@@ -198,7 +255,7 @@ local function generateHtml()
             </div>
         </body>
         </html>
-    ]], COLORS.BG, base64Image, hjklHtml, bfHtml)
+    ]], COLORS.BG, base64Image, progressBar, vimQuotient, hjklHtml, bfHtml)
 end
 
 -- Show welcome window
