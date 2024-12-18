@@ -140,7 +140,7 @@ function M.generateWindowHtml(direction, keyType)
     
     -- Generate all keys but with different display styles
     for _, dir in ipairs(directions) do
-        local isPressed = dir == direction
+        local isPressed = direction and dir == direction
         local keyHtml = generateKeyPreview(dir, keyType, isPressed)
         
         keysHtml = keysHtml .. string.format([[

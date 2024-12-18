@@ -26,7 +26,9 @@ local State = {
     lastSoundKey = nil,      -- 🔊 Last key that played sound
     isRealArrowPress = false,-- ⌨️ Track if arrow press was real or simulated
     isRealVimPress = false,  -- ⌨️ Track if VIM press was real or simulated
-    keyRepeatTimer = nil     -- ⏱️ Key repeat timer
+    keyRepeatTimer = nil,    -- ⏱️ Key repeat timer
+    hyperHeld = false,       -- Track if hyper is being held
+    hyperDirection = nil     -- Track current vim direction while hyper held
 }
 
 -- Constants
@@ -70,7 +72,7 @@ local function calculateWindowPosition(direction)
 end
 
 -- Create and show window
-function M.createWindow(direction, keyType)
+function M.createWindow(direction, keyType, skipFade)
     -- Clean up existing window
     if State.fadeTimer then State.fadeTimer:stop() end
     if State.deleteTimer then State.deleteTimer:stop() end
@@ -109,33 +111,12 @@ function M.createWindow(direction, keyType)
         State.activeWebview:html(html)
         State.activeWebview:show()
 
-        -- Set up fade out
-        State.fadeTimer = hs.timer.doAfter(TIMING.FADE_DELAY, function()
-            local currentWebview = State.activeWebview  -- Capture current webview
-            if currentWebview and currentWebview:isVisible() then
-                local steps = 10
-                local fadeTime = 0.8
-                local stepTime = fadeTime / steps
-                
-                for i = 1, steps do
-                    hs.timer.doAfter(i * stepTime, function()
-                        if currentWebview and currentWebview:isVisible() then
-                            currentWebview:alpha(1.0 - (i/steps))
-                        end
-                    end)
-                end
-                
-                -- Delete after fade
-                State.deleteTimer = hs.timer.doAfter(fadeTime + 0.1, function()
-                    if currentWebview then
-                        currentWebview:delete()
-                        if State.activeWebview == currentWebview then
-                            State.activeWebview = nil
-                        end
-                    end
-                end)
-            end
-        end)
+        -- Set up fade out unless skipFade is true
+        if not skipFade then
+            State.fadeTimer = hs.timer.doAfter(TIMING.FADE_DELAY, function()
+                fadeOutWindow()
+            end)
+        end
     end)
 
     if not success then
@@ -149,6 +130,78 @@ function M.createWindow(direction, keyType)
 
     return true
 end
+
+-- Fade out and cleanup window
+local function fadeOutWindow()
+    local currentWebview = State.activeWebview
+    if currentWebview and currentWebview:isVisible() then
+        local steps = 10
+        local fadeTime = 0.8
+        local stepTime = fadeTime / steps
+        
+        for i = 1, steps do
+            hs.timer.doAfter(i * stepTime, function()
+                if currentWebview and currentWebview:isVisible() then
+                    currentWebview:alpha(1.0 - (i/steps))
+                end
+            end)
+        end
+        
+        -- Delete after fade
+        State.deleteTimer = hs.timer.doAfter(fadeTime + 0.1, function()
+            if currentWebview then
+                currentWebview:delete()
+                if State.activeWebview == currentWebview then
+                    State.activeWebview = nil
+                end
+            end
+        end)
+    end
+end
+
+-- Handle hyper key press
+local function handleHyperPress()
+    if not State.hyperHeld then
+        State.hyperHeld = true
+        State.hyperDirection = nil
+        M.createWindow(nil, "vim", true)  -- Show all keys without highlighting any 
+    end
+end
+
+-- Handle hyper key release
+local function handleHyperRelease()
+    State.hyperHeld = false
+    State.hyperDirection = nil
+    if State.activeWebview then
+        fadeOutWindow()
+    end
+end
+
+-- Handle vim key with hyper
+local function handleVimKey(direction)
+    if State.hyperHeld then
+        State.hyperDirection = direction
+        -- Always use "vim" keyType for vim keys to get VIM_HIGHLIGHT colors
+        M.createWindow(direction, "vim", true)  -- Show highlighted key with white background, no fade
+    end
+end
+
+-- Create flag watcher for hyper key
+local hyperFlagWatcher = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(event)
+    local flags = event:getFlags()
+    local isHyper = flags.cmd and flags.alt and flags.shift and flags.ctrl
+    
+    if isHyper and not State.hyperHeld then
+        handleHyperPress()
+    elseif not isHyper and State.hyperHeld then
+        handleHyperRelease()
+    end
+    
+    return false
+end)
+
+-- Start the flag watcher
+hyperFlagWatcher:start()
 
 -- Check for celebration trigger
 function M.checkCelebration(direction, keyType)
@@ -199,70 +252,6 @@ function M.checkCelebration(direction, keyType)
     return false
 end
 
--- Handle Hyper key combinations
-local function handleHyperKey(event)
-    local keyCode = event:getKeyCode()
-    local flags = event:getFlags()
-    
-    -- Check for Hyper key (all modifiers)
-    if not (flags.cmd and flags.alt and flags.shift and flags.ctrl) then
-        return false
-    end
-
-    -- Map vim keys to directions
-    local direction = nil
-    local arrowKeyCode = nil
-    local keyMap = {
-        k = { dir = "up", code = 126 },
-        j = { dir = "down", code = 125 },
-        h = { dir = "left", code = 123 },
-        l = { dir = "right", code = 124 },
-        b = { dir = "back", code = 116 },  -- Page Up for back
-        f = { dir = "forward", code = 121 }  -- Page Down for forward
-    }
-
-    for key, map in pairs(keyMap) do
-        if keyCode == hs.keycodes.map[key] then
-            direction = map.dir
-            arrowKeyCode = map.code
-            break
-        end
-    end
-
-    if direction then
-        -- Log VIM key usage
-        debug.logLearning(direction, "vim")
-        
-        -- Set flags before any actions
-        State.isHyperGenerated = true
-        State.isRealVimPress = true
-        
-        -- Show feedback and play sound
-        M.createWindow(direction, "vim")
-        sound.playSound(direction, "vim")
-        M.checkCelebration(direction, "vim")
-
-        -- Simulate arrow key
-        hs.eventtap.event.newKeyEvent({}, arrowKeyCode, true):post()
-        
-        -- Reset state after delay
-        hs.timer.doAfter(TIMING.STATE_RESET_DELAY, function()
-            State.isHyperGenerated = false
-            State.isRealVimPress = false
-        end)
-        
-        -- Set up key repeat timer
-        if State.keyRepeatTimer then State.keyRepeatTimer:stop() end
-        State.keyRepeatTimer = hs.timer.doAfter(TIMING.KEY_REPEAT_DELAY, function()
-            State.lastSoundKey = nil
-        end)
-        
-        return true
-    end
-    
-    return false
-end
-
 -- Handle arrow keys
 local function handleArrowKey(event)
     -- Skip if this is from a Hyper-generated event
@@ -303,6 +292,57 @@ local function handleArrowKey(event)
     return false
 end
 
+-- Handle vim key events
+local vimKeyWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(event)
+    if not State.hyperHeld then return false end
+    
+    local keyCode = event:getKeyCode()
+    local keyMap = {
+        [hs.keycodes.map.k] = "up",
+        [hs.keycodes.map.j] = "down",
+        [hs.keycodes.map.h] = "left",
+        [hs.keycodes.map.l] = "right",
+        [hs.keycodes.map.b] = "back",
+        [hs.keycodes.map.f] = "forward"
+    }
+    
+    local direction = keyMap[keyCode]
+    if direction then
+        -- Log VIM key usage
+        debug.logLearning(direction, "vim")
+        
+        -- Show feedback and play sound
+        State.isHyperGenerated = true  -- Mark this as hyper-generated
+        State.isRealVimPress = true    -- Mark this as a real vim press
+        handleVimKey(direction)
+        sound.playSound(direction, "vim")
+        
+        -- Simulate arrow key
+        local arrowKeyCodes = {
+            up = 126,
+            down = 125,
+            left = 123,
+            right = 124,
+            back = 116,
+            forward = 121
+        }
+        hs.eventtap.event.newKeyEvent({}, arrowKeyCodes[direction], true):post()
+        
+        -- Reset state after delay
+        hs.timer.doAfter(TIMING.STATE_RESET_DELAY, function()
+            State.isHyperGenerated = false
+            State.isRealVimPress = false
+        end)
+        
+        return true
+    end
+    
+    return false
+end)
+
+-- Start the vim key watcher
+vimKeyWatcher:start()
+
 -- Initialize
 function M.init()
     -- Reset state
@@ -317,19 +357,23 @@ function M.init()
         lastSoundKey = nil,      -- 🔊 Last key that played sound
         isRealArrowPress = false,-- ⌨️ Track if arrow press was real or simulated
         isRealVimPress = false,  -- ⌨️ Track if VIM press was real or simulated
-        keyRepeatTimer = nil     -- ⏱️ Key repeat timer
+        keyRepeatTimer = nil,    -- ⏱️ Key repeat timer
+        hyperHeld = false,       -- Track if hyper is being held
+        hyperDirection = nil     -- Track current vim direction while hyper held
     }
 
     -- Initialize sound system
     sound.init()
 
     -- Create event watchers
-    M.hyperWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, handleHyperKey)
     M.arrowWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, handleArrowKey)
+    M.hyperFlagWatcher = hyperFlagWatcher
+    M.vimKeyWatcher = vimKeyWatcher
 
     -- Start watchers
-    M.hyperWatcher:start()
     M.arrowWatcher:start()
+    M.hyperFlagWatcher:start()
+    M.vimKeyWatcher:start()
 
     -- Show welcome window
     welcome.show()
@@ -337,7 +381,8 @@ end
 
 -- Cleanup
 function M.cleanup()
-    if M.hyperWatcher then M.hyperWatcher:stop() end
+    if M.hyperFlagWatcher then M.hyperFlagWatcher:stop() end
+    if M.vimKeyWatcher then M.vimKeyWatcher:stop() end
     if M.arrowWatcher then M.arrowWatcher:stop() end
     if State.activeWebview then State.activeWebview:delete() end
     if State.fadeTimer then State.fadeTimer:stop() end
