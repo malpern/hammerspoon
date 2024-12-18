@@ -35,9 +35,12 @@ end
 
 -- Constants
 local COLORS = {
-    BG = "#1E1E1E",
+    BG = "rgb(148, 215, 104)",  -- Restore green background
     SYMBOL = "white",
-    LABEL = "#666666"
+    LABEL = "#666666",
+    KEY_BG = "#1E1E1E",  -- Keep VIM key background dark
+    KEY_SYMBOL = "white",
+    KEY_LABEL = "#666666"
 }
 
 local M = {}
@@ -53,10 +56,13 @@ local function generateVimKeyPreview(key, symbol)
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;e
+            justify-content: center;
             margin: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 
+                        0 4px 8px rgba(0, 0, 0, 0.1);
             font-size: 32px;
+            transform: translateY(0);
+            transition: transform 0.2s ease;
         ">
             <div style="
                 font-family: 'SF Pro Display', 'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -72,7 +78,7 @@ local function generateVimKeyPreview(key, symbol)
                 margin-top: 2px;
             ">%s</div>
         </div>
-    ]], COLORS.BG, COLORS.SYMBOL, symbol, COLORS.LABEL, key)
+    ]], COLORS.KEY_BG, COLORS.KEY_SYMBOL, symbol, COLORS.KEY_LABEL, key)
 end
 
 -- Generate a progress bar string using block characters
@@ -88,7 +94,7 @@ local function generateHtml()
     local vimQuotient = calculateVimQuotient()
     local progressBar = generateProgressBar(vimQuotient, 14)  -- Reduced from 20 to 14 characters
     
-    -- Try PNG first, then fall back to JPG
+    -- Try PNG instead of SVG
     local vimLogoPath = hs.configdir .. "/sounds/vim.png"
     debug.log("🔍 Attempting to load vim logo from:", vimLogoPath)
     
@@ -157,12 +163,15 @@ local function generateHtml()
         <body>
             <div style="
                 background-color: %s;
-                border-radius: 8px;
+                border-radius: 12px;
                 width: 800px;
                 height: 400px;
                 display: flex;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-                border: 2px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+                            0 20px 60px rgba(0, 0, 0, 0.2),
+                            0 0 0 1px rgba(255, 255, 255, 0.1);
+                transform: perspective(1000px) rotateX(2deg);
+                transform-origin: 50%% 100%%;
             ">
                 <!-- Left Column - Vim Logo -->
                 <div style="
@@ -182,10 +191,19 @@ local function generateHtml()
                         align-items: center;
                         gap: 20px;
                     ">
-                        <img src="%s" style="width: 150px; height: 150px; object-fit: contain;" 
-                             onerror="console.error('Failed to load image:', this.src); this.style.display='none';">
                         <div style="
-                            color: rgba(255, 255, 255, 1) !important;
+                            width: 225px;
+                            height: 225px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin-bottom: 10px;
+                        ">
+                            <img src="%s" style="width: 100%%; height: 100%%;" 
+                                 onerror="console.error('Failed to load image:', this.src); this.style.display='none';">
+                        </div>
+                        <div style="
+                            color: black !important;
                             font-size: 16px;
                             font-family: monospace;
                             font-weight: 400;
@@ -193,9 +211,10 @@ local function generateHtml()
                             background-color: rgba(255, 255, 255, 0.1);
                             border-radius: 8px;
                             text-align: center;
-                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+                            text-shadow: none;
                             width: fit-content;
                             white-space: nowrap;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                         ">🏆 [%s] %d%%</div>
                     </div>
                 </div>
@@ -211,7 +230,7 @@ local function generateHtml()
                 ">
                     <!-- Welcome Message -->
                     <div style="
-                        color: white;
+                        color: black;
                         font-family: 'Proxima Nova', -apple-system, BlinkMacSystemFont, sans-serif;
                         font-size: 32px;
                         margin-bottom: 48px;
@@ -220,7 +239,7 @@ local function generateHtml()
                         letter-spacing: -0.02em;
                         line-height: 1.2;
                         opacity: 0.95;
-                        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                        text-shadow: none;
                         white-space: nowrap;
                     ">⌨️✨ Learning VIM Motions</div>
 
@@ -299,11 +318,9 @@ function M.show()
         webview:html(html)
         webview:show()
 
-        -- Fade out after 2 seconds
-        hs.timer.doAfter(2.0, function()
-            -- Single confetti celebration with 2 repeats
-            animation.triggerCelebration()
-            
+        -- Fade out after 0.9 seconds
+        hs.timer.doAfter(0.9, function()
+            -- Removed celebration trigger
             animation.fadeOut(webview, function()
                 if webview then
                     webview:delete()

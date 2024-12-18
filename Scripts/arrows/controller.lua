@@ -260,13 +260,17 @@ end
 local function handleArrowKey(event)
     -- Skip if this is from a Hyper-generated event
     if State.isHyperGenerated then 
-        State.isRealArrowPress = false
-        State.isRealVimPress = false
         return false 
     end
 
     -- Skip if this is a key repeat
     if event:getProperty(hs.eventtap.event.properties.keyboardEventAutorepeat) == 1 then
+        return false
+    end
+
+    -- Skip if any modifiers are pressed (except fn which is needed for page up/down)
+    local flags = event:getFlags()
+    if flags.cmd or flags.alt or flags.shift or flags.ctrl then
         return false
     end
 
@@ -342,16 +346,21 @@ local vimKeyWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, functio
     
     local direction = keyMap[keyCode]
     if direction then
-        -- Log VIM key usage
-        debug.logLearning(direction, "vim")
+        -- Set state for arrow key simulation
+        State.isHyperGenerated = true
         
-        -- Show feedback and play sound
-        State.isHyperGenerated = true  -- Mark this as hyper-generated
-        State.isRealVimPress = true    -- Mark this as a real vim press
-        handleVimKey(direction)
-        sound.playSound(direction, "vim")
+        -- Only update window and play sound if this is a new key press or a different key
+        local isNewKey = direction ~= State.currentVimKey
+        if isNewKey then
+            State.isRealVimPress = true
+            State.currentVimKey = direction
+            
+            -- Play sound and show window only on new key
+            sound.playSound(direction, "vim")
+            handleVimKey(direction)
+        end
         
-        -- Simulate arrow key
+        -- Simulate arrow key press (allows for natural key repeat)
         local arrowKeyCodes = {
             up = 126,
             down = 125,
@@ -362,20 +371,51 @@ local vimKeyWatcher = hs.eventtap.new({hs.eventtap.event.types.keyDown}, functio
         }
         hs.eventtap.event.newKeyEvent({}, arrowKeyCodes[direction], true):post()
         
-        -- Reset state after delay
-        hs.timer.doAfter(TIMING.STATE_RESET_DELAY, function()
+        -- Reset hyper generated state quickly to allow for natural key repeat
+        hs.timer.doAfter(0.01, function()
             State.isHyperGenerated = false
-            State.isRealVimPress = false
         end)
-        
-        return true
     end
     
     return false
 end)
 
--- Start the vim key watcher
+-- Handle vim key releases
+local vimKeyUpWatcher = hs.eventtap.new({hs.eventtap.event.types.keyUp}, function(event)
+    if not State.hyperHeld then return false end
+    
+    local keyCode = event:getKeyCode()
+    local keyMap = {
+        [hs.keycodes.map.k] = "up",
+        [hs.keycodes.map.j] = "down",
+        [hs.keycodes.map.h] = "left",
+        [hs.keycodes.map.l] = "right",
+        [hs.keycodes.map.b] = "back",
+        [hs.keycodes.map.f] = "forward"
+    }
+    
+    local direction = keyMap[keyCode]
+    if direction and direction == State.currentVimKey then
+        State.currentVimKey = nil
+        -- Simulate the corresponding arrow key up
+        local arrowKeyCodes = {
+            up = 126,
+            down = 125,
+            left = 123,
+            right = 124,
+            back = 116,
+            forward = 121
+        }
+        hs.eventtap.event.newKeyEvent({}, arrowKeyCodes[direction], false):post()
+        -- Don't fade out here as hyper release will handle that
+    end
+    
+    return false
+end)
+
+-- Start the vim key watchers
 vimKeyWatcher:start()
+vimKeyUpWatcher:start()
 
 -- Initialize
 function M.init()
