@@ -46,12 +46,15 @@ local function calculateWindowPosition()
     local screen = hs.screen.mainScreen()
     local frame = screen:frame()
     
-    -- Default position (top right)
+    -- New dimensions for 4 keys side by side (90px each) plus margins
+    local width = (90 * 4) + (5 * 2) + (10 * 3)  -- 4 keys * 90px + outer margins + inner gaps
+    local height = 120
+    
     local position = {
-        x = frame.x + frame.w - 90 - 20,  -- width + margin
-        y = frame.y + 20,                 -- margin
-        w = 90,                          -- width
-        h = 120                          -- height
+        x = frame.x + frame.w - width - 20,  -- 20px margin from right edge
+        y = frame.y + 20,                    -- 20px margin from top
+        w = width,
+        h = height
     }
     
     State.position = position

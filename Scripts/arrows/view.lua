@@ -38,28 +38,60 @@ local LABELS = {
     forward = "Forward"
 }
 
-function M.generateWindowHtml(direction, keyType)
-    local isArrowKey = keyType == "arrow"
-    local isVimKey = not isArrowKey
-    local colors = isArrowKey and COLORS.ARROW or COLORS.VIM
+-- Generate a single key preview
+local function generateKeyPreview(direction, isHighlighted)
+    local colors = isHighlighted and COLORS.ARROW or COLORS.VIM
+    local symbol = SYMBOLS[direction]
+    local label = LABELS[direction]
     
-    -- For arrow keys: label on top, symbol below
-    -- For vim keys: symbol on top, label below
-    local firstContent = isArrowKey and LABELS[direction] or SYMBOLS[direction]
-    local secondContent = isArrowKey and SYMBOLS[direction] or LABELS[direction]
-    local firstColor = isArrowKey and colors.LABEL or colors.SYMBOL
-    local secondColor = isArrowKey and colors.SYMBOL or colors.LABEL
+    -- For highlighted (arrow) keys: label on top, symbol below
+    -- For normal (vim) keys: symbol on top, label below
+    local firstContent = isHighlighted and label or symbol
+    local secondContent = isHighlighted and symbol or label
+    local firstColor = isHighlighted and colors.LABEL or colors.SYMBOL
+    local secondColor = isHighlighted and colors.SYMBOL or colors.LABEL
 
-    -- Special case for back button
-    local secondMargin = direction == "back" and "0px" or "2px"
-    -- Use smaller font for "Back" text only when it appears (depends on key mode)
-    local secondFontSize = (direction == "back" and isVimKey) and "0.6em" or 
-                          (direction == "forward" and isVimKey) and "0.45em" or "0.8em"  -- Forward text 25% smaller than Back
-    local firstFontSize = (direction == "back" and isArrowKey) and "0.6em" or 
-                         (direction == "forward" and isArrowKey) and "0.45em" or "1em"  -- Forward text 25% smaller than Back
+    return string.format([[
+        <div style="
+            background-color: %s;
+            border-radius: 12px;
+            width: 90px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            font-size: 48px;
+        ">
+            <div style="
+                font-family: 'SF Pro Display', 'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+                color: %s;
+                font-size: 1em;
+                font-weight: 600;
+            ">%s</div>
+            <div style="
+                font-family: 'SF Pro Display', 'SF Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+                color: %s;
+                font-size: 0.8em;
+                font-weight: 600;
+                margin-top: 2px;
+            ">%s</div>
+        </div>
+    ]], colors.BG, firstColor, firstContent, secondColor, secondContent)
+end
 
-    debug.log("Generating window HTML for", direction, "with type", keyType)
-
+function M.generateWindowHtml(direction, keyType)
+    -- Only show HJKL keys
+    local directions = {"left", "down", "up", "right"}
+    local keysHtml = ""
+    
+    for _, dir in ipairs(directions) do
+        local isHighlighted = keyType == "arrow" and dir == direction
+        keysHtml = keysHtml .. generateKeyPreview(dir, isHighlighted)
+    end
+    
     return string.format([[
         <!DOCTYPE html>
         <html>
@@ -79,44 +111,17 @@ function M.generateWindowHtml(direction, keyType)
         </head>
         <body>
             <div style="
-                background-color: %s;
-                border-radius: 12px;
-                width: 90px;
-                height: 120px;
                 display: flex;
-                flex-direction: column;
-                align-items: center;
                 justify-content: center;
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-                transition: all 0.2s ease;
-                font-size: 48px;
+                align-items: center;
+                gap: 10px;
+                padding: 10px;
             ">
-                <div style="
-                    font-family: %s;
-                    color: %s;
-                    font-size: %s;
-                    font-weight: 600;
-                ">%s</div>
-                <div style="
-                    font-family: %s;
-                    color: %s;
-                    font-size: %s;
-                    font-weight: 600;
-                    margin-top: %s;
-                ">%s</div>
+                %s
             </div>
         </body>
         </html>
-    ]], colors.BG, 
-        (isArrowKey or firstContent == SYMBOLS[direction]) and "'SF Pro', sans-serif" or "'Proxima Nova', 'SF Pro', sans-serif",
-        firstColor, 
-        firstFontSize,
-        firstContent,
-        (isArrowKey or secondContent == SYMBOLS[direction]) and "'SF Pro', sans-serif" or "'Proxima Nova', 'SF Pro', sans-serif",
-        secondColor,
-        secondFontSize,
-        secondMargin,
-        secondContent)
+    ]], keysHtml)
 end
 
 return M
