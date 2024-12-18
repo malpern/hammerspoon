@@ -42,19 +42,27 @@ local TIMING = {
 local M = {}
 
 -- Calculate window position
-local function calculateWindowPosition()
+local function calculateWindowPosition(direction)
     local screen = hs.screen.mainScreen()
     local frame = screen:frame()
     
-    -- New dimensions for 4 keys side by side (90px each) plus margins
-    local width = (90 * 4) + (5 * 2) + (10 * 3)  -- 4 keys * 90px + outer margins + inner gaps
-    local height = 120
+    -- Constants for sizing
+    local keyWidth = 90  -- width of each key
+    local keyGap = 10    -- gap between keys
+    local rightMargin = 25  -- distance from right edge of screen
+    
+    -- Calculate width based on number of keys
+    local numKeys = (direction == "back" or direction == "forward") and 2 or 4
+    local width = (keyWidth * numKeys) + (keyGap * (numKeys - 1))
+    
+    -- Position from right edge
+    local x = frame.x + frame.w - width - rightMargin
     
     local position = {
-        x = frame.x + frame.w - width - 20,  -- 20px margin from right edge
-        y = frame.y + 20,                    -- 20px margin from top
+        x = x,
+        y = frame.y + 20,  -- 20px margin from top
         w = width,
-        h = height
+        h = 120
     }
     
     State.position = position
@@ -71,8 +79,8 @@ function M.createWindow(direction, keyType)
         State.activeWebview = nil
     end
 
-    -- Calculate position
-    local pos = State.position or calculateWindowPosition()
+    -- Calculate position with direction parameter
+    local pos = State.position or calculateWindowPosition(direction)
 
     -- Create webview
     local success, webview = pcall(function()
@@ -103,12 +111,30 @@ function M.createWindow(direction, keyType)
 
         -- Set up fade out
         State.fadeTimer = hs.timer.doAfter(TIMING.FADE_DELAY, function()
-            animation.fadeOut(State.activeWebview, function()
-                if State.activeWebview then
-                    State.activeWebview:delete()
-                    State.activeWebview = nil
+            local currentWebview = State.activeWebview  -- Capture current webview
+            if currentWebview and currentWebview:isVisible() then
+                local steps = 10
+                local fadeTime = 0.8
+                local stepTime = fadeTime / steps
+                
+                for i = 1, steps do
+                    hs.timer.doAfter(i * stepTime, function()
+                        if currentWebview and currentWebview:isVisible() then
+                            currentWebview:alpha(1.0 - (i/steps))
+                        end
+                    end)
                 end
-            end)
+                
+                -- Delete after fade
+                State.deleteTimer = hs.timer.doAfter(fadeTime + 0.1, function()
+                    if currentWebview then
+                        currentWebview:delete()
+                        if State.activeWebview == currentWebview then
+                            State.activeWebview = nil
+                        end
+                    end
+                end)
+            end
         end)
     end)
 

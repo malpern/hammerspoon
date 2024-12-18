@@ -53,7 +53,7 @@ local function generateVimKeyPreview(key, symbol)
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: center;e
             margin: 5px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
             font-size: 32px;
