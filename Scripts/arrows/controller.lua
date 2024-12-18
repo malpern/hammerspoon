@@ -51,8 +51,9 @@ local function calculateWindowPosition(direction)
     
     -- Constants for sizing
     local keyWidth = 90  -- width of each key
-    local keyGap = 10    -- gap between keys
-    local rightMargin = 25  -- distance from right edge of screen
+    local keyGap = (direction == "back" or direction == "forward") and 30 or 10  -- 30px gap for B/F, 10px for HJKL
+    local topMargin = 20    -- margin from top edge
+    local rightMargin = 25  -- margin from right edge
     local borderWidth = 2   -- border thickness
     local containerPadding = 4  -- extra padding around container
     
@@ -60,12 +61,12 @@ local function calculateWindowPosition(direction)
     local numKeys = (direction == "back" or direction == "forward") and 2 or 4
     local width = (keyWidth * numKeys) + (keyGap * (numKeys - 1)) + (borderWidth * 2) + (containerPadding * 2)
     
-    -- Position from right edge
+    -- Position from right edge with consistent margin
     local x = frame.x + frame.w - width - rightMargin
     
     local position = {
         x = x,
-        y = frame.y + 20,  -- 20px margin from top
+        y = frame.y + topMargin,  -- 20px from top
         w = width,
         h = 120 + (borderWidth * 2) + (containerPadding * 2)  -- add space for border and padding
     }

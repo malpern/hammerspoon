@@ -30,8 +30,8 @@ local SYMBOLS = {
     down = "↓",
     left = "←",
     right = "→",
-    back = "▲",
-    forward = "▼"
+    back = "B",
+    forward = "F"
 }
 
 local LABELS = {
@@ -162,12 +162,15 @@ function M.generateWindowHtml(direction, keyType)
                     height: 132px;
                     display: flex;
                     align-items: center;
+                    justify-content: flex-end;
+                    /* border: 2px solid blue; */
                 }
                 #container {
                     display: flex;
                     gap: 10px;
-                    border: 2px solid red;
+                    /* border: 2px solid red; */
                     padding: 4px;
+                    justify-content: flex-end;
                 }
             </style>
         </head>
