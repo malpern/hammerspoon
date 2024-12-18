@@ -53,10 +53,12 @@ local function calculateWindowPosition(direction)
     local keyWidth = 90  -- width of each key
     local keyGap = 10    -- gap between keys
     local rightMargin = 25  -- distance from right edge of screen
+    local borderWidth = 2   -- border thickness
+    local containerPadding = 4  -- extra padding around container
     
     -- Calculate width based on number of keys
     local numKeys = (direction == "back" or direction == "forward") and 2 or 4
-    local width = (keyWidth * numKeys) + (keyGap * (numKeys - 1))
+    local width = (keyWidth * numKeys) + (keyGap * (numKeys - 1)) + (borderWidth * 2) + (containerPadding * 2)
     
     -- Position from right edge
     local x = frame.x + frame.w - width - rightMargin
@@ -65,7 +67,7 @@ local function calculateWindowPosition(direction)
         x = x,
         y = frame.y + 20,  -- 20px margin from top
         w = width,
-        h = 120
+        h = 120 + (borderWidth * 2) + (containerPadding * 2)  -- add space for border and padding
     }
     
     State.position = position

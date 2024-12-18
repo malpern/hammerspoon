@@ -159,13 +159,15 @@ function M.generateWindowHtml(direction, keyType)
                     background: transparent !important;
                     margin: 0;
                     padding: 0;
-                    height: 120px;
+                    height: 132px;
                     display: flex;
                     align-items: center;
                 }
                 #container {
                     display: flex;
                     gap: 10px;
+                    border: 2px solid red;
+                    padding: 4px;
                 }
             </style>
         </head>
