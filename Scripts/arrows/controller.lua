@@ -28,7 +28,8 @@ local State = {
     isRealVimPress = false,  -- ⌨️ Track if VIM press was real or simulated
     keyRepeatTimer = nil,    -- ⏱️ Key repeat timer
     hyperHeld = false,       -- Track if hyper is being held
-    hyperDirection = nil     -- Track current vim direction while hyper held
+    hyperDirection = nil,    -- Track current vim direction while hyper held
+    currentArrowKey = nil    -- Track currently pressed arrow key
 }
 
 -- Constants
@@ -135,8 +136,8 @@ end
 local function fadeOutWindow()
     local currentWebview = State.activeWebview
     if currentWebview and currentWebview:isVisible() then
-        local steps = 10
-        local fadeTime = 0.8
+        local steps = 20        -- More steps for smoother fade
+        local fadeTime = 2    -- Longer fade duration (2 seconds)
         local stepTime = fadeTime / steps
         
         for i = 1, steps do
@@ -261,6 +262,11 @@ local function handleArrowKey(event)
         return false 
     end
 
+    -- Skip if this is a key repeat
+    if event:getProperty(hs.eventtap.event.properties.keyboardEventAutorepeat) == 1 then
+        return false
+    end
+
     local keyCode = event:getKeyCode()
     local keyMap = {
         [126] = "up",
@@ -278,7 +284,8 @@ local function handleArrowKey(event)
         
         State.isRealArrowPress = true  -- Mark this as a real arrow press
         State.isRealVimPress = false   -- Reset VIM press state
-        M.createWindow(direction, "arrow")
+        State.currentArrowKey = direction  -- Track current arrow key
+        M.createWindow(direction, "arrow", true)  -- Create window with skipFade=true
         sound.playSound(direction, "arrow")
         M.checkCelebration(direction, "arrow")
         
@@ -287,6 +294,30 @@ local function handleArrowKey(event)
         State.keyRepeatTimer = hs.timer.doAfter(TIMING.KEY_REPEAT_DELAY, function()
             State.lastSoundKey = nil
         end)
+    end
+    
+    return false
+end
+
+-- Handle arrow key releases
+local function handleArrowKeyUp(event)
+    -- Skip if this is from a Hyper-generated event
+    if State.isHyperGenerated then return false end
+
+    local keyCode = event:getKeyCode()
+    local keyMap = {
+        [126] = "up",
+        [125] = "down",
+        [123] = "left",
+        [124] = "right",
+        [116] = "back",    -- Page Up for back
+        [121] = "forward"  -- Page Down for forward
+    }
+    
+    local direction = keyMap[keyCode]
+    if direction and direction == State.currentArrowKey then
+        State.currentArrowKey = nil  -- Clear current arrow key
+        fadeOutWindow()  -- Fade out the window
     end
     
     return false
@@ -359,7 +390,8 @@ function M.init()
         isRealVimPress = false,  -- ⌨️ Track if VIM press was real or simulated
         keyRepeatTimer = nil,    -- ⏱️ Key repeat timer
         hyperHeld = false,       -- Track if hyper is being held
-        hyperDirection = nil     -- Track current vim direction while hyper held
+        hyperDirection = nil,    -- Track current vim direction while hyper held
+        currentArrowKey = nil    -- Track currently pressed arrow key
     }
 
     -- Initialize sound system
@@ -367,11 +399,13 @@ function M.init()
 
     -- Create event watchers
     M.arrowWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, handleArrowKey)
+    M.arrowUpWatcher = hs.eventtap.new({ hs.eventtap.event.types.keyUp }, handleArrowKeyUp)
     M.hyperFlagWatcher = hyperFlagWatcher
     M.vimKeyWatcher = vimKeyWatcher
 
     -- Start watchers
     M.arrowWatcher:start()
+    M.arrowUpWatcher:start()
     M.hyperFlagWatcher:start()
     M.vimKeyWatcher:start()
 
@@ -384,6 +418,7 @@ function M.cleanup()
     if M.hyperFlagWatcher then M.hyperFlagWatcher:stop() end
     if M.vimKeyWatcher then M.vimKeyWatcher:stop() end
     if M.arrowWatcher then M.arrowWatcher:stop() end
+    if M.arrowUpWatcher then M.arrowUpWatcher:stop() end
     if State.activeWebview then State.activeWebview:delete() end
     if State.fadeTimer then State.fadeTimer:stop() end
     if State.deleteTimer then State.deleteTimer:stop() end
