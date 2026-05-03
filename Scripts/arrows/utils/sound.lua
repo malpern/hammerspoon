@@ -12,13 +12,15 @@
 local M = {}
 local debug = require("Scripts.arrows.utils.debug")
 
+local SOUND_ENABLED = false -- set to true to enable sounds by default
+
 -- Sound state
 local State = {
     sounds = {},            -- 🎵 Normal sounds
     dissonantSounds = {},   -- 🎶 Dissonant sounds
     backSound = nil,        -- ⬆️ Back sound
     forwardSound = nil,     -- ⬇️ Forward sound
-    silentMode = false,     -- 🔇 Mute state
+    silentMode = not SOUND_ENABLED, -- 🔇 Mute state
     activeSound = nil,      -- 🎧 Currently playing
     lastPlayTime = 0,       -- ⏱️ Debounce timer
     lastEscTime = nil,      -- ⌨️ Last ESC press

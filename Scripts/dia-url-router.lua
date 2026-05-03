@@ -109,6 +109,10 @@ end
 local function markRouted(url)
     recentlyRouted[url] = os.time()
 end
+M.markRouted = markRouted
+M.clearCooldown = function(url)
+    recentlyRouted[url] = nil
+end
 
 M.cooldownTimer = hs.timer.doEvery(300, function()
     local now = os.time()
@@ -171,6 +175,57 @@ local function profileForURL(url)
 end
 
 ---------------------------------------------------------------------------
+-- YouTube video state (requires --enable-applescript-javascript)
+---------------------------------------------------------------------------
+
+local function isYouTubeVideo(url)
+    return url:match("youtube%.com/watch") or url:match("youtu%.be/")
+end
+
+local function getVideoState()
+    local ok, result = hs.osascript.applescript([[
+        tell application "Dia"
+            tell active tab of window 1
+                execute javascript "
+                    var v = document.querySelector('video');
+                    v ? JSON.stringify({time: Math.floor(v.currentTime), paused: v.paused}) : '{}'
+                "
+            end tell
+        end tell
+    ]])
+    if ok and result then
+        local time = tonumber(tostring(result):match('"time":(%d+)'))
+        local paused = tostring(result):match('"paused":(%a+)') == "true"
+        if time and time > 0 then
+            return time, not paused
+        end
+    end
+    return nil, false
+end
+
+local function appendTimestamp(url, seconds)
+    if not seconds or seconds <= 0 then return url end
+    url = url:gsub("[?&]t=%d+s?", "")
+    local separator = url:find("?") and "&" or "?"
+    return url .. separator .. "t=" .. seconds .. "s"
+end
+
+local function autoPlayVideo()
+    hs.timer.doAfter(3, function()
+        hs.osascript.applescript([[
+            tell application "Dia"
+                tell active tab of window 1
+                    execute javascript "
+                        var v = document.querySelector('video');
+                        if (v && v.paused) v.play();
+                    "
+                end tell
+            end tell
+        ]])
+    end)
+end
+
+---------------------------------------------------------------------------
 -- Profile detection and tab operations
 ---------------------------------------------------------------------------
 
@@ -195,6 +250,20 @@ local function moveCurrentTabToProfile(url, targetProfile)
         return
     end
 
+    -- Preserve YouTube video state before closing
+    local wasPlaying = false
+    if isYouTubeVideo(url) then
+        flog("YouTube video detected, getting state")
+        local seconds, playing = getVideoState()
+        wasPlaying = playing
+        if seconds then
+            flog("Playback position: " .. seconds .. "s, playing: " .. tostring(playing))
+            url = appendTimestamp(url, seconds)
+        else
+            flog("Could not get video state (JS flag may not be enabled)")
+        end
+    end
+
     flog("Closing active tab")
     hs.osascript.applescript('tell application "Dia" to close active tab of window 1')
 
@@ -215,6 +284,11 @@ local function moveCurrentTabToProfile(url, targetProfile)
 
     targetWin:focus()
     app:activate()
+
+    if wasPlaying then
+        flog("Video was playing, will auto-play after load")
+        autoPlayVideo()
+    end
 
     local icon = targetProfile == "Smirk" and "💼" or "🏠"
     hs.notify.new(nil, {

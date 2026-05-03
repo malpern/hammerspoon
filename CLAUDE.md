@@ -55,6 +55,16 @@ local function flog(msg)
 end
 ```
 
+### JavaScript execution in Dia
+
+Dia supports `execute javascript` in AppleScript but requires the `--enable-applescript-javascript` launch flag. Hammerspoon detects when Dia launches without it and relaunches with the flag automatically.
+
+**DO NOT replace the Dia binary with a wrapper script.** This breaks codesigning and causes Dia to lose all profiles and login data. Use the Hammerspoon app watcher relaunch approach instead.
+
+### AppleScript JSON parsing
+
+When Dia returns JSON from `execute javascript`, the quotes are escaped (`\"` not `"`). Pattern matching must handle both `"key":` and `\\"key\\":` formats.
+
 ## Reloading
 
 `open -g hammerspoon://reload` or `hs -c "hs.reload()"`. The `require` cache can serve stale modules — a full `hs.reload()` is more reliable than re-requiring individual modules.
