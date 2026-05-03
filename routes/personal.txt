@@ -1,0 +1,67 @@
+# Personal domains — one per line
+# Lines starting with # are ignored
+
+# Social media
+youtube.com
+x.com
+twitter.com
+reddit.com
+instagram.com
+discord.com
+imgur.com
+threads.net
+tiktok.com
+facebook.com
+
+# News / reading
+techmeme.com
+news.ycombinator.com
+wsj.com
+nytimes.com
+bloomberg.com
+politico.com
+macrumors.com
+daringfireball.net
+theverge.com
+wired.com
+medium.com
+forbes.com
+karpathy.ai
+
+# Shopping
+amazon.com
+ebay.com
+modedesigns.com
+taschen.com
+buy.gazelle.com
+
+# Travel
+airbnb.com
+vrbo.com
+hilton.com
+
+# Finance / personal
+connect.secure.wellsfargo.com
+secure.bankofamerica.com
+secure.chase.com
+digital.fidelity.com
+fidelity.com
+wealth.emaplan.com
+id.venmo.com
+
+# Entertainment
+auth.hulu.com
+thepiratebay.org
+
+# Personal tools
+chatgpt.com
+fast.com
+wyzant.com
+
+# Tax / government
+ftb.ca.gov
+irs.gov
+gather-taxpayer.safesendreturns.com
+
+# GitHub (personal)
+path:github.com/malpern

@@ -12,3 +12,4 @@ require("Scripts.arrows")
 
 require("Scripts.appswitcher")
 require("Scripts.dia-move-tab")
+require("Scripts.dia-url-router")

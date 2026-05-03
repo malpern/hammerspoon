@@ -1,0 +1,52 @@
+# Smirk (work) domains — one per line
+# Lines starting with # are ignored
+
+# Smirk Health
+smirkhealth.com
+smirkhealth.click
+
+# Communication
+slack.com
+app.slack.com
+zoom.us
+us06web.zoom.us
+us02web.zoom.us
+teams.microsoft.com
+
+# Project management
+linear.app
+notion.so
+notion.site
+userinterviews.com
+
+# Design
+figma.com
+
+# Analytics
+us.posthog.com
+app.posthog.com
+posthog.com
+
+# Finance / corporate
+app.ramp.com
+ramp.com
+
+# Dev tools
+vercel.app
+vercel.com
+
+# Cloud / infra
+aws.amazon.com
+console.cloud.google.com
+
+# Insurance / partners
+chubb.com
+zurichna.com
+careington.com
+iris.opynhealth.com
+
+# Pitchbook
+pitchbook.com
+
+# GitHub (work)
+path:github.com/Smirk-Health
