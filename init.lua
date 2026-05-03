@@ -9,3 +9,6 @@ local dismissNotif = require("Scripts.dismissNotification")
 require("Scripts.mouse-highlight")
 -- require("Scripts.birthdayCountdown")
 require("Scripts.arrows")
+
+require("Scripts.appswitcher")
+require("Scripts.dia-move-tab")
