@@ -1,6 +1,5 @@
 local M = {}
 
-local DELAY = 300000 -- microseconds between steps (300ms)
 local DIA_BUNDLE = "company.thebrowser.dia"
 local LOGFILE = os.getenv("HOME") .. "/.hammerspoon/dia-move-tab.log"
 local function flog(msg)
@@ -11,129 +10,82 @@ local function flog(msg)
     end
 end
 
-local PROFILES = {
-    personal = {mods = "{control down}", key = "1"},
-    smirk    = {mods = "{control down}", key = "2"},
-}
-
--- Dia ignores hs.eventtap synthetic events; must use System Events
-local function sendKey(applescriptMods, key)
-    local script
-    if applescriptMods == "" then
-        script = string.format([[
-            tell application "System Events"
-                tell process "Dia"
-                    keystroke "%s"
-                end tell
-            end tell
-        ]], key)
-    else
-        script = string.format([[
-            tell application "System Events"
-                tell process "Dia"
-                    keystroke "%s" using %s
-                end tell
-            end tell
-        ]], key, applescriptMods)
-    end
-    hs.osascript.applescript(script)
-end
-
-local function sendReturn()
-    hs.osascript.applescript([[
-        tell application "System Events"
-            tell process "Dia"
-                key code 36
-            end tell
-        end tell
-    ]])
-end
-
-local function currentProfileIsPersonal()
-    local win = hs.window.focusedWindow()
-    if not win then
-        flog("WARN: No focused window")
-        return nil
-    end
-    local title = win:title() or ""
-    flog("Window title: " .. title)
-    local isPersonal = title:find("Personal") ~= nil
-    flog("Detected profile: " .. (isPersonal and "Personal" or "Smirk"))
-    return isPersonal
-end
-
 local function moveTabToOtherProfile()
     flog("=== Ctrl+S triggered ===")
 
     local app = hs.application.frontmostApplication()
-    if not app then
-        flog("WARN: No frontmost app")
-        return
-    end
-    flog("Frontmost app: " .. app:name() .. " (" .. app:bundleID() .. ")")
-
-    if app:bundleID() ~= DIA_BUNDLE then
+    if not app or app:bundleID() ~= DIA_BUNDLE then
         flog("WARN: Not Dia, ignoring")
         return
     end
 
-    local isPersonal = currentProfileIsPersonal()
-    local target = isPersonal and PROFILES.smirk or PROFILES.personal
-    local targetName = isPersonal and "Smirk" or "Personal"
-    flog("Target profile: " .. targetName)
+    -- Detect profile from Hammerspoon window title (includes profile prefix)
+    local win = hs.window.focusedWindow()
+    if not win then
+        flog("WARN: No focused window")
+        return
+    end
+    local currentName = win:title()
+    flog("Current window: " .. currentName)
 
-    flog("Sending Cmd+Shift+C (copy URL)")
-    sendKey("{command down, shift down}", "c")
-    hs.timer.usleep(DELAY)
+    local isPersonal = currentName:find("Smirk:") == nil
+    local targetLabel = isPersonal and "Smirk" or "Personal"
+    local targetIcon = isPersonal and "💼" or "🏠"
+    flog("Target profile: " .. targetLabel)
 
-    local url = hs.pasteboard.getContents()
-    flog("Clipboard: " .. (url or "<nil>"))
+    -- Get URL of active tab
+    local ok2, url = hs.osascript.applescript('tell application "Dia" to return URL of active tab of window 1')
+    if not ok2 or not url or not tostring(url):match("^https?://") then
+        flog("WARN: No valid URL: " .. tostring(url))
+        hs.notify.new(nil, {
+            title = "⚠️  Tab Move Failed",
+            informativeText = "No valid URL in active tab",
+            withdrawAfter = 3,
+        }):send()
+        return
+    end
+    url = tostring(url)
+    flog("URL: " .. url)
 
-    if not url or not url:match("^https?://") then
-        flog("WARN: No valid URL, aborting")
-        hs.alert.show("❌ No valid URL in clipboard", 1.5)
+    -- Close active tab
+    flog("Closing active tab")
+    hs.osascript.applescript('tell application "Dia" to close active tab of window 1')
+
+    -- Find the target window and open URL in it
+    local allWindows = app:allWindows()
+    local targetWin = nil
+    for _, w in ipairs(allWindows) do
+        local isSmirk = w:title():find("Smirk:") ~= nil
+        if (targetLabel == "Smirk" and isSmirk) or (targetLabel == "Personal" and not isSmirk) then
+            targetWin = w
+            break
+        end
+    end
+
+    if not targetWin then
+        flog("WARN: Could not find " .. targetLabel .. " window")
         return
     end
 
-    flog("Sending Cmd+W (close tab)")
-    sendKey("{command down}", "w")
-    hs.timer.usleep(DELAY)
+    -- Get the target window's index in AppleScript (1-based, ordered by frontmost)
+    flog("Opening URL in " .. targetLabel .. " window: " .. targetWin:title())
+    hs.osascript.applescript(string.format(
+        'tell application "Dia" to make new tab in window 2 with properties {URL:"%s"}',
+        url:gsub('"', '\\"')
+    ))
 
-    flog("Sending Ctrl+" .. target.key .. " (switch profile)")
-    sendKey(target.mods, target.key)
-    hs.timer.usleep(DELAY)
+    -- Bring target window to front
+    targetWin:focus()
 
-    flog("Sending Cmd+T (new tab)")
-    sendKey("{command down}", "t")
-    hs.timer.usleep(DELAY)
-
-    flog("Sending Cmd+V (paste)")
-    sendKey("{command down}", "v")
-    hs.timer.usleep(DELAY)
-
-    flog("Sending Return (navigate)")
-    sendReturn()
-
-    flog("=== Done, moved to " .. targetName .. " ===")
-    hs.alert.show("→ Moved to " .. targetName, 1)
+    flog("=== Done, moved to " .. targetLabel .. " ===")
+    hs.notify.new(nil, {
+        title = targetIcon .. "  Moved to " .. targetLabel,
+        informativeText = url,
+        withdrawAfter = 2,
+    }):send()
 end
 
-M.hotkey = hs.hotkey.new({"ctrl"}, "s", nil, moveTabToOtherProfile)
-
-M.filter = hs.window.filter.new(false):setAppFilter("Dia")
-M.filter:subscribe(hs.window.filter.windowFocused, function()
-    flog("Dia window focused, enabling hotkey")
-    M.hotkey:enable()
-end)
-M.filter:subscribe(hs.window.filter.windowUnfocused, function()
-    flog("Dia window unfocused, disabling hotkey")
-    M.hotkey:disable()
-end)
-
-local fw = hs.window.focusedWindow()
-if fw and fw:application():bundleID() == DIA_BUNDLE then
-    flog("Dia already focused on load, enabling hotkey")
-    M.hotkey:enable()
-end
+-- Always enabled; the callback checks if Dia is frontmost before acting
+M.hotkey = hs.hotkey.bind({"ctrl"}, "s", nil, moveTabToOtherProfile)
 
 return M
