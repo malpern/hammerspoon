@@ -1,3 +1,10 @@
 hammerspoon.log
 .DS_Store
 venv
+
+# ProfileRouter lives in its own repo (~/Documents/local-code/ProfileRouter),
+# symlinked into Spoons/ — don't commit the symlink here.
+Spoons/ProfileRouter.spoon
+
+# Per-machine route rules for ProfileRouter
+routes/
