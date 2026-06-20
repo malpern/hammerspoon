@@ -16,3 +16,7 @@ require("Scripts.mouse-highlight")
 hs.loadSpoon("ProfileRouter")
 spoon.ProfileRouter:start()
 spoon.ProfileRouter:bindHotkeys({ cycleTab = { { "ctrl" }, "s" } })
+
+-- Notify (once per version) when Dia updates past the 1.36.0 build that crashes
+-- on --enable-applescript-javascript, so the flag is worth re-testing.
+require("Scripts.dia-version-watch").start()
