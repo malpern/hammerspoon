@@ -10,7 +10,7 @@ require("Scripts.mouse-highlight")
 -- require("Scripts.birthdayCountdown")
 -- require("Scripts.arrows")  -- disabled
 
--- ProfileRouter (managed in its own repo: ~/Documents/local-code/ProfileRouter,
+-- ProfileRouter (managed in its own repo: ~/local-code/ProfileRouter,
 -- symlinked into Spoons/). Create ~/.hammerspoon/routes/<profile>.txt files to
 -- activate it; until then it just warns "No route files found".
 hs.loadSpoon("ProfileRouter")
