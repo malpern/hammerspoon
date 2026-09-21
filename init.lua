@@ -10,6 +10,11 @@ require("Scripts.mouse-highlight")
 -- require("Scripts.birthdayCountdown")
 -- require("Scripts.arrows")  -- disabled
 
+-- Cmd+Q ends a Moonlight stream (Moonlight's own Ctrl+Option+Shift+Q collides
+-- with Aqua Voice). Only active while Moonlight is frontmost. Loaded before
+-- ProfileRouter so a missing ProfileRouter checkout cannot take it down.
+require("Scripts.moonlight-quit").start()
+
 -- ProfileRouter (managed in its own repo: ~/local-code/ProfileRouter,
 -- symlinked into Spoons/). Create ~/.hammerspoon/routes/<profile>.txt files to
 -- activate it; until then it just warns "No route files found".
