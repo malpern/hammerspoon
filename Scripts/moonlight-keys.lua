@@ -3,12 +3,18 @@
 --
 --   Cmd+Q     end the stream (Moonlight's own Ctrl+Option+Shift+Q)
 --   fn+Esc    back to the Mac: minimize the stream (Moonlight's Ctrl+Option+Shift+D)
+--   Ctrl+Cmd+F  leave or enter full screen, stream keeps running (Moonlight's
+--             Ctrl+Option+Shift+X). The Mac's own full-screen shortcut, and the one
+--             that works on keyboards with no globe/fn key.
 --   Cmd+V     unchanged -- it is Omarchy's universal paste -- but the clipboards are
 --             synced, so it pastes whatever was copied last on EITHER machine
 --
 -- Keys are only intercepted while Moonlight is frontmost. Inside a stream Cmd reaches
 -- linux as Super, so a Cmd shortcut is only safe here if Omarchy binds nothing to it
--- (Super+Q is free; Super+W closes windows). fn is the one modifier that never reaches
+-- (Super+Q is free; Super+W closes windows). Ctrl+Cmd+F is the one deliberate
+-- exception: it shadows Omarchy's Super+Ctrl+F (tiled full screen), so that binding is
+-- not reachable from a Mac stream (Micah's choice, 2026-10-19; use it at the linux
+-- desktop instead). fn is the one modifier that never reaches
 -- linux at all, which is why the escape hatch lives on it.
 --
 -- Moonlight's chords are posted with RIGHT-side modifiers: Aqua Voice's dictation hotkey
@@ -55,6 +61,7 @@ end
 local BINDINGS = {
     [keycode["q"]] = { mods = { cmd = true }, chord = "q" },      -- end stream
     [keycode["escape"]] = { mods = { fn = true }, chord = "d" },  -- minimize
+    [keycode["f"]] = { mods = { cmd = true, ctrl = true }, chord = "x" }, -- toggle full screen
 }
 
 local function modsMatch(flags, want)
